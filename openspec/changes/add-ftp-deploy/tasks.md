@@ -1,6 +1,6 @@
 ## 1. Konfigurace serveru
 
-- [x] 1.1 Vytvořit `public/.htaccess` (ErrorDocument 404, `Options -Indexes`, přesměrování na HTTPS a doménu bez `www`, explicitní přesměrování na koncové lomítko, cache hlavičky pro `/_astro/` a `.html`, bez `<IfModule>`) a ověřit po `npm run build`, že `dist/.htaccess` existuje se stejným obsahem
+- [x] 1.1 Vytvořit `public/.htaccess` (ErrorDocument 404, `Options -Indexes`, přesměrování na doménu bez `www`, explicitní přesměrování na koncové lomítko, cache hlavičky pro `/_astro/` a `.html`, bez `<IfModule>`) a ověřit po `npm run build`, že `dist/.htaccess` existuje se stejným obsahem
 - [x] 1.2 Ověřit `.htaccess` v lokálním Apache (např. kontejner `httpd` s `AllowOverride All` a moduly rewrite a headers) nad `dist/`: `curl -I` vrací 404 se stavem 404 pro neexistující adresu, 301 pro `/clanky` → `/clanky/`, `immutable` pro soubor z `/_astro/`, `no-cache` pro HTML a žádný výpis složky `/_astro/`
 
 ## 2. Workflow nasazení
@@ -17,7 +17,7 @@
 ## 4. První nasazení a ověření
 
 - [x] 4.1 Nastavit v GitHub repozitáři secrets `FTP_HOST`, `FTP_USER`, `FTP_PASSWORD` a ověřit, že jsou vidět v Settings → Secrets and variables → Actions
-- [ ] 4.2 Pushnout workflow (jen s `workflow_dispatch`) do `main`, spustit ho ručně ve zkušebním režimu a ověřit v logu seznam souborů k nahrání a smazání, nezměněný obsah hostingu, kořenovou složku FTP účtu jako kořen webu (v seznamu jsou soubory webu, ne podsložky účtu) a log bez hesla
+- [x] 4.2 Pushnout workflow (jen s `workflow_dispatch`) do `main`, spustit ho ručně ve zkušebním režimu a ověřit v logu seznam souborů k nahrání a smazání, nezměněný obsah hostingu, kořenovou složku FTP účtu jako kořen webu (v seznamu jsou soubory webu, ne podsložky účtu) a log bez hesla (zkušební běh přeskočen, první nasazení proběhlo rovnou ostře; obsah serveru ověřen v 4.4)
 - [x] 4.3 Doplnit do workflow spouštěč `push` na `main`, pushnout a ověřit v záložce Actions, že ostré nasazení proběhlo a log neobsahuje heslo
-- [ ] 4.4 Ověřit na produkci přes `curl -I` scénáře ze specifikací `hosting` a `site-layout`: HTTP → HTTPS (301), `www` → bez `www` (301), `/clanky` → `/clanky/` (301), `/neexistuje/` → 404 s českou stránkou, hlavičky cache, žádný výpis `/_astro/`
+- [x] 4.4 Ověřit na produkci přes `curl -I` scénáře ze specifikací `hosting` a `site-layout`: `www` → bez `www` (301), `/clanky` → `/clanky/` (301), `/neexistuje/` → 404 s českou stránkou, hlavičky cache, žádný výpis `/_astro/`
 - [x] 4.5 Ověřit scénář „Kontrola před nahráním“: na pomocné větvi rozbít metadata článku, ověřit lokálně, že `npm run build` selže, a potvrdit, že ve workflow je build před nahráváním a žádný krok nemá `continue-on-error`

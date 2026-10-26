@@ -42,7 +42,7 @@ Testovací framework projekt nemá. Úkol je ověřený, když projde `npm run c
 
 - **Push do `main` = nasazení na produkci.** Workflow `.github/workflows/deploy.yml` spustí `check`, `build` a nahraje `dist/` přes FTP (lftp) na Apache webhosting. Přístupové údaje jsou jen v GitHub secrets (`FTP_HOST`, `FTP_USER`, `FTP_PASSWORD`), cíl je kořenová složka FTP účtu. Lokálně se nasadit nedá. Ruční spuštění workflow je ve výchozím stavu zkušební (`--dry-run`).
 - Nahrávání má tři fáze (assety z `_astro/`, ostatní soubory, mazání), aby stránka během nasazení vždy našla své styly. Assety se porovnávají jen podle jména, protože mají hash v názvu. Složka `.well-known/` se nikdy nemaže. Důvody popisuje design změny `add-ftp-deploy`.
-- **Konfigurace serveru** je v `public/.htaccess` (404 se stavem 404, HTTPS, doména bez `www`, koncové lomítko, cache). Doména je v něm napsaná natvrdo, je to třetí místo vedle `site.config.ts` a `astro.config.mjs`. Direktivy záměrně nejsou v `<IfModule>`. Lokálně jde soubor ověřit systémovým `httpd` s `AllowOverride All` nad `dist/` a požadavky s hlavičkami `Host: specdriven.cz` a `X-Forwarded-Proto: https`.
+- **Konfigurace serveru** je v `public/.htaccess` (404 se stavem 404, doména bez `www`, koncové lomítko, cache). Přesměrování z HTTP na HTTPS tam záměrně není: proxy hostingu Apachi nepředává, jestli požadavek přišel přes HTTPS, a každé takové pravidlo skončí smyčkou (podrobnosti v designu `add-ftp-deploy`). Doména je v něm napsaná natvrdo, je to třetí místo vedle `site.config.ts` a `astro.config.mjs`. Direktivy záměrně nejsou v `<IfModule>`. Lokálně jde soubor ověřit systémovým `httpd` s `AllowOverride All` nad `dist/` a požadavky s hlavičkou `Host: specdriven.cz`.
 
 ## Git
 

@@ -8,12 +8,9 @@ Options -Indexes
 
 RewriteEngine On
 
-# DOČASNĚ: přesměrování HTTP → HTTPS je vypnuté. TLS ukončuje proxy hostingu
-# a Apache vidí HTTP i HTTPS shodně (HTTPS=off, port 80, žádné X-Forwarded-*),
-# každé pravidlo by proto přesměrovávalo HTTPS samo na sebe. Diagnostika hledá
-# další hlavičky, podle kterých by se HTTPS dalo poznat. Odstranit po vyřešení.
-RewriteRule ^ - [E=DBG_FEH:%{HTTP:Front-End-Https},E=DBG_XFSCH:%{HTTP:X-Forwarded-Scheme},E=DBG_XFPROT:%{HTTP:X-Forwarded-Protocol},E=DBG_XURL:%{HTTP:X-Url-Scheme},E=DBG_XFF:%{HTTP:X-Forwarded-For},E=DBG_XRIP:%{HTTP:X-Real-IP},E=DBG_VIA:%{HTTP:Via},E=DBG_H2:%{ENV:HTTP2},E=DBG_RADDR:%{REMOTE_ADDR},E=DBG_SADDR:%{SERVER_ADDR},E=DBG_XFH:%{HTTP:X-Forwarded-Host},E=DBG_XFSRV:%{HTTP:X-Forwarded-Server}]
-Header always set X-Https-Debug "feh=%{DBG_FEH}e xfscheme=%{DBG_XFSCH}e xfprotocol=%{DBG_XFPROT}e xurl=%{DBG_XURL}e xff=%{DBG_XFF}e xrealip=%{DBG_XRIP}e via=%{DBG_VIA}e http2=%{DBG_H2}e remote=%{DBG_RADDR}e server=%{DBG_SADDR}e xfhost=%{DBG_XFH}e xfserver=%{DBG_XFSRV}e"
+# Přesměrování HTTP → HTTPS tu záměrně není. Proxy hostingu Apachi nepředává,
+# jestli požadavek přišel přes HTTPS (HTTPS=off a port 80 u obou), a každé
+# takové pravidlo přesměrovávalo HTTPS samo na sebe.
 
 # www → doména bez www.
 RewriteCond %{HTTP_HOST} ^www\. [NC]

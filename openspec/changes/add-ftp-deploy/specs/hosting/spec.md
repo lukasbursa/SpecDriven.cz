@@ -1,15 +1,8 @@
 ## Purpose
 
-Chování webového serveru, na kterém web běží: přesměrování na HTTPS a kanonickou doménu, tvar adres, cache hlavičky a ochrana obsahu serveru. Konfigurace je součástí repozitáře a nasazuje se spolu s webem.
+Chování webového serveru, na kterém web běží: přesměrování na kanonickou doménu, tvar adres, cache hlavičky a ochrana obsahu serveru. Konfigurace je součástí repozitáře a nasazuje se spolu s webem.
 
 ## ADDED Requirements
-
-### Requirement: Přesměrování na HTTPS
-Server SHALL každý požadavek přes HTTP trvale přesměrovat (stav 301) na stejnou adresu přes HTTPS.
-
-#### Scenario: Otevření přes HTTP
-- **WHEN** čtenář otevře `http://specdriven.cz/clanky/`
-- **THEN** server odpoví stavem 301 s přesměrováním na `https://specdriven.cz/clanky/`
 
 ### Requirement: Kanonická doména bez www
 Server SHALL požadavky na doménu `www.specdriven.cz` trvale přesměrovat (stav 301) na stejnou cestu na `https://specdriven.cz`.

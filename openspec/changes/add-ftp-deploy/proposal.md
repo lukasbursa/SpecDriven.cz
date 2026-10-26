@@ -10,16 +10,16 @@ Chceme, aby se web nasadil sám po každém pushi do větve `main` a aby server 
 - Nahrávání smaže ze serveru soubory, které nový build už nevytváří (např. staré CSS s jiným hashem). Pořadí nahrávání zajistí, že web během nasazení nezobrazí stránky bez stylů.
 - Přístupové údaje k FTP jsou uložené jen v GitHub secrets. V repozitáři žádné nejsou.
 - Ruční spuštění workflow z GitHubu se zkušebním režimem, který jen vypíše, co by se nahrálo a smazalo. Hodí se hlavně před prvním nasazením.
-- Nový soubor `.htaccess` pro Apache: vlastní stránka 404 se stavem 404, přesměrování na HTTPS a na doménu bez `www`, dlouhá cache pro soubory s hashem v názvu.
+- Nový soubor `.htaccess` pro Apache: vlastní stránka 404 se stavem 404, přesměrování na doménu bez `www` a na adresy s koncovým lomítkem, dlouhá cache pro soubory s hashem v názvu.
 - Oprava kontextu projektu v `openspec/config.yaml`: hosting je Apache webhosting nasazovaný přes FTP, ne Cloudflare Pages / Vercel / Netlify.
 
-Mimo rozsah: zmínka o nasazení na webu (stránka „Jak vznikl tento web“ se nemění), nasazování z vlastního počítače, šifrované spojení (SFTP, FTPS), náhledová nasazení pro pull requesty.
+Mimo rozsah: přesměrování z HTTP na HTTPS (z `.htaccess` na tomto hostingu nejde, viz design.md), zmínka o nasazení na webu (stránka „Jak vznikl tento web“ se nemění), nasazování z vlastního počítače, šifrované spojení (SFTP, FTPS), náhledová nasazení pro pull requesty.
 
 ## Capabilities
 
 ### New Capabilities
 - `deployment`: Automatické nasazení webu na hosting po pushi do `main`: podmínky spuštění, kontrola před nahráním, nahrání přes FTP, mazání zastaralých souborů, zkušební režim a zacházení s přístupovými údaji.
-- `hosting`: Chování webového serveru: přesměrování na HTTPS a kanonickou doménu, cache hlavičky a výchozí nastavení Apache, které web potřebuje.
+- `hosting`: Chování webového serveru: přesměrování na kanonickou doménu a adresy s lomítkem, cache hlavičky a výchozí nastavení Apache, které web potřebuje.
 
 ### Modified Capabilities
 - `site-layout`: Požadavek „Stránka 404“ se zpřesňuje, server MUST pro neexistující adresu vrátit HTTP stav 404 (ne 200 ani přesměrování). Na statickém hostingu to platilo samo, na Apache to musí zajistit konfigurace.
