@@ -18,6 +18,6 @@
 
 - [x] 4.1 Nastavit v GitHub repozitáři secrets `FTP_HOST`, `FTP_USER`, `FTP_PASSWORD` a ověřit, že jsou vidět v Settings → Secrets and variables → Actions
 - [ ] 4.2 Pushnout workflow (jen s `workflow_dispatch`) do `main`, spustit ho ručně ve zkušebním režimu a ověřit v logu seznam souborů k nahrání a smazání, nezměněný obsah hostingu, kořenovou složku FTP účtu jako kořen webu (v seznamu jsou soubory webu, ne podsložky účtu) a log bez hesla
-- [ ] 4.3 Doplnit do workflow spouštěč `push` na `main`, pushnout a ověřit v záložce Actions, že ostré nasazení proběhlo a log neobsahuje heslo
+- [x] 4.3 Doplnit do workflow spouštěč `push` na `main`, pushnout a ověřit v záložce Actions, že ostré nasazení proběhlo a log neobsahuje heslo
 - [ ] 4.4 Ověřit na produkci přes `curl -I` scénáře ze specifikací `hosting` a `site-layout`: HTTP → HTTPS (301), `www` → bez `www` (301), `/clanky` → `/clanky/` (301), `/neexistuje/` → 404 s českou stránkou, hlavičky cache, žádný výpis `/_astro/`
 - [x] 4.5 Ověřit scénář „Kontrola před nahráním“: na pomocné větvi rozbít metadata článku, ověřit lokálně, že `npm run build` selže, a potvrdit, že ve workflow je build před nahráváním a žádný krok nemá `continue-on-error`

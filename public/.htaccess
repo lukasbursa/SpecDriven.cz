@@ -8,22 +8,12 @@ Options -Indexes
 
 RewriteEngine On
 
-# DOČASNÁ diagnostika: hodnoty, podle kterých se pozná HTTPS. Odstranit, až se
-# přesměrování na HTTPS ověří na produkci.
-RewriteRule ^ - [E=DBG_HTTPS:%{HTTPS},E=DBG_ENV_HTTPS:%{ENV:HTTPS},E=DBG_PORT:%{SERVER_PORT},E=DBG_SCHEME:%{REQUEST_SCHEME},E=DBG_XFP:%{HTTP:X-Forwarded-Proto},E=DBG_XFS:%{HTTP:X-Forwarded-Ssl},E=DBG_XFPORT:%{HTTP:X-Forwarded-Port}]
-Header always set X-Https-Debug "https=%{DBG_HTTPS}e env_https=%{DBG_ENV_HTTPS}e port=%{DBG_PORT}e scheme=%{DBG_SCHEME}e xfp=%{DBG_XFP}e xfs=%{DBG_XFS}e xfport=%{DBG_XFPORT}e"
-
-# HTTP → HTTPS. Hostingy hlásí HTTPS různě (Apache sám, nebo proxy před ním),
-# přesměruje se proto jen tehdy, když HTTPS nehlásí žádný z ukazatelů.
-# Samotné %{HTTPS} a X-Forwarded-Proto na hostingu nestačily, vznikla smyčka.
-RewriteCond %{HTTPS} !=on
-RewriteCond %{ENV:HTTPS} !=on
-RewriteCond %{SERVER_PORT} !=443
-RewriteCond %{REQUEST_SCHEME} !=https
-RewriteCond %{HTTP:X-Forwarded-Proto} !=https
-RewriteCond %{HTTP:X-Forwarded-Ssl} !=on
-RewriteCond %{HTTP:X-Forwarded-Port} !=443
-RewriteRule ^ https://specdriven.cz%{REQUEST_URI} [R=301,L]
+# DOČASNĚ: přesměrování HTTP → HTTPS je vypnuté. TLS ukončuje proxy hostingu
+# a Apache vidí HTTP i HTTPS shodně (HTTPS=off, port 80, žádné X-Forwarded-*),
+# každé pravidlo by proto přesměrovávalo HTTPS samo na sebe. Diagnostika hledá
+# další hlavičky, podle kterých by se HTTPS dalo poznat. Odstranit po vyřešení.
+RewriteRule ^ - [E=DBG_FEH:%{HTTP:Front-End-Https},E=DBG_XFSCH:%{HTTP:X-Forwarded-Scheme},E=DBG_XFPROT:%{HTTP:X-Forwarded-Protocol},E=DBG_XURL:%{HTTP:X-Url-Scheme},E=DBG_XFF:%{HTTP:X-Forwarded-For},E=DBG_XRIP:%{HTTP:X-Real-IP},E=DBG_VIA:%{HTTP:Via},E=DBG_H2:%{ENV:HTTP2},E=DBG_RADDR:%{REMOTE_ADDR},E=DBG_SADDR:%{SERVER_ADDR},E=DBG_XFH:%{HTTP:X-Forwarded-Host},E=DBG_XFSRV:%{HTTP:X-Forwarded-Server}]
+Header always set X-Https-Debug "feh=%{DBG_FEH}e xfscheme=%{DBG_XFSCH}e xfprotocol=%{DBG_XFPROT}e xurl=%{DBG_XURL}e xff=%{DBG_XFF}e xrealip=%{DBG_XRIP}e via=%{DBG_VIA}e http2=%{DBG_H2}e remote=%{DBG_RADDR}e server=%{DBG_SADDR}e xfhost=%{DBG_XFH}e xfserver=%{DBG_XFSRV}e"
 
 # www → doména bez www.
 RewriteCond %{HTTP_HOST} ^www\. [NC]
