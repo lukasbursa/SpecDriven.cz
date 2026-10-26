@@ -55,9 +55,10 @@ lftp je zvolený proto, že umí `mirror -R` (rekurzivní nahrání s mazáním 
 | `FTP_HOST` | adresa FTP serveru |
 | `FTP_USER` | uživatel |
 | `FTP_PASSWORD` | heslo |
-| `FTP_REMOTE_PATH` | cílová složka na serveru (kořen webu) |
 
-Secrets se mapují přes `env:` jen do kroků, které je potřebují, ne do celého jobu. Před instalací lftp ověří krátký krok, že všechny čtyři jsou neprázdné, a vypíše názvy těch, které chybí. Hodnoty nevypisuje nikdy a nepoužívá `set -x`.
+Cílová složka se nekonfiguruje. Web se nahrává do kořenové složky FTP účtu (cesty `.` a `_astro` relativně k ní), která je na tomto hostingu zároveň kořenem webu.
+
+Secrets se mapují přes `env:` jen do kroků, které je potřebují, ne do celého jobu. Před instalací lftp ověří krátký krok, že všechny tři jsou neprázdné, a vypíše názvy těch, které chybí. Hodnoty nevypisuje nikdy a nepoužívá `set -x`.
 
 Heslo se lftp předává přes proměnnou `LFTP_PASSWORD` a přepínač `--env-password`, takže se neobjeví v argumentech procesu ani v příkazech lftp. GitHub navíc hodnoty secrets v logu maskuje.
 
@@ -71,22 +72,25 @@ Port se nekonfiguruje, používá se výchozí 21. Kdyby hosting potřeboval jin
 
 ### 5. Nahrávání ve třech průchodech
 
-Aby stránky během nasazení neodkazovaly na chybějící soubory (požadavek „Web funkční během nasazení“), běží `mirror -R` třikrát:
+Aby stránky během nasazení neodkazovaly na chybějící soubory (požadavek „Web funkční během nasazení“), probíhá `mirror -R` ve třech fázích:
 
 ```
-1. dist/_astro/ → <remote>/_astro/   bez mazání, --ignore-time
+1. dist/_astro/ → _astro/           bez mazání, --ignore-time
       nové assety s novými hashi jsou na serveru, staré zůstávají
-2. dist/        → <remote>/          bez mazání
+2. dist/        → ./                bez mazání, bez _astro/
       nahraje HTML, XML a ostatní soubory, stránky už odkazují na nové assety
-3. dist/        → <remote>/          --delete
-      vše je nahrané, tento průchod jen smaže soubory, které build nevytváří
+3. dist/_astro/ → _astro/           --delete, --ignore-time
+   dist/        → ./                --delete, bez _astro/
+      vše je nahrané, tyto příkazy jen smažou soubory, které build nevytváří
 ```
 
-Ve všech průchodech platí `--exclude-glob .well-known/` (a jeho obsah), aby mazání nesáhlo na ověřovací soubory hostingu. Dále `--no-perms`, aby soubory dostaly výchozí práva serveru, a `--parallel` pro rychlost.
+Ve všech příkazech platí `--exclude-glob .well-known/` (a jeho obsah), aby mazání nesáhlo na ověřovací soubory hostingu. Dále `--no-perms`, aby soubory dostaly výchozí práva serveru, a `--parallel` pro rychlost.
 
-Porovnávání: lftp ve výchozím stavu porovnává velikost a čas změny. V CI má každý build nové časy, takže průchod 2 nahraje vždy všechny HTML soubory. U malého webu to nevadí a je to bezpečnější než porovnávat jen velikost, kdy by se změněné HTML se stejnou délkou nenahrálo. Pro `_astro/` se čas ignoruje (`--ignore-time`), protože stejný název souboru s hashem znamená stejný obsah, a nahrávají se jen nové soubory.
+Porovnávání: lftp ve výchozím stavu porovnává velikost a čas změny. V CI má každý build nové časy, takže fáze 2 nahraje vždy všechny HTML soubory. U malého webu to nevadí a je to bezpečnější než porovnávat jen velikost, kdy by se změněné HTML se stejnou délkou nenahrálo. Pro `_astro/` se čas ignoruje (`--ignore-time`), protože stejný název souboru s hashem znamená stejný obsah, a nahrávají se jen nové soubory. Proto je `_astro/` z fáze 2 a z druhého příkazu fáze 3 vyloučená. Jinak by se kvůli novým časům nahrávala při každém nasazení celá znovu.
 
-Ve zkušebním režimu dostanou všechny tři průchody `--dry-run`. lftp pak jen vypíše plánované nahrání a mazání.
+Přepis existujícího souboru: lftp ve výchozím stavu starý soubor nejdřív smaže a pak nahraje nový, takže by na chvíli chyběl třeba `index.html`. Proto platí `set xfer:use-temp-file yes` (nahrání pod dočasným názvem a přejmenování na cílový) a `--overwrite` (bez předchozího mazání). Soubor se tak vymění najednou. Dočasné soubory po přerušeném nasazení smaže fáze 3 dalšího nasazení, protože v buildu nejsou.
+
+Ve zkušebním režimu dostanou všechny příkazy `--dry-run`. lftp pak jen vypíše plánované nahrání a mazání.
 
 ### 6. `.htaccess` v `public/`
 
@@ -109,16 +113,18 @@ Doména je v `.htaccess` napsaná natvrdo. Je to třetí místo vedle `src/site.
 ## Risks / Trade-offs
 
 - **[Heslo jde po síti nešifrovaně]** FTP posílá jméno, heslo i obsah v čitelné podobě. Kdo má přístup k síti mezi běžcem GitHub Actions a hostingem, může heslo zachytit. → Pokud to hosting umožňuje, použít pro nasazení samostatný FTP účet omezený na složku webu, aby únik hesla neotevřel celý hosting. Když hosting později nabídne FTPS nebo SFTP, přechod je změna nastavení v kroku nahrávání (viz rozhodnutí 4).
-- **[První nasazení smaže obsah cílové složky]** Průchod s `--delete` odstraní vše, co není v buildu (výchozí stránku hostingu, staré soubory). → Před prvním pushem spustit workflow ručně ve zkušebním režimu a zkontrolovat seznam mazaných souborů. `FTP_REMOTE_PATH` musí mířit na kořen webu, ne na domovskou složku účtu.
+- **[První nasazení smaže obsah cílové složky]** Průchod s `--delete` odstraní vše, co není v buildu (výchozí stránku hostingu, staré soubory). → Před prvním pushem spustit workflow ručně ve zkušebním režimu a zkontrolovat seznam mazaných souborů. Kořenová složka FTP účtu musí být kořen webu. Kdyby účet začínal v domovské složce s podsložkou webu, mazání by zasáhlo celý účet.
 - **[Smyčka přesměrování za proxy]** Pokud hosting terminuje TLS na proxy a neposílá `X-Forwarded-Proto`, pravidlo pro HTTPS by přesměrovávalo pořád dokola. → Po prvním nasazení ověřit `curl -I` na HTTP i HTTPS. Pravidlo pak upravit podle toho, co hosting skutečně posílá (např. `%{ENV:HTTPS}`).
 - **[Hosting nepovoluje některou direktivu v `.htaccess`]** (`Options`, `Header`) → Web vrátí 500, což se pozná hned. Direktivu pak upravit nebo zařídit povolení u hostingu.
-- **[Krátké okno při průchodu 3]** Čtenář, který má otevřenou starou stránku a dočítá z ní assety přesně ve chvíli mazání, může jeden soubor nedostat. → Přijatelné, týká se jen stránek načtených před nasazením a assety bývají v cache prohlížeče.
+- **[FTP server neumí přejmenovat soubor přes existující]** Výměna přes dočasný soubor spoléhá na to, že přejmenování (RNTO) přepíše cílový soubor. Linuxové FTP servery na webhostingu to běžně dělají. → Kdyby nasazení padalo na přejmenování, vypnout `xfer:use-temp-file` a smířit se s krátkým oknem při přepisu.
+- **[FTP server neumí nastavit čas změny souboru]** lftp po nahrání zapisuje na server čas souboru z buildu (MFMT). Bez toho by druhý příkaz fáze 3 nahrál stránky ještě jednou. → Výsledek je stejný, jen pomalejší nasazení. Pozná se z logu.
+- **[Krátké okno ve fázi 3]** Čtenář, který má otevřenou starou stránku a dočítá z ní assety přesně ve chvíli mazání, může jeden soubor nedostat. → Přijatelné, týká se jen stránek načtených před nasazením a assety bývají v cache prohlížeče.
 
 ## Migration Plan
 
-1. Nastavit secrets `FTP_HOST`, `FTP_USER`, `FTP_PASSWORD` a `FTP_REMOTE_PATH` v GitHub repozitáři (Settings → Secrets and variables → Actions).
+1. Nastavit secrets `FTP_HOST`, `FTP_USER` a `FTP_PASSWORD` v GitHub repozitáři (Settings → Secrets and variables → Actions).
 2. Ruční spuštění jde použít, až když je workflow ve větvi `main`, a push do `main` by zároveň spustil ostré nasazení. Workflow se proto nejdřív pushne jen se spouštěčem `workflow_dispatch`.
-3. Spustit workflow ručně ve zkušebním režimu a zkontrolovat, co by se smazalo. Případně obsah cílové složky zálohovat FTP klientem.
+3. Spustit workflow ručně ve zkušebním režimu a zkontrolovat, co by se smazalo. Případně obsah kořenové složky FTP účtu zálohovat FTP klientem.
 4. Doplnit spouštěč `push` a pushnout. Tím proběhne první ostré nasazení.
 5. Po ostrém nasazení ověřit scénáře ze specifikací `hosting` a `site-layout` (HTTP stavy, přesměrování, hlavičky) přes `curl -I`.
 6. Rollback: `git revert` problematického commitu a push do `main`. Při problému s `.htaccess` lze soubor na serveru dočasně smazat nebo přejmenovat přes FTP klienta.

@@ -38,7 +38,7 @@ Před nahráním na hosting MUST projít kontrola typů a diagnostiky webu i ses
 - **THEN** výsledek sestavení se nahraje na hosting
 
 ### Requirement: Obsah serveru odpovídá sestavení
-Po úspěšném nasazení SHALL cílová složka na hostingu obsahovat právě soubory z výsledku sestavení. Soubory, které nové sestavení už nevytváří, SHALL být ze serveru odstraněny. Složka `.well-known/` (ověřování certifikátů a domény) MUST zůstat nedotčena.
+Web se nahrává do kořenové složky FTP účtu. Po úspěšném nasazení SHALL tato složka obsahovat právě soubory z výsledku sestavení. Soubory, které nové sestavení už nevytváří, SHALL být ze serveru odstraněny. Složka `.well-known/` (ověřování certifikátů a domény) MUST zůstat nedotčena.
 
 #### Scenario: Změněný styl
 - **WHEN** se změní CSS a nové sestavení vytvoří soubor stylů s jiným hashem v názvu
@@ -60,7 +60,7 @@ Nasazení SHALL nahrávat soubory v takovém pořadí, aby každá stránka nač
 - **THEN** stránka se zobrazí se styly a písmem
 
 ### Requirement: Přístupové údaje mimo repozitář
-Údaje pro přístup na hosting (server, uživatel, heslo, cílová složka) SHALL být uložené výhradně v secrets repozitáře na GitHubu. Repozitář MUST NOT obsahovat žádný z těchto údajů a heslo MUST NOT být vypsáno do logu nasazení. Když některý údaj chybí, nasazení SHALL skončit chybou ještě před připojením k serveru a uvést název chybějícího údaje.
+Údaje pro přístup na hosting (server, uživatel, heslo) SHALL být uložené výhradně v secrets repozitáře na GitHubu. Repozitář MUST NOT obsahovat žádný z těchto údajů a heslo MUST NOT být vypsáno do logu nasazení. Když některý údaj chybí, nasazení SHALL skončit chybou ještě před připojením k serveru a uvést název chybějícího údaje.
 
 #### Scenario: Chybějící heslo
 - **WHEN** secret s heslem není nastavený a spustí se nasazení

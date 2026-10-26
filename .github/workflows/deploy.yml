@@ -1,0 +1,85 @@
+# Nasazení webu na hosting přes FTP. Požadavky popisuje openspec/specs/deployment,
+# postup a jeho důvody openspec/changes/archive/*-add-ftp-deploy/design.md.
+name: Nasazení
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: Zkušební běh (jen vypíše, co by se nahrálo a smazalo)
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+# Druhé nasazení počká na první, nepřeruší ho uprostřed nahrávání.
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - run: npm run check
+      - run: npm run build
+
+      # Vypíše jen názvy chybějících secrets, nikdy jejich hodnoty.
+      - name: Kontrola přístupových údajů
+        env:
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+          FTP_USER: ${{ secrets.FTP_USER }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          missing=()
+          for name in FTP_HOST FTP_USER FTP_PASSWORD; do
+            [ -n "${!name}" ] || missing+=("$name")
+          done
+          if [ ${#missing[@]} -gt 0 ]; then
+            echo "::error::Chybí secrets: ${missing[*]}"
+            exit 1
+          fi
+
+      - name: Instalace lftp
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq lftp
+
+      # Tři fáze: nové assety, pak stránky, nakonec smazání toho, co build
+      # už nevytváří. Stránka načtená během nasazení tak vždy najde své styly.
+      # Assety mají hash v názvu, porovnávají se proto jen podle jména
+      # (--ignore-time), ostatní soubory i podle času změny. Cílem je kořenová
+      # složka FTP účtu, která je zároveň kořenem webu.
+      - name: Nahrání na hosting
+        env:
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+          FTP_USER: ${{ secrets.FTP_USER }}
+          LFTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          DRY_RUN: ${{ inputs.dry_run && '--dry-run' || '' }}
+        run: |
+          opts="--reverse --overwrite --no-perms --parallel=4 --exclude-glob .well-known/ --verbose $DRY_RUN"
+          assets="$opts --ignore-time dist/_astro _astro"
+          pages="$opts --exclude-glob _astro/ dist ."
+          lftp <<EOF
+          set cmd:fail-exit yes
+          set ftp:ssl-allow no
+          set ftp:passive-mode on
+          set net:timeout 30
+          set net:max-retries 3
+          set net:reconnect-interval-base 5
+          set xfer:use-temp-file yes
+          open --env-password -u "$FTP_USER" "ftp://$FTP_HOST"
+          mirror $assets
+          mirror $pages
+          mirror --delete $assets
+          mirror --delete $pages
+          EOF

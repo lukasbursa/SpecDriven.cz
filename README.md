@@ -27,6 +27,22 @@ npm run preview  # náhled sestaveného webu
 npm run check    # kontrola typů
 ```
 
+## Nasazení
+
+Web běží na webhostingu s Apache. Po každém pushi do větve `main` ho [GitHub Actions](.github/workflows/deploy.yml) zkontroluje, sestaví a nahraje přes FTP. Když kontrola nebo build selže, nic se nenahraje. Konfigurace serveru (stránka 404, přesměrování, cache) je v [`public/.htaccess`](public/.htaccess).
+
+Přístupové údaje jsou v secrets repozitáře (Settings → Secrets and variables → Actions):
+
+| Secret | Význam |
+|---|---|
+| `FTP_HOST` | adresa FTP serveru, případně `host:port` |
+| `FTP_USER` | uživatel |
+| `FTP_PASSWORD` | heslo |
+
+Web se nahrává do kořenové složky FTP účtu, která je zároveň kořenem webu.
+
+Workflow jde spustit i ručně v záložce Actions. Ve výchozím stavu je to zkušební běh: jen vypíše, co by se nahrálo a smazalo, a na serveru nic nezmění. Nasazení maže ze serveru soubory, které build nevytváří, kromě složky `.well-known/`.
+
 ## Technologie
 
 [Astro](https://astro.build) (statický výstup), obsah v Markdown/MDX, čisté CSS, písmo IBM Plex. V prohlížeči neběží žádný JavaScript.

@@ -38,6 +38,12 @@ Testovací framework projekt nemá. Úkol je ověřený, když projde `npm run c
 - **Komponenta `Scenario.astro`** (blok WHEN/THEN) se používá na úvodní stránce i v MDX článcích (import relativní cestou). Má explicitní `aria-labelledby`, protože Chrome neodvozuje jméno `<figure>` z `<figcaption>`.
 - **V prohlížeči neběží žádný JavaScript.** Barevný režim se řídí jen systémem (`prefers-color-scheme`).
 
+## Nasazení
+
+- **Push do `main` = nasazení na produkci.** Workflow `.github/workflows/deploy.yml` spustí `check`, `build` a nahraje `dist/` přes FTP (lftp) na Apache webhosting. Přístupové údaje jsou jen v GitHub secrets (`FTP_HOST`, `FTP_USER`, `FTP_PASSWORD`), cíl je kořenová složka FTP účtu. Lokálně se nasadit nedá. Ruční spuštění workflow je ve výchozím stavu zkušební (`--dry-run`).
+- Nahrávání má tři fáze (assety z `_astro/`, ostatní soubory, mazání), aby stránka během nasazení vždy našla své styly. Assety se porovnávají jen podle jména, protože mají hash v názvu. Složka `.well-known/` se nikdy nemaže. Důvody popisuje design změny `add-ftp-deploy`.
+- **Konfigurace serveru** je v `public/.htaccess` (404 se stavem 404, HTTPS, doména bez `www`, koncové lomítko, cache). Doména je v něm napsaná natvrdo, je to třetí místo vedle `site.config.ts` a `astro.config.mjs`. Direktivy záměrně nejsou v `<IfModule>`. Lokálně jde soubor ověřit systémovým `httpd` s `AllowOverride All` nad `dist/` a požadavky s hlavičkami `Host: specdriven.cz` a `X-Forwarded-Proto: https`.
+
 ## Git
 
 Commit zprávy se píšou česky. Commituj a pushuj, jen když o to uživatel požádá.

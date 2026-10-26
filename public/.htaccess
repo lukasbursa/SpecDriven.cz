@@ -1,0 +1,33 @@
+# Konfigurace Apache pro SpecDriven.cz. Požadavky popisuje openspec/specs/hosting.
+# Direktivy záměrně nejsou v <IfModule>: chybějící modul má shodit web chybou 500,
+# ne tiše vypnout přesměrování nebo cache.
+
+# Lokální cesta, ne URL: Apache vrátí obsah 404.html se stavem 404 bez přesměrování.
+ErrorDocument 404 /404.html
+Options -Indexes
+
+RewriteEngine On
+
+# HTTP → HTTPS. Za proxy, která ukončuje TLS, pozná HTTPS podle X-Forwarded-Proto.
+RewriteCond %{HTTPS} !=on
+RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+RewriteRule ^ https://specdriven.cz%{REQUEST_URI} [R=301,L]
+
+# www → doména bez www.
+RewriteCond %{HTTP_HOST} ^www\. [NC]
+RewriteRule ^ https://specdriven.cz%{REQUEST_URI} [R=301,L]
+
+# Složka bez koncového lomítka → s lomítkem. Explicitně, protože DirectorySlash
+# by za proxy přesměroval na http:// a vznikla by dvě přesměrování za sebou.
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^(.*[^/])$ https://specdriven.cz/$1/ [R=301,L]
+
+# Soubory s hashem v názvu se nemění, prohlížeč je smí držet rok bez ověřování.
+<If "%{REQUEST_URI} =~ m#^/_astro/#">
+  Header set Cache-Control "public, max-age=31536000, immutable"
+</If>
+
+# Stránky si prohlížeč ověří u serveru při každém načtení.
+<FilesMatch "\.html$">
+  Header set Cache-Control "no-cache"
+</FilesMatch>

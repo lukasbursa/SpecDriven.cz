@@ -29,8 +29,8 @@ context: |
 
   Stack: Astro 7 (statický výstup), obsah v Markdown/MDX přes content
   collections, TypeScript, čisté moderní CSS (bez frameworku), žádný
-  JavaScript v prohlížeči. Hosting: statický (Cloudflare Pages / Vercel /
-  Netlify).
+  JavaScript v prohlížeči. Hosting: webhosting s Apache (konfigurace
+  v .htaccess), nasazení přes FTP z GitHub Actions po každém pushi do main.
 
   Konvence:
   - Obsah webu je česky, s diakritikou.

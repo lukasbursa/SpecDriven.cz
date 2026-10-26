@@ -28,7 +28,7 @@ Mimo rozsah: zmínka o nasazení na webu (stránka „Jak vznikl tento web“ se
 
 - Nový workflow `.github/workflows/deploy.yml`, který obsahuje i samotný postup nahrávání.
 - Nový soubor `public/.htaccess`, který Astro zkopíruje do `dist/`.
-- V GitHub repozitáři je potřeba nastavit secrets s údaji k FTP (server, uživatel, heslo, cílová složka).
+- V GitHub repozitáři je potřeba nastavit secrets s údaji k FTP (server, uživatel, heslo). Web se nahrává do kořenové složky FTP účtu, která je zároveň kořenem webu.
 - Nástroj `lftp` v běhovém prostředí GitHub Actions (instaluje se v rámci workflow).
 - Úprava `openspec/config.yaml` (hosting) a dokumentace pro vývojáře (`CLAUDE.md`, `README.md`).
 - Repozitář je veřejný: workflow uvidí každý, proto se nasazení nikdy nespouští z pull requestů a hodnoty secrets se nesmí objevit v logu. FTP přenáší heslo nešifrovaně, riziko popisuje design.md.
