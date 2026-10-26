@@ -35,7 +35,7 @@ Astro (aktuálně řada 7) generuje čisté HTML, nativně podporuje Markdown/MD
 Pomocná funkce `getPublishedArticles()` vrací publikované články seřazené od nejnovějšího. Používají ji výpis, úvodní stránka, RSS i generování stránek článků, takže koncept nemůže omylem prosáknout jinam. Sitemap obsahuje jen vygenerované stránky, takže koncepty v ní automaticky nejsou.
 
 ### Konfigurace v `src/site.config.ts`
-Doména, název, podtitul, autor, URL repozitáře (včetně větve pro odkazy do složek) a URL OpenSpec jsou v jednom typovaném objektu. Komponenty si hodnoty berou odtud.
+Doména, název, podtitul, autor, URL repozitáře (včetně větve pro odkazy do složek) a URL OpenSpec jsou v jednom typovaném objektu. Komponenty si hodnoty berou odtud. Hodnoty: autor „Lukáš Burša“, repozitář `https://github.com/lukasbursa/SpecDriven.cz`, větev `main`.
 
 ### Vizuální směr: „web jako specifikace“, střední cesta
 Rám stránky přebírá jazyk specifikací: monospace prefixy `##`/`###` před nadpisy, scénáře WHEN/THEN, frontmatter článku jako blok metadat, stavový řádek v patičce. Tento jazyk je společný BDD a psaní požadavků obecně, není vázaný na jeden nástroj. Tělo článků je naopak klidné: bezpatkové písmo, šířka řádku ~68 znaků, řádkování 1,7.
@@ -91,6 +91,5 @@ Data se formátují přes `Intl.DateTimeFormat('cs-CZ', { dateStyle: 'long' })`,
 
 ## Open Questions
 
-- Přesná URL veřejného GitHub repozitáře a jméno autora v patičce: doplní se do `src/site.config.ts`, na specifikaci ani struktuře to nic nemění.
 - Fontsource, nebo vestavěné Fonts API Astra: pokud je v Astru 7 stabilní a splní požadavky (vlastní doména, podmnožiny), lze ho použít místo Fontsource. Chování webu se tím nemění.
 - Volba hostingu (Cloudflare Pages / Vercel / Netlify) se řeší v samostatné změně pro nasazení.
