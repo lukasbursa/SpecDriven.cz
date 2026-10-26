@@ -9,12 +9,10 @@ context: |
   Cílové publikum: čeští vývojáři, tech leadi a týmy, kteří chtějí při práci
   s AI asistenty stavět software podle specifikací.
 
-  Web je univerzální – není o jednom nástroji. První vlna pokrytých nástrojů:
-  OpenSpec, Spec Kit, Kiro. Další (Tessl, BMAD…) mohou přijít později.
+  Web je univerzální – není o jednom nástroji.
 
-  Tón obsahu: neutrální a informativní. Vysvětlujeme, co nástroj nebo pojem je
-  a jak funguje. Nepíšeme názory, doporučení „nejlepšího“ nástroje, recenze ani
-  vlastní testy. Fakta o nástrojích odkazují na oficiální zdroje a nesou datum
+  Tón obsahu: věcný a informativní. Vysvětlujeme, co nástroj nebo pojem je
+  a jak funguje. Fakta o nástrojích odkazují na oficiální zdroje a nesou datum
   ověření, protože se rychle mění.
 
   Web sám je vyvíjen veřejně přes OpenSpec – repozitář slouží jako živá ukázka
