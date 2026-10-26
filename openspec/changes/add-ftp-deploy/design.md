@@ -6,7 +6,7 @@ Omezení, která z projektu plynou:
 
 - Build stahuje písma ze sítě (Fonts API Astra), musí tedy běžet v prostředí s přístupem k internetu. GitHub Actions to splňuje.
 - Stavový řádek v patičce čte při buildu `openspec/specs/` a `openspec/changes/archive/`, build proto musí běžet nad celým checkoutem repozitáře, ne jen nad `src/`.
-- Astro 7 vyžaduje Node.js 22.23 nebo novější.
+- Astro 7 vyžaduje Node.js 22.23.4 nebo novější.
 - Adresy jsou se `trailingSlash: 'always'` a stránky vznikají jako `<cesta>/index.html`.
 
 ## Goals / Non-Goals
@@ -36,7 +36,9 @@ Job má podmínku `if: github.ref == 'refs/heads/main'`, takže ruční spuště
 
 Souběh řeší `concurrency: { group: deploy, cancel-in-progress: false }`. Druhé nasazení počká, místo aby přerušilo první uprostřed nahrávání. GitHub drží ve frontě jen poslední čekající běh, takže se při sérii pushů rovnou nasadí nejnovější commit.
 
-Kroky: `actions/checkout` → `actions/setup-node` (Node 22 LTS, cache npm) → `npm ci` → `npm run check` → `npm run build` → kontrola secrets → `apt-get install lftp` → nahrání. Selhání kteréhokoli kroku ukončí job dřív, než se k serveru cokoli pošle.
+Kroky: `actions/checkout` → `actions/setup-node` (Node 24 LTS, cache npm) → `npm ci` → `npm run check` → `npm run build` → kontrola secrets → `apt-get install lftp` → nahrání. Selhání kteréhokoli kroku ukončí job dřív, než se k serveru cokoli pošle.
+
+Node 24 a ne 22: `setup-node` s `node-version: 22` vezme verzi z cache běžce, která může být starší, než Astro vyžaduje (22.23.3 neprošla). Node 24 je aktuální LTS a odpovídá lokálnímu vývoji.
 
 *Alternativa:* oddělený job pro build a deploy s artefaktem `dist/`. Je to přehlednější v UI, ale přidává upload a download artefaktu bez reálného přínosu. Jeden job stačí.
 

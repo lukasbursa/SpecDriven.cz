@@ -17,7 +17,7 @@ Postup každé změny: **propose → apply → archive**.
 
 ## Lokální vývoj
 
-Potřebujete Node.js 22+.
+Potřebujete Node.js 22.23.4 nebo novější (CI používá Node 24).
 
 ```sh
 npm install

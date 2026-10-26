@@ -5,7 +5,7 @@
 
 ## 2. Workflow nasazení
 
-- [x] 2.1 Vytvořit `.github/workflows/deploy.yml` zatím jen se spouštěčem `workflow_dispatch` (vstup `dry_run`, výchozí `true`), s podmínkou na větev `main`, `permissions: contents: read`, `concurrency` bez rušení a kroky Node 22, `npm ci`, `npm run check`, `npm run build` a ověřit, že workflow neobsahuje `pull_request` a hodnoty přístupových údajů v něm nejsou
+- [x] 2.1 Vytvořit `.github/workflows/deploy.yml` zatím jen se spouštěčem `workflow_dispatch` (vstup `dry_run`, výchozí `true`), s podmínkou na větev `main`, `permissions: contents: read`, `concurrency` bez rušení a kroky Node 24, `npm ci`, `npm run check`, `npm run build` a ověřit, že workflow neobsahuje `pull_request` a hodnoty přístupových údajů v něm nejsou
 - [x] 2.2 Doplnit krok kontroly secrets (`FTP_HOST`, `FTP_USER`, `FTP_PASSWORD`), který vypíše jen názvy chybějících, a ověřit tutéž logiku lokálně spuštěním kroku v shellu bez proměnných: skončí chybou s názvy a nic nepřipojuje
 - [x] 2.3 Doplnit instalaci lftp a krok nahrávání podle design.md (heslo přes `LFTP_PASSWORD` + `--env-password`, `ftp:ssl-allow no`, pasivní režim, timeouty, tři fáze `mirror -R`, vyloučení `.well-known/`, `--no-perms`, `--dry-run` podle vstupu) a ověřit, že secrets jsou v `env:` jen u kroků, které je potřebují
 
