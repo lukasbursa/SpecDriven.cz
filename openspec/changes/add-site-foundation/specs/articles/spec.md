@@ -48,7 +48,7 @@ Web SHALL poskytovat RSS feed publikovaných článků na adrese `/rss.xml` s n�
 - **THEN** obdrží platný RSS 2.0 dokument se všemi publikovanými články
 
 ### Requirement: Úvodní článek
-Web SHALL obsahovat publikovaný článek „Co je spec-driven development“ na adrese `/clanky/co-je-spec-driven-development/`, který vysvětluje princip SDD, jeho typický cyklus (návrh, specifikace, implementace, archivace) a přínos pro práci s AI asistenty.
+Web SHALL obsahovat publikovaný článek „Co je spec-driven development“ na adrese `/clanky/co-je-spec-driven-development/`, který vysvětluje princip SDD, jeho obecný cyklus (záměr, specifikace, plán, implementace, ověření) a roli specifikace při práci s AI asistenty. Článek MUST být neutrální: nástroje (OpenSpec, Spec Kit, Kiro) smí pouze vyjmenovat jako příklady s odkazem na oficiální zdroje, bez hodnocení a doporučení.
 
 #### Scenario: Úvodní článek existuje
 - **WHEN** čtenář otevře `/clanky/co-je-spec-driven-development/`

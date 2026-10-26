@@ -7,15 +7,30 @@ context: |
 
   Projekt: SpecDriven.cz – český rozcestník o spec-driven developmentu (SDD).
   Cílové publikum: čeští vývojáři, tech leadi a týmy, kteří chtějí při práci
-  s AI asistenty stavět software podle specifikací (OpenSpec, Spec Kit, Kiro…).
+  s AI asistenty stavět software podle specifikací.
+
+  Web je univerzální – není o jednom nástroji. První vlna pokrytých nástrojů:
+  OpenSpec, Spec Kit, Kiro. Další (Tessl, BMAD…) mohou přijít později.
+
+  Tón obsahu: neutrální a informativní. Vysvětlujeme, co nástroj nebo pojem je
+  a jak funguje. Nepíšeme názory, doporučení „nejlepšího“ nástroje, recenze ani
+  vlastní testy. Fakta o nástrojích odkazují na oficiální zdroje a nesou datum
+  ověření, protože se rychle mění.
 
   Web sám je vyvíjen veřejně přes OpenSpec – repozitář slouží jako živá ukázka
   metody. Proto mají být proposals, specs i tasks srozumitelné i pro čtenáře
-  zvenku, kteří se z nich učí.
+  zvenku, kteří se z nich učí. OpenSpec je zmíněn jako nástroj, kterým web
+  vznikl, ne jako doporučení.
 
-  Stack: Astro (statický výstup), obsah v Markdown/MDX přes content collections,
-  TypeScript, bez zbytečných runtime závislostí. Hosting: statický (Cloudflare
-  Pages / Vercel / Netlify).
+  Vizuální styl: „web jako specifikace“ – střední cesta. Struktura připomíná
+  specifikaci (prefixy ##, scénáře WHEN/THEN, delty +/−, frontmatter, stavový
+  řádek), ale text článků je klidný a čitelný. Písmo IBM Plex Sans + Mono,
+  modrý akcent, světlý režim „papír“, tmavý režim „blueprint“.
+
+  Stack: Astro 7 (statický výstup), obsah v Markdown/MDX přes content
+  collections, TypeScript, čisté moderní CSS (bez frameworku), žádný
+  JavaScript v prohlížeči. Hosting: statický (Cloudflare Pages / Vercel /
+  Netlify).
 
   Konvence:
   - Obsah webu je česky, s diakritikou.

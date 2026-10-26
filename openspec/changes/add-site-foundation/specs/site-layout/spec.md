@@ -60,3 +60,25 @@ Web SHALL respektovat systémové nastavení barevného režimu čtenáře (`pre
 #### Scenario: Tmavý režim systému
 - **WHEN** čtenář má v systému nastavený tmavý režim
 - **THEN** web se zobrazí v tmavé variantě
+
+### Requirement: Dekorativní prvky specifikace
+Vizuální prvky, které napodobují zápis specifikace (např. prefixy `##` a `###` před nadpisy, oddělovače `---` ve frontmatteru), MUST být čistě dekorativní: čtečky obrazovky je nepředčítají a nejsou součástí textu nadpisů v titulku stránky, v RSS ani ve výsledcích vyhledávačů.
+
+#### Scenario: Nadpis s prefixem
+- **WHEN** čtečka obrazovky přečte nadpis sekce zobrazený jako „## Nejnovější články“
+- **THEN** přečte pouze „Nejnovější články“
+
+#### Scenario: Kopírování nadpisu
+- **WHEN** se ze stránky vygeneruje titulek nebo položka RSS
+- **THEN** neobsahuje znaky `#` z dekorativních prefixů
+
+### Requirement: Písmo hostované na vlastní doméně
+Web MUST načítat všechna písma ze své vlastní domény a MUST NOT při načtení stránky kontaktovat servery třetích stran (např. Google Fonts). Písmo SHALL správně zobrazovat všechny znaky české abecedy.
+
+#### Scenario: Načtení stránky bez třetích stran
+- **WHEN** čtenář otevře libovolnou stránku webu
+- **THEN** prohlížeč nestahuje žádné soubory z jiné domény než specdriven.cz
+
+#### Scenario: České znaky
+- **WHEN** stránka obsahuje text „Příliš žluťoučký kůň úpěl ďábelské ódy“
+- **THEN** všechny znaky se zobrazí ve stejném písmu bez náhradních fontů
