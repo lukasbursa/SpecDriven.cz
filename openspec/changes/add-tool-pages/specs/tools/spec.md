@@ -31,8 +31,8 @@ Všude, kde web vypisuje více nástrojů, SHALL je řadit podle počtu hvězd n
 - **THEN** Spec Kit je ve výpisu před OpenSpec
 
 #### Scenario: Komerční nástroje na konci
-- **WHEN** Kiro a Tessl nemají uvedený počet hvězd a Agent OS má 5 548 hvězd
-- **THEN** výpis končí v pořadí Agent OS, Kiro, Tessl
+- **WHEN** Kiro nemá uvedený počet hvězd a Agent OS má 5 548 hvězd
+- **THEN** výpis končí v pořadí Agent OS, Kiro
 
 ### Requirement: Přehled nástrojů
 Web SHALL mít stránku `/nastroje/` s hlavním nadpisem „Nástroje pro spec-driven development“ a krátkým úvodem, který uvede, podle čeho jsou nástroje seřazeny. Stránka SHALL vypsat všechny publikované nástroje. U každého SHALL být zobrazen název (odkaz na stránku nástroje), typ, popis, počet hvězd ve formátu běžném v češtině (např. „143 024“), případně text, že nástroj nemá veřejný repozitář, a datum ověření.
@@ -75,8 +75,8 @@ Stránky nástrojů MUST NOT být zobrazeny v seznamu článků `/clanky/` ani v
 - **THEN** seznam neobsahuje žádnou stránku nástroje
 
 ### Requirement: Pokryté nástroje
-Web SHALL obsahovat publikované stránky těchto nástrojů: Spec Kit (`/nastroje/spec-kit/`), OpenSpec (`/nastroje/openspec/`), BMAD-METHOD (`/nastroje/bmad-method/`), Agent OS (`/nastroje/agent-os/`), Kiro (`/nastroje/kiro/`) a Tessl (`/nastroje/tessl/`). Údaje na nich MUST vycházet z oficiálních zdrojů nástroje platných k datu ověření.
+Web SHALL obsahovat publikované stránky těchto nástrojů: Spec Kit (`/nastroje/spec-kit/`), OpenSpec (`/nastroje/openspec/`), BMAD-METHOD (`/nastroje/bmad-method/`), GSD Core (`/nastroje/gsd-core/`), Agent OS (`/nastroje/agent-os/`) a Kiro (`/nastroje/kiro/`). Údaje na nich MUST vycházet z oficiálních zdrojů nástroje platných k datu ověření.
 
 #### Scenario: První dávka nástrojů
 - **WHEN** čtenář otevře `/nastroje/`
-- **THEN** přehled obsahuje Spec Kit, OpenSpec, BMAD-METHOD, Agent OS, Kiro a Tessl
+- **THEN** přehled obsahuje Spec Kit, OpenSpec, BMAD-METHOD, GSD Core, Agent OS a Kiro

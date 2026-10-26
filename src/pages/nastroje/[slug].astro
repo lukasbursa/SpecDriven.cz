@@ -1,0 +1,99 @@
+---
+import { render } from 'astro:content';
+import Frontmatter, { type Entry } from '../../components/Frontmatter.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatStars, getPublishedTools, type Tool } from '../../lib/tools';
+
+export async function getStaticPaths() {
+  const tools = await getPublishedTools();
+  return tools.map((tool) => ({ params: { slug: tool.id }, props: { tool } }));
+}
+
+interface Props {
+  tool: Tool;
+}
+
+const { tool } = Astro.props;
+const { title, description, kind, license, website, repository, docs, stars, verifiedDate, pubDate, updatedDate } =
+  tool.data;
+const { Content, headings } = await render(tool);
+
+// Sekce s mapováním na obecný cyklus je povinná, bez ní se web nesestaví.
+const requiredSection = 'Jak funguje';
+if (!headings.some((heading) => heading.depth === 2 && heading.text === requiredSection)) {
+  throw new Error(`Nástroj ${tool.id}: chybí sekce „${requiredSection}“ (nadpis úrovně ##).`);
+}
+
+const entries: Entry[] = [
+  { key: 'typ', value: kind, accent: true },
+  { key: 'licence', value: license },
+  { key: 'hvězdy', value: stars === undefined ? 'bez veřejného repozitáře' : formatStars(stars) },
+  { key: 'ověřeno', value: verifiedDate },
+  { key: 'publikováno', value: pubDate },
+  ...(updatedDate ? [{ key: 'aktualizováno', value: updatedDate }] : []),
+];
+
+// Odkazy se zobrazují bez protokolu a koncového lomítka, např. „openspec.dev“.
+const links = [
+  { label: 'Oficiální web', url: website },
+  { label: 'Repozitář', url: repository },
+  { label: 'Dokumentace', url: docs },
+].flatMap(({ label, url }) => (url ? [{ label, url, text: url.replace(/^https?:\/\//, '').replace(/\/$/, '') }] : []));
+---
+
+<BaseLayout title={title} description={description} type="article" publishedTime={pubDate} modifiedTime={updatedDate}>
+  <article class="container tool">
+    <p class="tool__path mono"><a href="/nastroje/">nastroje</a> / {tool.id}</p>
+
+    <Frontmatter entries={entries} />
+
+    <h1 class="tool__title">{title}</h1>
+
+    <div class="prose">
+      <Content />
+
+      <h2 id="oficialni-odkazy">Oficiální odkazy</h2>
+      <ul>
+        {
+          links.map(({ label, url, text }) => (
+            <li>
+              {label}: <a href={url}>{text}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  @layer components {
+    .tool {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-5);
+      padding-block: var(--space-6) var(--space-8);
+
+      /* :global, aby pravidlo platilo i pro kořen vnořených komponent. */
+      & > :global(*) {
+        max-width: var(--measure);
+      }
+    }
+
+    .tool__path {
+      color: var(--faint);
+      font-size: 0.8125rem;
+
+      & a {
+        color: inherit;
+      }
+    }
+
+    .tool__title {
+      margin-top: var(--space-2);
+      font-size: var(--text-h1);
+      line-height: var(--leading-tight);
+      letter-spacing: -0.015em;
+    }
+  }
+</style>

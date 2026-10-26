@@ -8,13 +8,13 @@ Web slibuje, že čtenáři ukáže, jaké nástroje pro spec-driven development
 - Nová stránka `/nastroje/` s přehledem všech nástrojů.
 - Ke každému nástroji vlastní stránka `/nastroje/<slug>/` s blokem metadat (typ, licence, počet hvězd na GitHubu, oficiální web, repozitář, datum ověření), povinnou sekcí „Jak funguje“, která mapuje kroky nástroje na obecný cyklus SDD, a odkazy na oficiální zdroje.
 - Nástroje se řadí podle popularity, měřené počtem hvězd na GitHubu k datu ověření, od nejpopulárnějšího. Nástroje bez veřejného repozitáře (komerční produkty) jsou na konci.
-- První dávka šesti nástrojů: Spec Kit, OpenSpec, BMAD-METHOD, Agent OS, Kiro, Tessl.
+- První dávka šesti nástrojů: Spec Kit, OpenSpec, BMAD-METHOD, GSD Core, Agent OS, Kiro.
 - Stránky nástrojů nejsou články: nezobrazují se v `/clanky/` ani mezi nejnovějšími články, ale RSS feed je obsahuje.
 - Odkaz „Nástroje“ v hlavní navigaci.
 - Úvodní článek odkazuje u nástrojů na jejich stránky na webu a na přehled `/nastroje/`.
 - Uvolnění kontextu projektu v `openspec/config.yaml`: tón obsahu je věcný a informativní, bez zákazu porovnávání a bez pevného seznamu „první vlny“ nástrojů. Řazení podle popularity by s původním textem bylo v rozporu.
 
-Mimo rozsah: automatické stahování počtu hvězd při buildu, srovnávací tabulka nástrojů podle funkcí, filtrování podle typu, další nástroje (Get Shit Done, Spec Workflow MCP, cc-sdd, Superpowers), hodnocení nebo vlastní testy nástrojů.
+Mimo rozsah: automatické stahování počtu hvězd při buildu, srovnávací tabulka nástrojů podle funkcí, filtrování podle typu, další nástroje (Spec Workflow MCP, cc-sdd, Spec Kitty, Superpowers), hodnocení nebo vlastní testy nástrojů. Původně plánovaný Tessl první dávka nezahrnuje: podle oficiálních zdrojů se přeorientoval na správu skillů pro agenty a spec-driven development už nepopisuje. Nahradil ho GSD Core.
 
 ## Capabilities
 

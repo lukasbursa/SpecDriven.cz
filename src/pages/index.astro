@@ -1,11 +1,14 @@
 ---
 import ArticleList from '../components/ArticleList.astro';
 import Scenario from '../components/Scenario.astro';
+import ToolCards from '../components/ToolCards.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getPublishedArticles } from '../lib/articles';
+import { getPublishedTools } from '../lib/tools';
 import { site } from '../site.config';
 
 const latest = (await getPublishedArticles()).slice(0, 5);
+const tools = (await getPublishedTools()).slice(0, 6);
 
 const cycle = [
   { name: 'Záměr', text: 'Proč změna vzniká a co má přinést.' },
@@ -46,6 +49,16 @@ const cycle = [
         ))
       }
     </ol>
+  </section>
+
+  <section class="section-border">
+    <div class="container section" aria-labelledby="nastroje">
+      <div class="section__head">
+        <h2 id="nastroje" class="section__title mark-h2">Nástroje pro SDD</h2>
+        <a class="mono section__more" href="/nastroje/">Všechny nástroje →</a>
+      </div>
+      <ToolCards tools={tools} />
+    </div>
   </section>
 
   <section class="section-border">

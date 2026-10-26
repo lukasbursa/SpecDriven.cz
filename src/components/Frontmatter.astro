@@ -1,0 +1,70 @@
+---
+import { formatDate, isoDate } from '../lib/dates';
+
+// Blok metadat ve stylu YAML frontmatteru. Datum se vypíše jako <time>,
+// `accent` zvýrazní hodnotu barvou (např. štítky).
+export interface Entry {
+  key: string;
+  value: string | Date;
+  accent?: boolean;
+}
+
+interface Props {
+  entries: Entry[];
+}
+
+const { entries } = Astro.props;
+---
+
+<dl class="frontmatter">
+  {
+    entries.map(({ key, value, accent }) => (
+      <div>
+        <dt>{key}:</dt>
+        <dd class:list={{ frontmatter__accent: accent }}>
+          {value instanceof Date ? <time datetime={isoDate(value)}>{formatDate(value)}</time> : value}
+        </dd>
+      </div>
+    ))
+  }
+</dl>
+
+<style>
+  @layer components {
+    .frontmatter {
+      padding: var(--space-3) 1.125rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      font-family: var(--font-code);
+      font-size: var(--text-sm);
+      line-height: 1.8;
+
+      &::before,
+      &::after {
+        display: block;
+        color: var(--faint);
+        content: '---';
+        content: '---' / '';
+      }
+
+      & div {
+        display: grid;
+        grid-template-columns: 8.5rem minmax(0, 1fr);
+        gap: var(--space-3);
+      }
+
+      & dt {
+        color: var(--faint);
+      }
+
+      & dd {
+        margin: 0;
+      }
+    }
+
+    .frontmatter__accent {
+      color: var(--accent);
+    }
+  }
+</style>

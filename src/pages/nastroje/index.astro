@@ -1,0 +1,44 @@
+---
+import ToolCards from '../../components/ToolCards.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getPublishedTools } from '../../lib/tools';
+
+const tools = await getPublishedTools();
+---
+
+<BaseLayout
+  title="Nástroje pro spec-driven development"
+  description="Přehled nástrojů pro spec-driven development seřazený podle popularity na GitHubu: co jsou zač a jak fungují."
+>
+  <div class="container page">
+    <h1 class="page__title">Nástroje pro spec-driven development</h1>
+    <p class="page__lead">
+      Nástroje, které vedou vývoj přes specifikaci. Jsou seřazené podle počtu hvězd na GitHubu k datu ověření, od
+      nejpopulárnějšího. Nástroje bez veřejného repozitáře jsou na konci.
+    </p>
+    <ToolCards tools={tools} headingLevel={2} showVerified />
+  </div>
+</BaseLayout>
+
+<style>
+  @layer components {
+    .page {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+      padding-block: var(--space-7) var(--space-8);
+    }
+
+    .page__title {
+      font-size: var(--text-h1);
+      line-height: var(--leading-tight);
+    }
+
+    .page__lead {
+      max-width: var(--measure);
+      margin-bottom: var(--space-4);
+      color: var(--muted);
+      font-size: var(--text-lead);
+    }
+  }
+</style>

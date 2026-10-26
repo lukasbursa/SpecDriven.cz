@@ -111,8 +111,8 @@ Typy a zdroje první dávky (hvězdy ověřené 27. 10. 2026, před zápisem zno
 | OpenSpec | `openspec.md` | CLI | openspec.dev | Fission-AI/OpenSpec | 73 062 |
 | BMAD-METHOD | `bmad-method.md` | Metodika | – (ověřit) | bmad-code-org/BMAD-METHOD | 54 588 |
 | Agent OS | `agent-os.md` | Plugin | buildermethods.com/agent-os | buildermethods/agent-os | 5 548 |
+| GSD Core | `gsd-core.md` | Plugin | opengsd.net | open-gsd/gsd-core | 10 889 |
 | Kiro | `kiro.md` | IDE | kiro.dev | – | – |
-| Tessl | `tessl.md` | Platforma | tessl.io | – | – |
 
 Repozitář `kirodotdev/Kiro` je jen issue tracker, ne zdrojový kód IDE, proto se jako `repository` neuvádí a Kiro nemá hvězdy. Licence BMAD-METHOD hlásí GitHub jako `NOASSERTION`, skutečnou je potřeba vyčíst ze souboru LICENSE.
 

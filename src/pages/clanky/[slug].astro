@@ -1,8 +1,8 @@
 ---
 import { render } from 'astro:content';
+import Frontmatter, { type Entry } from '../../components/Frontmatter.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getPublishedArticles, type Article } from '../../lib/articles';
-import { formatDate, isoDate } from '../../lib/dates';
 
 export async function getStaticPaths() {
   const articles = await getPublishedArticles();
@@ -16,33 +16,19 @@ interface Props {
 const { article } = Astro.props;
 const { title, description, pubDate, updatedDate, tags } = article.data;
 const { Content } = await render(article);
+
+const entries: Entry[] = [
+  { key: 'publikováno', value: pubDate },
+  ...(updatedDate ? [{ key: 'aktualizováno', value: updatedDate }] : []),
+  ...(tags.length > 0 ? [{ key: 'štítky', value: `[${tags.join(', ')}]`, accent: true }] : []),
+];
 ---
 
 <BaseLayout title={title} description={description} type="article" publishedTime={pubDate} modifiedTime={updatedDate}>
   <article class="container article">
     <p class="article__path mono"><a href="/clanky/">clanky</a> / {article.id}</p>
 
-    <dl class="frontmatter">
-      <div><dt>publikováno:</dt><dd><time datetime={isoDate(pubDate)}>{formatDate(pubDate)}</time></dd></div>
-      {
-        updatedDate && (
-          <div>
-            <dt>aktualizováno:</dt>
-            <dd>
-              <time datetime={isoDate(updatedDate)}>{formatDate(updatedDate)}</time>
-            </dd>
-          </div>
-        )
-      }
-      {
-        tags.length > 0 && (
-          <div>
-            <dt>štítky:</dt>
-            <dd class="frontmatter__tags">[{tags.join(', ')}]</dd>
-          </div>
-        )
-      }
-    </dl>
+    <Frontmatter entries={entries} />
 
     <h1 class="article__title">{title}</h1>
 
@@ -60,7 +46,8 @@ const { Content } = await render(article);
       gap: var(--space-5);
       padding-block: var(--space-6) var(--space-8);
 
-      & > * {
+      /* :global, aby pravidlo platilo i pro kořen vnořených komponent. */
+      & > :global(*) {
         max-width: var(--measure);
       }
     }
@@ -72,42 +59,6 @@ const { Content } = await render(article);
       & a {
         color: inherit;
       }
-    }
-
-    .frontmatter {
-      padding: var(--space-3) 1.125rem;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: var(--surface);
-      font-family: var(--font-code);
-      font-size: var(--text-sm);
-      line-height: 1.8;
-
-      &::before,
-      &::after {
-        display: block;
-        color: var(--faint);
-        content: '---';
-        content: '---' / '';
-      }
-
-      & div {
-        display: grid;
-        grid-template-columns: 8.5rem minmax(0, 1fr);
-        gap: var(--space-3);
-      }
-
-      & dt {
-        color: var(--faint);
-      }
-
-      & dd {
-        margin: 0;
-      }
-    }
-
-    .frontmatter__tags {
-      color: var(--accent);
     }
 
     .article__title {
