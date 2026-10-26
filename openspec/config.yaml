@@ -26,8 +26,8 @@ context: |
   modrý akcent, světlý režim „papír“, tmavý režim „blueprint“.
 
   Stack: Astro 7 (statický výstup), obsah v Markdown/MDX přes content
-  collections, TypeScript, čisté moderní CSS (bez frameworku), žádný
-  JavaScript v prohlížeči. Hosting: webhosting s Apache (konfigurace
+  collections, TypeScript, čisté moderní CSS (bez frameworku).
+  Hosting: webhosting s Apache (konfigurace
   v .htaccess), nasazení přes FTP z GitHub Actions po každém pushi do main.
 
   Konvence:

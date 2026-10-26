@@ -2,7 +2,7 @@
 
 Web má jednu content collection `articles` a jediné místo, kde se vybírají publikované články (`getPublishedArticles()` v `src/lib/articles.ts`). Stránka článku `src/pages/clanky/[slug].astro` vykresluje blok metadat ve stylu YAML frontmatteru (`<dl class="frontmatter">` s oddělovači `---`), styly má scoped v sobě. Úvodní stránka skládá sekce přímo v `src/pages/index.astro`. Schéma používá `z` z `astro/zod` (Zod 4), neplatná metadata shodí build s hláškou, která uvede soubor.
 
-Omezení: v prohlížeči neběží JavaScript, data se formátují v UTC (`src/lib/dates.ts`), dekorativní prefixy `##` jsou jen v CSS a scoped styly patří do `@layer components`.
+Omezení: data se formátují v UTC (`src/lib/dates.ts`), dekorativní prefixy `##` jsou jen v CSS a scoped styly patří do `@layer components`.
 
 ## Goals / Non-Goals
 

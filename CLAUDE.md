@@ -36,7 +36,7 @@ Testovací framework projekt nemá. Úkol je ověřený, když projde `npm run c
 - **Fonty** IBM Plex Sans/Mono spravuje Fonts API Astra s providerem `fontsource` (`astro.config.mjs`). Build je stahuje ze sítě a servíruje z vlastní domény. Provider `npm` v Astru 7.4 nefunguje (vrací `file://` URL). Externí zdroje (Google Fonts, CDN) v HTML být nesmí, specifikace to vyžaduje.
 - **Data bez času** se formátují v UTC (`src/lib/dates.ts`), aby výsledek nezávisel na časovém pásmu stroje.
 - **Komponenta `Scenario.astro`** (blok WHEN/THEN) se používá na úvodní stránce i v MDX článcích (import relativní cestou). Má explicitní `aria-labelledby`, protože Chrome neodvozuje jméno `<figure>` z `<figcaption>`.
-- **V prohlížeči neběží žádný JavaScript.** Barevný režim se řídí jen systémem (`prefers-color-scheme`).
+- **JavaScript v prohlížeči zakázaný není**, zatím ho ale žádná stránka nepoužívá. Barevný režim se řídí jen systémem (`prefers-color-scheme`).
 
 ## Nasazení
 
