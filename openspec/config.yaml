@@ -1,0 +1,23 @@
+schema: spec-driven
+
+context: |
+  Language: cs
+  All artifacts must be written in cs.
+  Keep OpenSpec structural headings and SHALL/MUST keywords in English.
+
+  Projekt: SpecDriven.cz – český rozcestník o spec-driven developmentu (SDD).
+  Cílové publikum: čeští vývojáři, tech leadi a týmy, kteří chtějí při práci
+  s AI asistenty stavět software podle specifikací (OpenSpec, Spec Kit, Kiro…).
+
+  Web sám je vyvíjen veřejně přes OpenSpec – repozitář slouží jako živá ukázka
+  metody. Proto mají být proposals, specs i tasks srozumitelné i pro čtenáře
+  zvenku, kteří se z nich učí.
+
+  Stack: Astro (statický výstup), obsah v Markdown/MDX přes content collections,
+  TypeScript, bez zbytečných runtime závislostí. Hosting: statický (Cloudflare
+  Pages / Vercel / Netlify).
+
+  Konvence:
+  - Obsah webu je česky, s diakritikou.
+  - Rychlost a přístupnost (WCAG AA) mají přednost před efekty.
+  - Každá změna webu prochází cyklem propose → apply → archive.
