@@ -1,0 +1,105 @@
+---
+import { site } from '../site.config';
+
+const nav = [
+  { href: '/clanky/', label: 'Články' },
+  { href: '/jak-vznikl-tento-web/', label: 'Jak vznikl tento web' },
+];
+
+const path = Astro.url.pathname;
+
+// Přesná shoda = aktuální stránka, jinak stránka uvnitř sekce (např. detail článku).
+function current(href: string): 'page' | 'true' | undefined {
+  if (path === href) return 'page';
+  if (path.startsWith(href)) return 'true';
+  return undefined;
+}
+---
+
+<header class="header">
+  <div class="container header__inner">
+    <a href="/" class="wordmark">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <rect x="2.5" y="2.5" width="19" height="19" rx="3" stroke-width="2"></rect>
+        <path d="M7 12.5l3.2 3.2L17 8.8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+      <span>{site.name}</span>
+    </a>
+    <nav aria-label="Hlavní navigace">
+      <ul class="nav">
+        {
+          nav.map(({ href, label }) => (
+            <li>
+              <a href={href} class="mark-h2" aria-current={current(href)}>
+                {label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  @layer components {
+    .header {
+      border-bottom: 1px solid var(--line);
+    }
+
+    .header__inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-1) var(--space-6);
+      padding-block: var(--space-3);
+    }
+
+    .wordmark {
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+      min-height: 44px;
+      color: var(--ink);
+      font-family: var(--font-code);
+      font-size: 1.125rem;
+      font-weight: 600;
+      text-decoration: none;
+
+      & svg {
+        color: var(--accent);
+      }
+    }
+
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0 var(--space-6);
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      font-family: var(--font-code);
+      font-size: 0.9375rem;
+
+      & a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+        color: var(--ink);
+        text-decoration: none;
+
+        &:hover {
+          color: var(--accent);
+        }
+
+        &[aria-current] {
+          color: var(--accent);
+          text-decoration: underline;
+          text-decoration-thickness: 2px;
+          text-underline-offset: 0.45em;
+        }
+      }
+    }
+  }
+</style>

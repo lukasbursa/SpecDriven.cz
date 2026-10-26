@@ -1,0 +1,96 @@
+---
+import { articlePath, type Article } from '../lib/articles';
+import { formatDate, isoDate } from '../lib/dates';
+
+interface Props {
+  articles: Article[];
+}
+
+const { articles } = Astro.props;
+---
+
+<ul class="articles">
+  {
+    articles.map((article) => (
+      <li class="article">
+        <div class="article__head">
+          <h3 class="article__title mark-h3">
+            <a href={articlePath(article)}>{article.data.title}</a>
+          </h3>
+          <time class="article__date" datetime={isoDate(article.data.pubDate)}>
+            {formatDate(article.data.pubDate)}
+          </time>
+        </div>
+        <p class="article__description">{article.data.description}</p>
+        {article.data.tags.length > 0 && (
+          <ul class="article__tags" aria-label="Štítky">
+            {article.data.tags.map((tag) => (
+              <li class="tag">#{tag}</li>
+            ))}
+          </ul>
+        )}
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  @layer components {
+    .articles {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      border-top: 1px solid var(--line);
+    }
+
+    .article {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+      padding-block: var(--space-5);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .article__head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--space-1) var(--space-5);
+    }
+
+    .article__title {
+      font-size: var(--text-h3);
+      line-height: 1.35;
+
+      & a {
+        color: var(--ink);
+        text-decoration: none;
+
+        &:hover {
+          color: var(--accent);
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .article__date {
+      color: var(--faint);
+      font-family: var(--font-code);
+      font-size: var(--text-sm);
+    }
+
+    .article__description {
+      color: var(--muted);
+    }
+
+    .article__tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+  }
+</style>

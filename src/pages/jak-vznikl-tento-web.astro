@@ -1,0 +1,90 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { repoTreeUrl, site } from '../site.config';
+---
+
+<BaseLayout
+  title="Jak vznikl tento web"
+  description="SpecDriven.cz vzniká metodou spec-driven developmentu pomocí OpenSpec ve veřejném repozitáři. Jak to probíhá a kde najdete specifikace."
+>
+  <article class="container page">
+    <h1 class="page__title">Jak vznikl tento web</h1>
+
+    <div class="prose">
+      <p class="page__lead">
+        SpecDriven.cz vzniká stejnou metodou, o které píše: spec-driven developmentem. Celý vývoj je veřejný, takže si
+        můžete projít specifikace i historii každé změny.
+      </p>
+
+      <h2>Nástroj</h2>
+      <p>
+        Web se vyvíjí pomocí nástroje <a href={site.openspecUrl} rel="noopener">OpenSpec</a>. Specifikace i návrhy
+        změn jsou textové soubory v Markdownu uložené ve složce <code>openspec/</code> přímo v repozitáři webu.
+      </p>
+      <p>Volba OpenSpec pro tento web není doporučením oproti jiným nástrojům.</p>
+
+      <h2>Cyklus jedné změny</h2>
+      <p>Každá úprava webu – nová stránka, sekce nebo změna vzhledu – projde třemi kroky:</p>
+      <ol>
+        <li>
+          <strong>Propose (návrh)</strong> – vznikne složka změny s návrhem (proč a co), deltou specifikací (jaké chování
+          přibývá nebo se mění), technickým návrhem a seznamem úkolů. Návrh se zreviduje dřív, než vznikne kód.
+        </li>
+        <li>
+          <strong>Apply (implementace)</strong> – podle úkolů vznikne kód a ověří se proti scénářům ve specifikaci.
+        </li>
+        <li>
+          <strong>Archive (archivace)</strong> – dokončená změna se přesune do archivu a její delta se promítne do
+          aktuálních specifikací webu.
+        </li>
+      </ol>
+
+      <h2>Kde najdete specifikace</h2>
+      <ul>
+        <li>
+          <a href={repoTreeUrl('openspec/specs')} rel="noopener">Aktuální specifikace</a> – co web právě teď dělá, rozdělené
+          podle oblastí (layout, články, SEO…).
+        </li>
+        <li>
+          <a href={repoTreeUrl('openspec/changes/archive')} rel="noopener">Archiv změn</a> – historie všech dokončených změn
+          včetně původních návrhů a úkolů.
+        </li>
+        <li>
+          <a href={repoTreeUrl('openspec/changes')} rel="noopener">Rozpracované změny</a> – na čem se právě pracuje.
+        </li>
+      </ul>
+      <p>
+        Aktuální stav vývoje ukazuje i řádek v patičce každé stránky: počet specifikací, počet archivovaných změn a
+        poslední dokončenou změnu.
+      </p>
+
+      <h2>Technologie</h2>
+      <p>
+        Web je statický, postavený na <a href="https://astro.build" rel="noopener">Astru</a>. Obsah je v Markdownu,
+        vzhled v čistém CSS a v prohlížeči neběží žádný JavaScript. Zdrojový kód najdete
+        na <a href={site.repo.url} rel="noopener">GitHubu</a>.
+      </p>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  @layer components {
+    .page {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-5);
+      padding-block: var(--space-7) var(--space-8);
+    }
+
+    .page__title {
+      font-size: var(--text-h1);
+      line-height: var(--leading-tight);
+    }
+
+    .page__lead {
+      color: var(--muted);
+      font-size: var(--text-lead);
+    }
+  }
+</style>

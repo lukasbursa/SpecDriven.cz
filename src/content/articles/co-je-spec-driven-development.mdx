@@ -1,0 +1,68 @@
+---
+title: Co je spec-driven development
+description: Spec-driven development je přístup, kdy nejdřív popíšete požadované chování softwaru a teprve podle této specifikace vzniká kód.
+pubDate: 2026-10-26
+tags: [základy]
+---
+
+import Scenario from '../../components/Scenario.astro';
+
+**Spec-driven development (SDD)** je způsob vývoje softwaru, při kterém nejdřív sepíšete, co má software dělat, a teprve potom podle tohoto popisu vzniká kód. Ten může psát člověk, AI asistent, nebo oba společně.
+
+## Specifikace jako zdroj pravdy
+
+Ve spec-driven developmentu je hlavním výstupem práce **specifikace**: strukturovaný popis požadovaného chování. Kód se z ní odvozuje a ověřuje se proti ní.
+
+Specifikace obvykle žije přímo v repozitáři vedle kódu, jako běžné textové soubory (nejčastěji v Markdownu). Díky tomu se verzuje v gitu, dá se revidovat v pull requestu a je k dispozici každému, kdo na projektu pracuje, včetně AI asistentů.
+
+## Proč se o SDD mluví právě teď
+
+Myšlenka „nejdřív zadání, potom kód“ není nová. Novou pozornost získala s nástupem AI asistentů pro programování.
+
+AI asistent pracuje s tím, co má v daném okamžiku k dispozici: se zadáním v konverzaci a s kódem, který vidí. Pokud je zadání jen v chatu, při další konverzaci chybí a model si chybějící informace odvozuje sám. Specifikace uložená v repozitáři poskytuje stálý kontext, ke kterému se může vrátit člověk i AI.
+
+## Jak vypadá specifikace
+
+Specifikace popisuje **chování, ne implementaci**: co má systém dělat, ne jakými třídami nebo knihovnami toho dosáhne. Běžně se skládá z požadavků a ke každému požadavku patří jeden nebo více scénářů, které jde ověřit.
+
+Scénáře se často zapisují ve tvaru WHEN/THEN (případně GIVEN/WHEN/THEN). Takto vypadá jeden ze scénářů ve specifikaci tohoto webu:
+
+<Scenario title="Koncept se nepublikuje" when="autor označí článek jako koncept a sestaví produkční verzi webu">
+  výstup sestavení neobsahuje stránku tohoto článku ani odkaz na něj
+</Scenario>
+
+Scénář lze přímo přepsat do automatického testu nebo ho projít ručně.
+
+## Obecný cyklus
+
+Konkrétní nástroje se liší v názvech kroků i souborů. Většina z nich ale sleduje podobný cyklus:
+
+1. **Záměr** – proč změna vzniká a co má přinést.
+2. **Specifikace** – požadované chování jako požadavky a scénáře.
+3. **Plán** – technický návrh a rozpad práce na úkoly.
+4. **Implementace** – kód podle úkolů, psaný člověkem nebo AI asistentem.
+5. **Ověření** – kontrola, že výsledek odpovídá scénářům ve specifikaci.
+
+Specifikace přitom není jednorázový dokument. Při každé další změně se upravuje, takže popisuje aktuální chování systému.
+
+## Nástroje
+
+Spec-driven development podporuje několik nástrojů. Tento web je nehodnotí ani neporovnává z hlediska kvality, jen popisuje, co jsou zač. Příklady (stav k 26. 10. 2026):
+
+- [OpenSpec](https://github.com/Fission-AI/OpenSpec) – open-source nástroj pro příkazovou řádku, který spravuje specifikace a návrhy změn přímo v repozitáři a spolupracuje s řadou AI asistentů.
+- [Spec Kit](https://github.com/github/spec-kit) – open-source sada nástrojů od GitHubu, která vede vývoj přes fáze specifikace, plánu a úkolů.
+- [Kiro](https://kiro.dev) – vývojové prostředí od AWS s vestavěným režimem práce se specifikacemi (požadavky, návrh, úkoly).
+
+## Souvislost se staršími přístupy
+
+SDD navazuje na postupy, které se v softwarovém inženýrství používají dlouho:
+
+- **BDD (behavior-driven development)** – popis chování pomocí scénářů Given/When/Then, například v jazyce Gherkin.
+- **Design docs a RFC** – písemný návrh řešení, který se reviduje před implementací.
+- **ADR (architecture decision records)** – zaznamenávání architektonických rozhodnutí a jejich důvodů.
+
+Od nich se SDD liší hlavně tím, že specifikace je přímým vstupem pro generování a kontrolu kódu, často s pomocí AI.
+
+## Příklad z praxe
+
+Tento web sám vzniká metodou spec-driven developmentu. Jak to probíhá a kde v repozitáři najdete jeho specifikace, popisuje stránka [Jak vznikl tento web](/jak-vznikl-tento-web/).

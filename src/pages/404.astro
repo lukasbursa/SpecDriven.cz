@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Stránka nenalezena" description="Požadovaná stránka na webu SpecDriven.cz neexistuje.">
+  <section class="container not-found">
+    <p class="mono not-found__code">404 · not found</p>
+    <h1>Stránka nebyla nalezena</h1>
+    <p>Adresa, kterou hledáte, na webu neexistuje nebo byla přesunuta.</p>
+    <ul>
+      <li><a href="/">Úvodní stránka</a></li>
+      <li><a href="/clanky/">Všechny články</a></li>
+    </ul>
+  </section>
+</BaseLayout>
+
+<style>
+  @layer components {
+    .not-found {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+      padding-block: var(--space-8);
+
+      & h1 {
+        font-size: var(--text-h1);
+      }
+
+      & ul {
+        margin: 0;
+        padding-left: 1.25em;
+      }
+    }
+
+    .not-found__code {
+      color: var(--faint);
+      font-size: var(--text-sm);
+    }
+  }
+</style>

@@ -1,0 +1,85 @@
+---
+// Blok scénáře ve tvaru specifikace: „Scenario: …“ a řádky WHEN/THEN.
+// Obsah řádku THEN se předává jako slot, může tedy obsahovat odkaz.
+interface Props {
+  title: string;
+  given?: string;
+  when: string;
+}
+
+const { title, given, when } = Astro.props;
+
+// Chrome neodvozuje jméno <figure> z <figcaption>, proto explicitní aria-labelledby.
+const id = `scenario-${title
+  .normalize('NFD')
+  .replace(/[\u0300-\u036f]/g, '')
+  .toLowerCase()
+  .replace(/[^a-z0-9]+/g, '-')
+  .replace(/^-|-$/g, '')}`;
+---
+
+<figure class="scenario" aria-labelledby={id}>
+  <figcaption id={id} class="scenario__title">Scenario: {title}</figcaption>
+  <dl class="scenario__steps">
+    {
+      given && (
+        <>
+          <dt>GIVEN</dt>
+          <dd>{given}</dd>
+        </>
+      )
+    }
+    <dt>WHEN</dt>
+    <dd>{when}</dd>
+    <dt>THEN</dt>
+    <dd><slot /></dd>
+  </dl>
+</figure>
+
+<style>
+  @layer components {
+    .scenario {
+      max-width: 40rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      overflow: hidden;
+    }
+
+    .scenario__title {
+      padding: 0.625rem var(--space-4);
+      border-bottom: 1px solid var(--line);
+      font-family: var(--font-code);
+      font-size: 0.8125rem;
+      line-height: 1.5;
+      color: var(--faint);
+
+      &::before {
+        content: '####\00a0';
+        content: '####\00a0' / '';
+      }
+    }
+
+    .scenario__steps {
+      display: grid;
+      grid-template-columns: 4rem minmax(0, 1fr);
+      gap: var(--space-3) var(--space-2);
+      align-items: baseline;
+      margin: 0;
+      padding: var(--space-4);
+      font-size: 1.0625rem;
+      line-height: 1.55;
+    }
+
+    dt {
+      font-family: var(--font-code);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    dd {
+      margin: 0;
+    }
+  }
+</style>

@@ -1,0 +1,38 @@
+---
+import ArticleList from '../../components/ArticleList.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getPublishedArticles } from '../../lib/articles';
+
+const articles = await getPublishedArticles();
+---
+
+<BaseLayout title="Články" description="Všechny články o spec-driven developmentu na SpecDriven.cz, od nejnovějšího.">
+  <div class="container page">
+    <h1 class="page__title">Články</h1>
+    <p class="page__lead">Vysvětlení pojmů, principů a nástrojů spec-driven developmentu. Od nejnovějšího.</p>
+    <ArticleList articles={articles} />
+  </div>
+</BaseLayout>
+
+<style>
+  @layer components {
+    .page {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+      padding-block: var(--space-7) var(--space-8);
+    }
+
+    .page__title {
+      font-size: var(--text-h1);
+      line-height: var(--leading-tight);
+    }
+
+    .page__lead {
+      max-width: var(--measure);
+      margin-bottom: var(--space-4);
+      color: var(--muted);
+      font-size: var(--text-lead);
+    }
+  }
+</style>

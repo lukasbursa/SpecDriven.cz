@@ -1,0 +1,39 @@
+---
+import { Font } from 'astro:assets';
+import type { ComponentProps } from 'astro/types';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import SeoHead from '../components/SeoHead.astro';
+import '../styles/tokens.css';
+import '../styles/base.css';
+import '../styles/prose.css';
+
+type Props = ComponentProps<typeof SeoHead>;
+
+const seo = Astro.props;
+---
+
+<!doctype html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8" />
+    <!-- Pořadí CSS vrstev musí být deklarováno před všemi ostatními styly. -->
+    <style is:inline>
+      @layer reset, base, prose, components;
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <Font cssVariable="--font-sans" preload={[{ weight: 400, style: 'normal', subset: 'latin' }]} />
+    <Font cssVariable="--font-mono" />
+    <SeoHead {...seo} />
+  </head>
+  <body>
+    <a class="skip-link" href="#obsah">Přeskočit na obsah</a>
+    <Header />
+    <main id="obsah" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

@@ -1,0 +1,53 @@
+---
+import { site } from '../site.config';
+import StatusBar from './StatusBar.astro';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <StatusBar />
+    <div class="footer__row">
+      <p>
+        Tento web byl vytvořen pomocí <a href={site.introArticlePath}>SDD</a>{' – '}<a
+          href={site.openspecUrl}
+          rel="noopener">OpenSpec</a
+        >{' · '}<a href={site.repo.url} rel="noopener">Zdrojový kód a specifikace na GitHubu</a>
+      </p>
+      <p class="footer__copy">© {year} {site.author}</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  @layer components {
+    .footer {
+      border-top: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--muted);
+      font-size: 0.9375rem;
+      line-height: 1.6;
+    }
+
+    .footer__inner {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      padding-block: var(--space-5);
+    }
+
+    .footer__row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--space-1) var(--space-5);
+    }
+
+    .footer__copy {
+      color: var(--faint);
+      font-size: var(--text-sm);
+    }
+  }
+</style>

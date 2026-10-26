@@ -54,7 +54,8 @@ Využívá `@layer` (reset → base → components → prose) pro předvídateln
 - *Alternativa:* Tailwind 4 – rychlý u velkých aplikací, ale web má jen asi deset komponent s výrazně vlastním vzhledem a utility třídy v HTML jsou pro vzdělávací repozitář hůře čitelné. Sass – zbytečný, nativní CSS už umí vnořování i proměnné.
 
 ### Písmo: IBM Plex Sans + IBM Plex Mono, hostované u nás
-Plex Sans pro text a nadpisy, Plex Mono pro strukturní prvky (prefixy, štítky, data, frontmatter, stavový řádek). Obě rodiny k sobě patří a mají plnou podporu češtiny. Písma se instalují jako balíčky Fontsource a servírují z vlastní domény, načítají se jen podmnožiny `latin` a `latin-ext` a jen použité řezy (Sans 400/600 + italic 400, Mono 400/600).
+Plex Sans pro text a nadpisy, Plex Mono pro strukturní prvky (prefixy, štítky, data, frontmatter, stavový řádek). Obě rodiny k sobě patří a mají plnou podporu češtiny. Písma spravuje vestavěné Fonts API Astra (stabilní od Astro 6) s providerem `fontsource`: při buildu je stáhne (a uloží do cache) a web je servíruje z vlastní domény (`/_astro/fonts/`). Načítají se jen podmnožiny `latin` a `latin-ext` a řezy 400/600 (Sans i v kurzívě).
+- *Proč ne provider `npm` s lokálními balíčky:* v Astru 7.4 vrací provider cesty jako `file://` URL, které Astro neumí načíst (build selže). Build proto potřebuje přístup k síti, což je na hostingu běžné.
 - *Proč ne Google Fonts:* přenos IP adres návštěvníků Googlu je v EU právně sporný (LG München, 2022) a další doména zpomaluje první načtení.
 
 ### Komponenta `Scenario`
@@ -91,5 +92,4 @@ Data se formátují přes `Intl.DateTimeFormat('cs-CZ', { dateStyle: 'long' })`,
 
 ## Open Questions
 
-- Fontsource, nebo vestavěné Fonts API Astra: pokud je v Astru 7 stabilní a splní požadavky (vlastní doména, podmnožiny), lze ho použít místo Fontsource. Chování webu se tím nemění.
 - Volba hostingu (Cloudflare Pages / Vercel / Netlify) se řeší v samostatné změně pro nasazení.
