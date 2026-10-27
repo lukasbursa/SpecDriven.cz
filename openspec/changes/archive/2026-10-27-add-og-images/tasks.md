@@ -34,4 +34,4 @@
 ## 6. Kontrola
 
 - [x] 6.1 Spustit `npm run check`, `npm run build` a `openspec validate add-og-images --strict` a ověřit, že projdou bez chyb a build nevypíše žádné varování o chybějícím obrázku
-- [ ] 6.2 Po nasazení ověřit náhled `/clanky/co-je-spec-driven-development/` a `/nastroje/openspec/` v LinkedIn Post Inspector
+- [x] 6.2 Po nasazení ověřit náhled `/clanky/co-je-spec-driven-development/` a `/nastroje/openspec/` v LinkedIn Post Inspector
