@@ -22,11 +22,15 @@ Každá stránka webu SHALL zobrazovat hlavičku s názvem webu „SpecDriven.cz
 - **THEN** odkaz „Nástroje“ v navigaci je vizuálně odlišen a označen atributem `aria-current`
 
 ### Requirement: Jednotná patička
-Každá stránka webu SHALL zobrazovat patičku se jménem autora webu, rokem a informacemi definovanými v capability `open-development`.
+Každá stránka webu SHALL zobrazovat patičku se jménem autora webu, rokem a informacemi definovanými v capability `open-development` a `analytics`. Pod stavovým řádkem SHALL být odkazy patičky a údaj o autorovi a roku na šířce okna 1280 px na jednom řádku. Na užším displeji se smí zalomit.
 
 #### Scenario: Patička na libovolné stránce
 - **WHEN** čtenář otevře libovolnou stránku webu včetně stránky 404
 - **THEN** na konci stránky je zobrazena patička
+
+#### Scenario: Patička na jednom řádku
+- **WHEN** čtenář otevře libovolnou stránku webu v okně širokém 1280 px
+- **THEN** odkazy patičky a „© <rok> <autor>“ jsou pod stavovým řádkem na jednom řádku
 
 ### Requirement: Stránka 404
 Web SHALL pro neexistující adresy vracet stránku 404 v češtině s odkazem na úvodní stránku a na seznam článků. Server MUST tuto stránku vrátit přímo na požadované adrese s HTTP stavem 404, ne se stavem 200 ani přesměrováním na jinou adresu.
@@ -121,11 +125,15 @@ Vizuální prvky, které napodobují zápis specifikace (např. prefixy `##` a `
 - **THEN** neobsahuje znaky `#` z dekorativních prefixů
 
 ### Requirement: Písmo hostované na vlastní doméně
-Web MUST načítat všechna písma ze své vlastní domény a MUST NOT při načtení stránky kontaktovat servery třetích stran (např. Google Fonts). Písmo SHALL správně zobrazovat všechny znaky české abecedy.
+Web MUST načítat všechna písma ze své vlastní domény a MUST NOT při načtení stránky kontaktovat servery třetích stran (např. Google Fonts). Jedinou výjimkou SHALL být měření návštěvnosti přes Google Analytics, a to jen poté, co k němu čtenář udělil souhlas (viz capability `analytics`). Písmo SHALL správně zobrazovat všechny znaky české abecedy.
 
 #### Scenario: Načtení stránky bez třetích stran
-- **WHEN** čtenář otevře libovolnou stránku webu
+- **WHEN** čtenář, který neudělil souhlas s měřením, otevře libovolnou stránku webu
 - **THEN** prohlížeč nestahuje žádné soubory z jiné domény než specdriven.cz
+
+#### Scenario: Načtení stránky po souhlasu s měřením
+- **WHEN** čtenář, který udělil souhlas s měřením, otevře libovolnou stránku webu
+- **THEN** prohlížeč kromě specdriven.cz kontaktuje jen domény Google Analytics a písma stahuje ze specdriven.cz
 
 #### Scenario: České znaky
 - **WHEN** stránka obsahuje text „Příliš žluťoučký kůň úpěl ďábelské ódy“

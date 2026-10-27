@@ -6,12 +6,12 @@ Web je sám ukázkou spec-driven developmentu. Tato capability zajišťuje, že 
 
 ## Requirements
 
-### Requirement: Zmínka o SDD v patičce
-Patička každé stránky SHALL obsahovat text „Tento web byl vytvořen pomocí SDD – OpenSpec“, kde „SDD“ odkazuje na úvodní článek o spec-driven developmentu a „OpenSpec“ odkazuje na oficiální stránky nástroje OpenSpec.
+### Requirement: Zmínka o OpenSpec v patičce
+Patička každé stránky SHALL obsahovat text „Vytvořeno pomocí OpenSpec“, kde „OpenSpec“ odkazuje na stránku nástroje OpenSpec na tomto webu (`/nastroje/openspec/`). Když stránka nástroje není publikovaná, odkaz SHALL vést na oficiální stránky nástroje OpenSpec.
 
 #### Scenario: Čtenář si všimne patičky
 - **WHEN** čtenář sjede na konec libovolné stránky
-- **THEN** vidí text „Tento web byl vytvořen pomocí SDD – OpenSpec“ s odkazy na článek o SDD a na OpenSpec
+- **THEN** vidí text „Vytvořeno pomocí OpenSpec“ a odkaz „OpenSpec“ vede na `/nastroje/openspec/`
 
 ### Requirement: Odkaz na veřejný repozitář
 Patička každé stránky SHALL obsahovat odkaz na veřejný repozitář webu s textem, který jasně říká, že jde o zdrojový kód a specifikace webu. Odkazy vedoucí mimo web SHALL mít atribut `rel="noopener"`.
