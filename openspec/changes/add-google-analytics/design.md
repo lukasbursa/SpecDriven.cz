@@ -47,7 +47,7 @@ Alternativa: Consent Mode v režimu „advanced“, kdy se `gtag.js` načte vžd
 
 ### 2. Komponenta `ConsentBanner.astro` vložená hned za odkaz „Přeskočit na obsah“
 
-Komponenta obsahuje lištu (ve výchozím stavu `hidden`) a modul `<script>`, který Astro zabalí do souboru v `_astro/`. Skript se tedy servíruje ze specdriven.cz. Hodnoty bere importem ze `site.config.ts`, stejně jako komponenty.
+Komponenta obsahuje lištu (ve výchozím stavu `hidden`) a modul `<script>`. Astro malé skripty vkládá přímo do HTML jako `<script type="module">`, větší dává do souboru v `_astro/`. V obou případech skript přichází ze specdriven.cz a adresa `gtag.js` je v něm jen jako text, který se použije až po souhlasu. Měřicí ID a doménu dostane skript v atributech `data-measurement-id` a `data-hostname` na liště, které šablona vyplní ze `site.config.ts`. Import `site.config.ts` přímo ve skriptu by do každé stránky vložil celý objekt `site`.
 
 Lišta není inline skript v `<head>` jako přepínač režimu. Nemusí platit před vykreslením: když se objeví o chvíli později, nic nebliká, protože je `position: fixed` u dolního okraje a neposouvá obsah.
 
@@ -84,7 +84,7 @@ Skript GA4 načte jen tehdy, když se `location.hostname` shoduje s hostitelem z
 
 ### 6. Tlačítka „Nastavení cookies“ přes atribut `data-consent-open`
 
-Tlačítko v patičce i ovládání na stránce o ochraně údajů jsou `<button type="button" data-consent-open hidden>`. Skript lišty je najde, odkryje a po kliknutí zobrazí lištu. Bez JavaScriptu zůstanou skrytá. Na stránce `/ochrana-osobnich-udaju/` je navíc vedle tlačítka text s aktuálním stavem („Měření je povolené.“ / „Měření je odmítnuté.“ / „Zatím jste nezvolili.“), který skript vyplní do prvku s atributem `data-consent-state`. Bez JavaScriptu stránka místo toho napíše, že bez JavaScriptu se nic neměří.
+Tlačítko v patičce i ovládání na stránce o ochraně údajů jsou `<button type="button" data-consent-open hidden>`. Skript lišty je najde, odkryje a po kliknutí zobrazí lištu. Bez JavaScriptu zůstanou skrytá. Lišta otevřená tlačítkem přesune zaměření na své první tlačítko, protože v DOM je na začátku stránky a uživatel klávesnice by se k ní z patičky jinak vracel přes celou stránku. Po volbě se zaměření vrátí na tlačítko, které lištu otevřelo, jinak by zůstalo na skrytém prvku. Lišta zobrazená sama při načtení zaměření nebere (rozhodnutí 2). Na stránce `/ochrana-osobnich-udaju/` je navíc vedle tlačítka text s aktuálním stavem („Měření je povolené.“ / „Měření je odmítnuté.“ / „Zatím jste nezvolili.“), který skript vyplní do prvku s atributem `data-consent-state`. Bez JavaScriptu stránka místo toho napíše, že bez JavaScriptu se nic neměří.
 
 ### 7. Stránka `/ochrana-osobnich-udaju/` jako `.astro` stránka
 

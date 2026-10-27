@@ -1,0 +1,234 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { formatDate, isoDate } from '../lib/dates';
+import { site } from '../site.config';
+
+// Datum poslední změny textu. Při úpravě stránky ho posuňte.
+const updated = new Date('2026-10-27');
+
+// GA4 pojmenuje druhou cookie podle měřicího ID bez předpony „G-“.
+const sessionCookie = `_ga_${site.analytics.measurementId.replace(/^G-/, '')}`;
+
+const gdpr = 'https://eur-lex.europa.eu/legal-content/CS/TXT/?uri=CELEX:32016R0679';
+const ecommAct = 'https://e-sbirka.gov.cz/sb/2005/127';
+const gaCookies = 'https://support.google.com/analytics/answer/11397207?hl=cs';
+const gaRetention = 'https://support.google.com/analytics/answer/7667196?hl=cs';
+const gaPrivacy = 'https://support.google.com/analytics/answer/12017362?hl=cs';
+---
+
+<BaseLayout
+  title="Ochrana osobních údajů"
+  description="Jaké údaje SpecDriven.cz zpracovává a proč, co ukládá ve vašem prohlížeči a jak změnit nebo odvolat souhlas s měřením návštěvnosti."
+>
+  <article class="container page">
+    <h1 class="page__title">Ochrana osobních údajů</h1>
+
+    <div class="prose">
+      <p class="page__lead">
+        Web měří návštěvnost přes Google Analytics, ale jen když s tím souhlasíte. Bez souhlasu nic neměří a nestahuje
+        nic z cizích domén.
+      </p>
+
+      <h2>Kdo údaje zpracovává</h2>
+      <p>
+        Správcem osobních údajů je {site.author}, autor webu. Kontakt:{' '}
+        <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>.
+      </p>
+
+      <h2>Měření návštěvnosti</h2>
+      <p>
+        Když na liště zvolíte „Přijmout“, web načte Google Analytics 4. Měření ukazuje, kolik lidí web čte, které stránky
+        je zajímají a odkud přicházejí, například z vyhledávače nebo ze sociální sítě. Podle toho se rozhoduje, o čem psát
+        a kde web propagovat.
+      </p>
+      <p>Google Analytics přitom zpracovává:</p>
+      <ul>
+        <li>náhodný identifikátor prohlížeče uložený v cookie,</li>
+        <li>navštívené stránky a čas návštěvy,</li>
+        <li>odkud jste přišli (předchozí stránka nebo kampaň uvedená v odkazu),</li>
+        <li>typ zařízení, operační systém, prohlížeč a jazyk,</li>
+        <li>
+          přibližnou polohu (stát, region, město), kterou Google odvodí z IP adresy. U návštěvníků z EU Google IP adresu
+          nezaznamenává ani neukládá, po určení polohy ji smaže (<a href={gaPrivacy} rel="noopener">dokumentace Googlu</a>).
+        </li>
+      </ul>
+      <p>Google signály a personalizace reklam jsou vypnuté. Údaje z měření se nepoužívají k reklamě.</p>
+      <p>
+        Právním základem je váš souhlas podle čl. 6 odst. 1 písm. a) <a href={gdpr} rel="noopener">obecného nařízení o
+        ochraně osobních údajů (GDPR)</a>. Uložení cookies do vašeho prohlížeče vyžaduje souhlas i podle § 89 odst. 3{' '}
+        <a href={ecommAct} rel="noopener">zákona č. 127/2005 Sb., o elektronických komunikacích</a>. Souhlas je dobrovolný.
+        Když ho neudělíte, web funguje stejně.
+      </p>
+
+      <h2>Komu údaje předáváme</h2>
+      <p>
+        Údaje z měření zpracovává Google jako zpracovatel podle svých{' '}
+        <a href="https://business.safety.google/adsprocessorterms/" rel="noopener">podmínek zpracování dat</a>, ve kterých
+        je Google Analytics{' '}
+        <a href="https://business.safety.google/adsservices/" rel="noopener">vedená jako služba zpracovatele</a>.
+      </p>
+      <p>
+        Údaje se mohou dostat na servery společnosti Google LLC v USA. Google LLC je certifikovaná podle rámce EU-U.S. Data
+        Privacy Framework, na který se při předávání údajů z Evropského hospodářského prostoru spoléhá od 1. září 2023 (<a
+          href="https://business.safety.google/adsdatatransfers/"
+          rel="noopener">prohlášení Googlu</a
+        >, <a href="https://www.dataprivacyframework.gov/list" rel="noopener">seznam certifikovaných organizací</a>). Pro
+        organizace z tohoto seznamu Evropská komise rozhodla, že poskytují odpovídající ochranu údajů.
+      </p>
+      <p>Nikomu dalšímu údaje nepředáváme.</p>
+
+      <h2>Jak dlouho údaje uchováváme</h2>
+      <ul>
+        <li>
+          Cookies Google Analytics platí 2 roky (<a href={gaCookies} rel="noopener">dokumentace Googlu</a>). Po odvolání
+          souhlasu je web smaže.
+        </li>
+        <li>
+          Údaje o jednotlivých uživatelích a událostech uchovává Google Analytics 14 měsíců a potom je smaže (<a
+            href={gaRetention}
+            rel="noopener">dokumentace Googlu</a
+          >). Souhrnné statistiky, například počet návštěv za měsíc, zůstávají.
+        </li>
+        <li>Vaši volbu na liště si web pamatuje 12 měsíců, potom se zeptá znovu.</li>
+      </ul>
+
+      <h2>Co web ukládá ve vašem prohlížeči</h2>
+      <table tabindex="0">
+        <caption class="visually-hidden">Cookies a údaje v localStorage</caption>
+        <thead>
+          <tr>
+            <th scope="col">Název</th>
+            <th scope="col">Typ</th>
+            <th scope="col">K čemu slouží</th>
+            <th scope="col">Jak dlouho</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row"><code>_ga</code></th>
+            <td>cookie, jen se souhlasem</td>
+            <td>rozlišení prohlížečů pro Google Analytics</td>
+            <td>2 roky</td>
+          </tr>
+          <tr>
+            <th scope="row"><code>{sessionCookie}</code></th>
+            <td>cookie, jen se souhlasem</td>
+            <td>stav návštěvy pro Google Analytics</td>
+            <td>2 roky</td>
+          </tr>
+          <tr>
+            <th scope="row"><code>analytics-consent</code></th>
+            <td><code>localStorage</code></td>
+            <td>vaše volba na liště se souhlasem</td>
+            <td>12 měsíců</td>
+          </tr>
+          <tr>
+            <th scope="row"><code>color-scheme</code></th>
+            <td><code>localStorage</code></td>
+            <td>ručně zvolený světlý nebo tmavý režim</td>
+            <td>dokud volbu nezměníte</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        Položky v <code>localStorage</code> web nikam neposílá, zůstávají jen ve vašem prohlížeči. Jsou potřeba pro funkce,
+        které jste sami zvolili, a souhlas k nim nepotřebujete.
+      </p>
+
+      <h2>Provoz webu</h2>
+      <p>
+        Písma a ostatní soubory web načítá ze své domény. Poskytovatel hostingu může kvůli provozu a bezpečnosti vést
+        technické záznamy o přístupech, například IP adresu, čas a adresu stránky.
+      </p>
+      <p>
+        Odkazy na GitHub (zdrojový kód, diskuze, návrhy úprav) jsou obyčejné odkazy. Web z GitHubu nic nenačítá. Údaje
+        zpracuje GitHub až po kliknutí, podle svých zásad.
+      </p>
+
+      <h2>Změna nebo odvolání souhlasu</h2>
+      <p>
+        Souhlas můžete kdykoli změnit nebo odvolat, stejně snadno, jako jste ho udělili. Po odvolání web přestane údaje
+        odesílat a smaže cookies Google Analytics. Odvolání se netýká měření, které proběhlo před ním.
+      </p>
+      <div class="consent-control">
+        <!-- Text přepíše ConsentBanner podle aktuální volby. -->
+        <p data-consent-state>Váš prohlížeč nespouští JavaScript, proto se nic neměří a není co nastavovat.</p>
+        <button type="button" class="button" data-consent-open hidden>Nastavení cookies</button>
+      </div>
+      <p>Tlačítko „Nastavení cookies“ najdete také v patičce každé stránky.</p>
+
+      <h2>Vaše práva</h2>
+      <p>Podle GDPR máte právo:</p>
+      <ul>
+        <li>na přístup ke svým údajům (čl. 15),</li>
+        <li>na opravu (čl. 16),</li>
+        <li>na výmaz (čl. 17),</li>
+        <li>na omezení zpracování (čl. 18),</li>
+        <li>na přenositelnost údajů (čl. 20),</li>
+        <li>vznést námitku (čl. 21),</li>
+        <li>kdykoli odvolat souhlas (čl. 7 odst. 3).</li>
+      </ul>
+      <p>
+        Stačí napsat na <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>. Google Analytics rozlišuje
+        návštěvníky jen náhodným identifikátorem v cookie, proto k dohledání vašich údajů může být potřeba hodnota cookie{' '}
+        <code>_ga</code> z vašeho prohlížeče.
+      </p>
+      <p>
+        Když nesouhlasíte se způsobem zpracování, můžete podat stížnost u{' '}
+        <a href="https://uoou.gov.cz" rel="noopener">Úřadu pro ochranu osobních údajů</a>.
+      </p>
+
+      <p class="page__updated">
+        Poslední změna: <time datetime={isoDate(updated)}>{formatDate(updated)}</time>
+      </p>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  @layer components {
+    .page {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-5);
+      padding-block: var(--space-7) var(--space-8);
+    }
+
+    .page__title {
+      font-size: var(--text-h1);
+      line-height: var(--leading-tight);
+    }
+
+    .page__lead {
+      color: var(--muted);
+      font-size: var(--text-lead);
+    }
+
+    .consent-control {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-3) var(--space-5);
+      padding: var(--space-4);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+
+      & .button {
+        border: 0;
+        font-family: inherit;
+        cursor: pointer;
+      }
+
+      /* .button nastavuje display, bez tohoto pravidla by atribut hidden nefungoval. */
+      & .button[hidden] {
+        display: none;
+      }
+    }
+
+    .page__updated {
+      color: var(--faint);
+      font-size: var(--text-sm);
+    }
+  }
+</style>

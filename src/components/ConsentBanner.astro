@@ -1,0 +1,252 @@
+---
+import { site } from '../site.config';
+
+const hostname = new URL(site.url).hostname;
+---
+
+<!-- Bez JavaScriptu zůstane skrytá a nic se neměří. Pořadí v DOM: hned za odkazem „Přeskočit na obsah“.
+     Skript dostane nastavení v atributech: import site.config by se vložil celý do každé stránky. -->
+<section
+  class="consent"
+  aria-labelledby="consent-title"
+  data-consent-banner
+  data-measurement-id={site.analytics.measurementId}
+  data-hostname={hostname}
+  hidden
+>
+  <div class="container consent__inner">
+    <div class="consent__text">
+      <p id="consent-title" class="consent__title">Cookies a měření návštěvnosti</p>
+      <p>
+        Se souhlasem měříme přes Google Analytics, kolik lidí web čte a odkud přicházejí. Bez souhlasu se nic neměří.{' '}
+        <a href={site.privacyPath}>Ochrana osobních údajů</a>
+      </p>
+    </div>
+    <div class="consent__actions">
+      <button type="button" class="button consent__button" data-consent="granted">Přijmout</button>
+      <button type="button" class="button consent__button" data-consent="denied">Odmítnout</button>
+    </div>
+  </div>
+</section>
+
+<script>
+  type Choice = 'granted' | 'denied';
+
+  const KEY = 'analytics-consent';
+  const STATE_TEXT: Record<Choice | 'none', string> = {
+    granted: 'Měření je povolené.',
+    denied: 'Měření je odmítnuté.',
+    none: 'Zatím jste nezvolili, měření neběží.',
+  };
+
+  const root = document.documentElement;
+  const banner = document.querySelector<HTMLElement>('[data-consent-banner]');
+  const measurementId = banner?.dataset.measurementId ?? '';
+  const hostname = banner?.dataset.hostname ?? '';
+  // Lokální vývoj ani náhled do statistik nepíšou.
+  const measure = measurementId !== '' && location.hostname === hostname;
+
+  let gtag: ((...args: unknown[]) => void) | undefined;
+  let opener: HTMLElement | null = null;
+
+  /** Uložená volba, nebo null, když chybí, je neplatná nebo starší než 12 měsíců. */
+  function readChoice(): Choice | null {
+    try {
+      const raw = localStorage.getItem(KEY);
+      if (!raw) return null;
+      const { value, date } = JSON.parse(raw);
+      const expires = new Date(date);
+      expires.setUTCFullYear(expires.getUTCFullYear() + 1);
+      if ((value === 'granted' || value === 'denied') && Date.now() < expires.getTime()) return value;
+      localStorage.removeItem(KEY);
+    } catch {
+      // Zablokované úložiště nebo poškozený záznam: jako by volba nebyla.
+    }
+    return null;
+  }
+
+  // Se zablokovaným úložištěm platí volba jen na této stránce.
+  let current = readChoice();
+
+  function saveChoice(value: Choice) {
+    current = value;
+    try {
+      localStorage.setItem(KEY, JSON.stringify({ value, date: new Date().toISOString().slice(0, 10) }));
+    } catch {}
+  }
+
+  function startAnalytics() {
+    if (!measure) return;
+    if (gtag) {
+      // Souhlas odvolaný a znovu udělený na téže stránce.
+      gtag('consent', 'update', { analytics_storage: 'granted' });
+      return;
+    }
+    const w = window as unknown as { dataLayer: unknown[] };
+    w.dataLayer = w.dataLayer || [];
+    // gtag.js zpracuje jen objekt arguments. Pole z (...args) tiše ignoruje a nic se neměří.
+    gtag = function () {
+      w.dataLayer.push(arguments);
+    };
+    gtag('consent', 'default', {
+      analytics_storage: 'granted',
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+    });
+    gtag('js', new Date());
+    gtag('config', measurementId, {
+      allow_google_signals: false,
+      allow_ad_personalization_signals: false,
+    });
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(measurementId)}`;
+    document.head.append(script);
+  }
+
+  /** Smaže cookies `_ga` a `_ga_*`. GA4 je ukládá na `.specdriven.cz`, na localhostu bez domény. */
+  function deleteAnalyticsCookies() {
+    for (const cookie of document.cookie.split(';')) {
+      const name = cookie.split('=')[0].trim();
+      if (!name.startsWith('_ga')) continue;
+      const expired = `${name}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+      document.cookie = expired;
+      document.cookie = `${expired}; domain=.${hostname}`;
+    }
+  }
+
+  function stopAnalytics() {
+    gtag?.('consent', 'update', { analytics_storage: 'denied' });
+    deleteAnalyticsCookies();
+  }
+
+  // Výška lišty, aby pod ní nezůstal konec stránky ani zaměřený prvek.
+  const resize = new ResizeObserver(() => {
+    if (banner) root.style.setProperty('--consent-height', `${banner.offsetHeight}px`);
+  });
+
+  function showBanner() {
+    if (!banner) return;
+    banner.hidden = false;
+    resize.observe(banner);
+  }
+
+  function hideBanner() {
+    if (!banner) return;
+    banner.hidden = true;
+    resize.disconnect();
+    root.style.removeProperty('--consent-height');
+  }
+
+  function renderState() {
+    for (const el of document.querySelectorAll('[data-consent-state]')) {
+      el.textContent = STATE_TEXT[current ?? 'none'];
+    }
+  }
+
+  function apply() {
+    if (current === 'granted') startAnalytics();
+    else stopAnalytics();
+    renderState();
+  }
+
+  if (banner) {
+    banner.addEventListener('click', (event) => {
+      const button = (event.target as Element).closest<HTMLButtonElement>('[data-consent]');
+      if (!button) return;
+      saveChoice(button.dataset.consent === 'granted' ? 'granted' : 'denied');
+      apply();
+      hideBanner();
+      // Tlačítko lišty je teď skryté, zaměření se vrátí tam, odkud čtenář lištu otevřel.
+      opener?.focus();
+      opener = null;
+    });
+
+    for (const button of document.querySelectorAll<HTMLButtonElement>('[data-consent-open]')) {
+      button.hidden = false;
+      button.addEventListener('click', () => {
+        opener = button;
+        showBanner();
+        // Lišta je v DOM na začátku stránky, bez přesunu zaměření by se k ní klávesnicí šlo přes celou stránku.
+        banner.querySelector<HTMLButtonElement>('[data-consent]')?.focus();
+      });
+    }
+
+    // Stránka obnovená tlačítkem Zpět skript nespustí, volba se mezitím mohla změnit.
+    addEventListener('pageshow', (event) => {
+      if (!event.persisted) return;
+      current = readChoice() ?? current;
+      apply();
+      if (current) hideBanner();
+      else showBanner();
+    });
+
+    apply();
+    if (!current) showBanner();
+  }
+</script>
+
+<style>
+  @layer components {
+    /* Proměnnou nastavuje skript podle výšky lišty, bez lišty je nulová. */
+    :global(html) {
+      scroll-padding-bottom: var(--consent-height, 0px);
+    }
+
+    :global(body) {
+      padding-bottom: var(--consent-height, 0px);
+    }
+
+    .consent {
+      position: fixed;
+      inset-inline: 0;
+      bottom: 0;
+      z-index: 5;
+      border-top: 1px solid var(--line);
+      background: var(--surface);
+      box-shadow: 0 -4px 16px rgb(0 0 0 / 0.08);
+      color: var(--muted);
+      font-size: 0.9375rem;
+      line-height: 1.6;
+
+      &[hidden] {
+        display: none;
+      }
+    }
+
+    .consent__inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-3) var(--space-5);
+      padding-block: var(--space-4);
+    }
+
+    .consent__text {
+      flex: 1 1 32rem;
+    }
+
+    .consent__title {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    /* Obě volby stejně velké a stejně výrazné. */
+    .consent__actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-3);
+      flex: 0 1 auto;
+    }
+
+    .consent__button {
+      justify-content: center;
+      min-width: 8rem;
+      border: 0;
+      font-family: inherit;
+      cursor: pointer;
+    }
+  }
+</style>

@@ -30,7 +30,7 @@ Web SHALL měřit návštěvnost přes Google Analytics 4. Měření MUST se spu
 ### Requirement: Lišta se souhlasem
 Dokud čtenář nezvolí, SHALL se na každé stránce zobrazit lišta, která stručně řekne, k čemu web cookies potřebuje, a odkáže na stránku `/ochrana-osobnich-udaju/`. Lišta SHALL nabízet tlačítka „Přijmout“ a „Odmítnout“ se stejnou velikostí, stejnou výrazností a na stejné úrovni. Lišta MUST NOT nabízet předem zvolený souhlas ani jiný způsob zavření než tyto dvě volby. Nezvolení MUST NOT být bráno jako souhlas.
 
-Lišta MUST NOT bránit čtení ani ovládání stránky a MUST NOT si vzít zaměření klávesnice. Prvním zaměřitelným prvkem stránky SHALL zůstat odkaz „Přeskočit na obsah“, lišta SHALL následovat hned po něm. Lišta MUST být čitelná ve světlém i tmavém režimu s kontrastem podle WCAG AA, MUST mít přístupný název a MUST se vejít na displej široký 320 px bez vodorovného posouvání.
+Lišta MUST NOT bránit čtení ani ovládání stránky. Lišta zobrazená při načtení stránky MUST NOT si vzít zaměření klávesnice. Prvním zaměřitelným prvkem stránky SHALL zůstat odkaz „Přeskočit na obsah“, lišta SHALL následovat hned po něm. Lišta MUST být čitelná ve světlém i tmavém režimu s kontrastem podle WCAG AA, MUST mít přístupný název a MUST se vejít na displej široký 320 px bez vodorovného posouvání.
 
 Zvolená odpověď SHALL platit 12 měsíců. Potom se lišta SHALL zobrazit znovu.
 
@@ -44,7 +44,7 @@ Zvolená odpověď SHALL platit 12 měsíců. Potom se lišta SHALL zobrazit zno
 
 #### Scenario: Ovládání klávesnicí
 - **WHEN** čtenář po načtení stránky stiskne Tab
-- **THEN** zaměří se odkaz „Přeskočit na obsah“ a dalším stiskem Tab se zaměří první tlačítko lišty
+- **THEN** zaměří se odkaz „Přeskočit na obsah“, dalšími stisky Tab odkaz na podrobnosti v liště a tlačítka lišty a teprve potom hlavička stránky
 
 #### Scenario: Čtečka obrazovky
 - **WHEN** čtečka obrazovky dojde na lištu
@@ -55,7 +55,7 @@ Zvolená odpověď SHALL platit 12 měsíců. Potom se lišta SHALL zobrazit zno
 - **THEN** lišta se zobrazí znovu a Google Analytics se do nové volby nespustí
 
 ### Requirement: Změna a odvolání souhlasu
-Patička každé stránky SHALL obsahovat tlačítko „Nastavení cookies“, které znovu zobrazí lištu se souhlasem. Čtenář tak může souhlas kdykoli udělit nebo odvolat. Po odvolání souhlasu web MUST okamžitě přestat odesílat data Googlu a MUST smazat cookies Google Analytics, které uložil.
+Patička každé stránky SHALL obsahovat tlačítko „Nastavení cookies“, které znovu zobrazí lištu se souhlasem a přesune zaměření klávesnice na její první tlačítko. Po volbě se zaměření SHALL vrátit na tlačítko, které lištu otevřelo. Čtenář tak může souhlas kdykoli udělit nebo odvolat. Po odvolání souhlasu web MUST okamžitě přestat odesílat data Googlu a MUST smazat cookies Google Analytics, které uložil.
 
 #### Scenario: Odvolání souhlasu
 - **WHEN** čtenář, který souhlas udělil, klikne v patičce na „Nastavení cookies“ a potom na „Odmítnout“

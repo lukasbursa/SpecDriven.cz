@@ -7,6 +7,8 @@ export const site = {
     'Český rozcestník o spec-driven developmentu: co to je, jak funguje a jaké nástroje existují.',
   url: 'https://specdriven.cz',
   author: 'Lukáš Burša',
+  // Kontakt na správce osobních údajů, vypisuje ho stránka o ochraně údajů.
+  contactEmail: 'info@lukasbursa.cz',
   // Profily autora pro strukturovaná data (schema.org sameAs).
   authorProfiles: ['https://github.com/lukasbursa'],
   repo: {
@@ -16,6 +18,11 @@ export const site = {
   openspecUrl: 'https://github.com/Fission-AI/OpenSpec',
   introArticlePath: '/clanky/co-je-spec-driven-development/',
   ogImage: '/og-default.png',
+  privacyPath: '/ochrana-osobnich-udaju/',
+  // Google Analytics 4. Načte se až po souhlasu a jen na doméně z `url`.
+  analytics: {
+    measurementId: 'G-Z05Q363X59',
+  },
 } as const;
 
 // Diskuze na GitHubu. Slugy kategorií vytvořil GitHub z názvů a nechal v nich
