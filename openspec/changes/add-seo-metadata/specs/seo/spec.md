@@ -21,10 +21,10 @@ Stránky SHALL obsahovat strukturovaná data ve formátu JSON-LD podle slovníku
 
 - úvodní stránka: web (`WebSite`) s názvem, adresou, popisem a jazykem `cs`, jehož vydavatelem je autor,
 - stránka článku: `Article` s názvem, popisem, kanonickou adresou, obrázkem pro sdílení, jazykem `cs`, datem publikace, datem poslední změny a autorem, který je zároveň vydavatelem,
-- stránka nástroje: totéž jako stránka článku a navíc popis nástroje (`SoftwareApplication`) s názvem, kategorií vývojářský software a odkazem na oficiální web, případně repozitář,
+- stránka nástroje: totéž jako stránka článku a navíc nástroj jako předmět stránky (`about`) s názvem a odkazem na oficiální web, případně repozitář,
 - stránky článků a nástrojů a přehledy `/clanky/` a `/nastroje/`: drobečková navigace (`BreadcrumbList`) od úvodní stránky po aktuální stránku.
 
-Hodnoty MUST pocházet z metadat obsahu a z nastavení webu, ne z ručně psaného textu. Strukturovaná data MUST být platný JSON a MUST NOT obsahovat nic, co by prohlížeč spustil jako skript.
+Hodnoty MUST pocházet z metadat obsahu a z nastavení webu, ne z ručně psaného textu. Data publikace a změny MUST být zapsaná jako datum a čas s časovým pásmem (ISO 8601). Strukturovaná data MUST NOT obsahovat typ, pro který Google vyžaduje údaje, které web nemá (cena, hodnocení), například `SoftwareApplication`. Test výsledků s rozšířenými funkcemi od Googlu proto MUST NOT u žádné stránky hlásit chybu. Strukturovaná data MUST být platný JSON a MUST NOT obsahovat nic, co by prohlížeč spustil jako skript.
 
 #### Scenario: Strukturovaná data článku
 - **WHEN** vyhledávač načte `/clanky/co-je-spec-driven-development/`
@@ -32,7 +32,11 @@ Hodnoty MUST pocházet z metadat obsahu a z nastavení webu, ne z ručně psané
 
 #### Scenario: Strukturovaná data nástroje
 - **WHEN** vyhledávač načte `/nastroje/openspec/`
-- **THEN** stránka obsahuje JSON-LD typu `Article`, jehož předmětem je `SoftwareApplication` s názvem „OpenSpec“ a adresou `https://openspec.dev/`
+- **THEN** stránka obsahuje JSON-LD typu `Article`, jehož předmětem je nástroj s názvem „OpenSpec“ a adresou `https://openspec.dev/`, a Test výsledků s rozšířenými funkcemi od Googlu u stránky nehlásí chybu
+
+#### Scenario: Formát data
+- **WHEN** Test výsledků s rozšířenými funkcemi od Googlu načte stránku článku
+- **THEN** u `datePublished` a `dateModified` nehlásí neplatné datum ani chybějící časové pásmo
 
 #### Scenario: Drobečková navigace
 - **WHEN** vyhledávač načte `/nastroje/openspec/`

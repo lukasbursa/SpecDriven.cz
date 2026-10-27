@@ -4,7 +4,7 @@ Základ SEO web má (titulky, popisy, kanonické adresy, Open Graph, sitemap), a
 
 ## What Changes
 
-- **Strukturovaná data (JSON-LD):** úvodní stránka popíše web (`WebSite`), článek a stránka nástroje se popíšou jako `Article` s autorem, daty publikace a změny. U nástroje bude navíc popsaný samotný nástroj (`SoftwareApplication`). Stránky článků, nástrojů a oba přehledy dostanou drobečkovou navigaci (`BreadcrumbList`).
+- **Strukturovaná data (JSON-LD):** úvodní stránka popíše web (`WebSite`), článek a stránka nástroje se popíšou jako `Article` s autorem, daty publikace a změny. U nástroje bude navíc uvedený samotný nástroj jako předmět stránky s odkazem na oficiální web a repozitář. Stránky článků, nástrojů a oba přehledy dostanou drobečkovou navigaci (`BreadcrumbList`).
 - **Autor:** blok metadat na stránce článku i nástroje ukáže řádek `autor:`. Hlavička stránky dostane `<meta name="author">` a strukturovaná data autora jako osobu s odkazem na profil na GitHubu. Web má jednoho autora z `src/site.config.ts`.
 - **Datum změny v sitemapě:** stránky článků a nástrojů dostanou v sitemapě `lastmod` podle data aktualizace, případně publikace, u nástroje i podle data ověření. Přehledy a úvodní stránka převezmou nejnovější datum svého obsahu. Stránky bez data z metadat `lastmod` mít nebudou.
 - **Datum změny nástroje:** jako datum poslední změny stránky nástroje se bere nejnovější z dat publikace, aktualizace a ověření. Platí to pro `article:modified_time`, strukturovaná data i sitemap.

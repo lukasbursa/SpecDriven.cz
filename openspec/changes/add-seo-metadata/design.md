@@ -36,11 +36,18 @@ Alternativa: skládat objekty přímo v `SeoHead` z propů (`type`, název, data
 | `/` | `WebSite` (název, adresa, popis, `inLanguage: cs`, `publisher` → autor) |
 | `/clanky/`, `/nastroje/` | `BreadcrumbList` |
 | `/clanky/<slug>/` | `Article`, `BreadcrumbList` |
-| `/nastroje/<slug>/` | `Article` s `about` → `SoftwareApplication`, `BreadcrumbList` |
+| `/nastroje/<slug>/` | `Article` s `about` → `Thing`, `BreadcrumbList` |
 
-`Article` má `headline`, `description`, `url` a `mainEntityOfPage` (kanonická adresa), `image` (adresa obrázku pro sdílení), `inLanguage`, `datePublished`, `dateModified`, `author` a `publisher` (obojí autor). Data jsou ve tvaru `YYYY-MM-DD` přes `isoDate()` ze `src/lib/dates.ts`, protože obsah nemá čas.
+`Article` má `headline`, `description`, `url` a `mainEntityOfPage` (kanonická adresa), `image` (adresa obrázku pro sdílení), `inLanguage`, `datePublished`, `dateModified`, `author` a `publisher` (obojí autor). Data jsou celé datum a čas v UTC (`toISOString()`, například `2026-10-26T00:00:00.000Z`), stejně jako v `article:published_time`. Původně byla ve tvaru `YYYY-MM-DD`, protože obsah nemá čas, ale Test výsledků s rozšířenými funkcemi od Googlu u nich hlásil „Invalid datetime value“ a „missing a timezone“ (ověřeno po nasazení).
 
-Nástroj je `Article`, jehož předmětem (`about`) je `SoftwareApplication` s `name`, `applicationCategory: "DeveloperApplication"`, `url` (oficiální web, a když chybí, repozitář) a `sameAs` (repozitář, pokud je jiný než `url`). Samotné `SoftwareApplication` jako hlavní typ stránky jsme zamítli. Google pro něj vyžaduje cenu (`offers`) nebo hodnocení, a ty nemáme ani nechceme vymýšlet. Stránka navíc už teď má `og:type` `article`, je to text o nástroji, ne nástroj samotný.
+Nástroj je `Article`, jehož předmětem (`about`) je `Thing` s `name`, `url` (oficiální web, a když chybí, repozitář) a `sameAs` (repozitář, pokud je jiný než `url`). Samotný nástroj jako hlavní typ stránky jsme zamítli, protože stránka je text o nástroji, ne nástroj samotný, a už teď má `og:type` `article`.
+
+Předmět byl původně `SoftwareApplication` s `applicationCategory: "DeveloperApplication"`. Google ho ale vyhodnocuje i jako vnořený objekt a hlásil u něj chybu „Two or more properties required from the following: offers, aggregateRating, applicationCategory, operatingSystem“ (ověřeno po nasazení). Uvažované alternativy:
+
+- **Doplnit `operatingSystem`** do metadat nástroje z oficiálních zdrojů. Položka by byla platná, jenže u metodik (BMAD-METHOD) operační systém nedává smysl. Rozšířený výsledek pro aplikaci by navíc bez hodnocení a ceny stejně nic neukázal.
+- **Nechat neplatnou položku.** Hodnocení stránky to neovlivní, ale test by trvale hlásil chybu.
+
+`Thing` Google nevaliduje a vazba na oficiální web a repozitář zůstává. Ztrácí se jen informace, že jde o software.
 
 Drobečková navigace: `SpecDriven.cz` (`/`) → `Články` (`/clanky/`) nebo `Nástroje` (`/nastroje/`) → název stránky. Odpovídá cestě `clanky / <slug>`, kterou stránky ukazují nad blokem metadat.
 

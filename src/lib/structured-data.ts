@@ -1,6 +1,5 @@
 import { site } from '../site.config';
 import { articleModifiedDate, articlePath, type Article } from './articles';
-import { isoDate } from './dates';
 import { toolModifiedDate, toolPath, type Tool } from './tools';
 
 // Objekty pro strukturovaná data (JSON-LD, slovník schema.org). Stránka předá
@@ -54,8 +53,9 @@ function pageArticle({ path, title, description, image, published, modified }: P
     mainEntityOfPage: url,
     image: absolute(image),
     inLanguage: 'cs',
-    datePublished: isoDate(published),
-    dateModified: isoDate(modified),
+    // Celé datum a čas s pásmem, samotné YYYY-MM-DD Google hlásí jako neplatné.
+    datePublished: published.toISOString(),
+    dateModified: modified.toISOString(),
     author: authorRef,
     publisher: authorRef,
   };
@@ -76,7 +76,8 @@ export function articleData(article: Article, image: string): StructuredData {
 
 /**
  * Stránka nástroje: text o nástroji, ne nástroj samotný. Proto Article
- * s předmětem SoftwareApplication (ten by sám vyžadoval cenu nebo hodnocení).
+ * s nástrojem jako předmětem. Předmět je Thing: SoftwareApplication Google
+ * validuje i vnořené a bez ceny nebo hodnocení ho hlásí jako neplatný.
  */
 export function toolData(tool: Tool, image: string): StructuredData {
   const { title, description, pubDate, website, repository } = tool.data;
@@ -92,9 +93,8 @@ export function toolData(tool: Tool, image: string): StructuredData {
       modified: toolModifiedDate(tool),
     }),
     about: {
-      '@type': 'SoftwareApplication',
+      '@type': 'Thing',
       name: title,
-      applicationCategory: 'DeveloperApplication',
       url,
       ...(repository && repository !== url ? { sameAs: [repository] } : {}),
     },
