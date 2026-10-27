@@ -11,4 +11,4 @@
 
 ## 3. Po nasazení (ručně, po pushi do main)
 
-- [ ] 3.1 Ověřit v logu kroku „npm run build“ v GitHub Actions, že build nevypsal varování o historii, a na produkci, že stavový řádek ukazuje jako poslední změnu tu, která byla archivována naposledy.
+- [x] 3.1 Ověřit v logu kroku „npm run build“ v GitHub Actions, že build nevypsal varování o historii, a na produkci, že stavový řádek ukazuje jako poslední změnu tu, která byla archivována naposledy.
