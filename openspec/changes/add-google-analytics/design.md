@@ -11,7 +11,7 @@ Motivaci popisuje proposal.md, požadavky jsou ve specifikacích `analytics` a `
 **Goals:**
 - Před souhlasem se Google Analytics vůbec nenačte, takže bez souhlasu zůstane chování webu přesně jako dnes.
 - Měřicí ID a doména jsou jen v `site.config.ts`.
-- Jedna komponenta obsluhuje lištu, tlačítko v patičce i ovládání na stránce o ochraně údajů.
+- Jedna komponenta obsluhuje lištu i ovládání na stránce o ochraně údajů.
 - Žádná nová závislost v `package.json`.
 
 **Non-Goals:**
@@ -53,7 +53,7 @@ Lišta není inline skript v `<head>` jako přepínač režimu. Nemusí platit p
 
 Pořadí v DOM: odkaz „Přeskočit na obsah“, lišta, hlavička. Klávesnicí se tak k liště dostane čtenář hned, nemusí projít celou stránku. Lišta nemá `role="dialog"` ani nepřebírá zaměření, protože čtení nemá blokovat. Je to `<section>` s `aria-labelledby` na krátký nadpis „Cookies a měření návštěvnosti“. Nadpis není `<h2>` s dekorativním prefixem: použije se `<p>` se `id`, aby lišta nezasahovala do osnovy nadpisů stránky.
 
-Aby lišta nezakryla konec stránky (patičku i tlačítko „Nastavení cookies“), skript při zobrazení zapíše výšku lišty do proměnné `--consent-height` na `<html>` a sleduje ji přes `ResizeObserver`. CSS z ní nastaví `padding-bottom` na `body` a `scroll-padding-bottom` na `html`, aby zaměřený prvek nezůstal pod lištou (WCAG 2.4.11). Po skrytí lišty se proměnná smaže.
+Aby lišta nezakryla konec stránky (patičku i odkaz „Ochrana osobních údajů“), skript při zobrazení zapíše výšku lišty do proměnné `--consent-height` na `<html>` a sleduje ji přes `ResizeObserver`. CSS z ní nastaví `padding-bottom` na `body` a `scroll-padding-bottom` na `html`, aby zaměřený prvek nezůstal pod lištou (WCAG 2.4.11). Po skrytí lišty se proměnná smaže.
 
 Alternativa: lišta nahoře, staticky v toku stránky. Nic by nezakrývala, ale bez inline skriptu v `<head>` by se objevila až po vykreslení a posunula by celou stránku dolů. Inline skript by kvůli tomu musel znát stav souhlasu. Odmítnuto jako zbytečně složité.
 
@@ -82,9 +82,11 @@ Stránka obnovená tlačítkem Zpět (bfcache) nespustí skript znovu a mohla by
 
 Skript GA4 načte jen tehdy, když se `location.hostname` shoduje s hostitelem z `site.url`. Lokální `npm run dev` ani `npm run preview` tak data do GA4 nepošlou a lištu lze testovat, aniž by se do statistik dostal autor. Kontrola podle domény je spolehlivější než `import.meta.env.PROD`, protože `preview` je produkční build.
 
-### 6. Tlačítka „Nastavení cookies“ přes atribut `data-consent-open`
+### 6. Tlačítko „Nastavení cookies“ jen na stránce o ochraně údajů
 
-Tlačítko v patičce i ovládání na stránce o ochraně údajů jsou `<button type="button" data-consent-open hidden>`. Skript lišty je najde, odkryje a po kliknutí zobrazí lištu. Bez JavaScriptu zůstanou skrytá. Lišta otevřená tlačítkem přesune zaměření na své první tlačítko, protože v DOM je na začátku stránky a uživatel klávesnice by se k ní z patičky jinak vracel přes celou stránku. Po volbě se zaměření vrátí na tlačítko, které lištu otevřelo, jinak by zůstalo na skrytém prvku. Lišta zobrazená sama při načtení zaměření nebere (rozhodnutí 2). Na stránce `/ochrana-osobnich-udaju/` je navíc vedle tlačítka text s aktuálním stavem („Měření je povolené.“ / „Měření je odmítnuté.“ / „Zatím jste nezvolili.“), který skript vyplní do prvku s atributem `data-consent-state`. Bez JavaScriptu stránka místo toho napíše, že bez JavaScriptu se nic neměří.
+Tlačítko „Nastavení cookies“ je jen na stránce `/ochrana-osobnich-udaju/`, na kterou vede odkaz z patičky každé stránky. Ke změně souhlasu stačí dvě kliknutí z kterékoli stránky a patička se vejde na jeden řádek. Tlačítko v patičce bylo v první verzi, autor ho odebral, protože opakovalo ovládání ze stránky. Odvolání tak zůstává stejně snadné jako udělení: lišta se zobrazí na každé stránce, dokud čtenář nezvolí, a změna volby je na jedné stránce s vysvětlením.
+
+Tlačítko je `<button type="button" data-consent-open hidden>`. Atribut zůstává obecný, aby šlo tlačítko přidat i jinam. Skript lišty najde všechna taková tlačítka, odkryje a po kliknutí zobrazí lištu. Bez JavaScriptu zůstanou skrytá. Lišta otevřená tlačítkem přesune zaměření na své první tlačítko, protože v DOM je na začátku stránky a uživatel klávesnice by se k ní od tlačítka jinak vracel přes celou stránku. Po volbě se zaměření vrátí na tlačítko, které lištu otevřelo, jinak by zůstalo na skrytém prvku. Lišta zobrazená sama při načtení zaměření nebere (rozhodnutí 2). Na stránce `/ochrana-osobnich-udaju/` je navíc vedle tlačítka text s aktuálním stavem („Měření je povolené.“ / „Měření je odmítnuté.“ / „Zatím jste nezvolili.“), který skript vyplní do prvku s atributem `data-consent-state`. Bez JavaScriptu stránka místo toho napíše, že bez JavaScriptu se nic neměří.
 
 ### 7. Stránka `/ochrana-osobnich-udaju/` jako `.astro` stránka
 

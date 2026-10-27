@@ -55,14 +55,14 @@ Zvolená odpověď SHALL platit 12 měsíců. Potom se lišta SHALL zobrazit zno
 - **THEN** lišta se zobrazí znovu a Google Analytics se do nové volby nespustí
 
 ### Requirement: Změna a odvolání souhlasu
-Patička každé stránky SHALL obsahovat tlačítko „Nastavení cookies“, které znovu zobrazí lištu se souhlasem a přesune zaměření klávesnice na její první tlačítko. Po volbě se zaměření SHALL vrátit na tlačítko, které lištu otevřelo. Čtenář tak může souhlas kdykoli udělit nebo odvolat. Po odvolání souhlasu web MUST okamžitě přestat odesílat data Googlu a MUST smazat cookies Google Analytics, které uložil.
+Stránka `/ochrana-osobnich-udaju/` SHALL obsahovat tlačítko „Nastavení cookies“, které znovu zobrazí lištu se souhlasem a přesune zaměření klávesnice na její první tlačítko. Po volbě se zaměření SHALL vrátit na tlačítko, které lištu otevřelo. Na stránku vede odkaz „Ochrana osobních údajů“ z patičky každé stránky, patička samotná tlačítko „Nastavení cookies“ MUST NOT obsahovat. Čtenář tak může souhlas kdykoli udělit nebo odvolat. Po odvolání souhlasu web MUST okamžitě přestat odesílat data Googlu a MUST smazat cookies Google Analytics, které uložil.
 
 #### Scenario: Odvolání souhlasu
-- **WHEN** čtenář, který souhlas udělil, klikne v patičce na „Nastavení cookies“ a potom na „Odmítnout“
+- **WHEN** čtenář, který souhlas udělil, klikne v patičce na „Ochrana osobních údajů“, na stránce na „Nastavení cookies“ a potom na „Odmítnout“
 - **THEN** v prohlížeči už není žádná cookie začínající `_ga` a další stránky Google Analytics nespustí
 
 #### Scenario: Dodatečný souhlas
-- **WHEN** čtenář, který měření odmítl, klikne v patičce na „Nastavení cookies“ a potom na „Přijmout“
+- **WHEN** čtenář, který měření odmítl, klikne na stránce `/ochrana-osobnich-udaju/` na „Nastavení cookies“ a potom na „Přijmout“
 - **THEN** web spustí Google Analytics na aktuální stránce
 
 ### Requirement: Prohlížeč bez JavaScriptu
@@ -88,10 +88,6 @@ Fakta o Google Analytics (názvy a doba platnosti cookies, doba uchování dat) 
 #### Scenario: Čtenář chce vědět, co se měří
 - **WHEN** čtenář klikne v patičce na „Ochrana osobních údajů“
 - **THEN** zobrazí se stránka `/ochrana-osobnich-udaju/` s popisem měření, seznamem cookies a údajů v `localStorage` a kontaktem na správce
-
-#### Scenario: Odvolání ze stránky
-- **WHEN** čtenář na stránce `/ochrana-osobnich-udaju/` použije ovládání souhlasu a zvolí „Odmítnout“
-- **THEN** souhlas je odvolaný stejně jako přes tlačítko v patičce
 
 #### Scenario: Odkaz z lišty
 - **WHEN** čtenář na liště klikne na odkaz na podrobnosti

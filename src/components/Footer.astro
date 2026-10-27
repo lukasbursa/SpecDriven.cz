@@ -1,8 +1,11 @@
 ---
 import { discussions, site } from '../site.config';
+import { getPublishedTools, toolPath } from '../lib/tools';
 import StatusBar from './StatusBar.astro';
 
 const year = new Date().getFullYear();
+// Stránka nástroje na tomto webu. Když je koncept, odkaz vede na oficiální stránky.
+const openspecTool = (await getPublishedTools()).find((tool) => tool.id === 'openspec');
 ---
 
 <footer class="footer">
@@ -10,20 +13,20 @@ const year = new Date().getFullYear();
     <StatusBar />
     <div class="footer__row">
       <p>
-        Tento web byl vytvořen pomocí <a href={site.introArticlePath}>SDD</a>{' – '}<a
-          href={site.openspecUrl}
-          rel="noopener">OpenSpec</a
-        >{' · '}<a href={site.repo.url} rel="noopener">Zdrojový kód a specifikace na GitHubu</a>{' · '}<a
+        Vytvořeno pomocí {
+          openspecTool ? (
+            <a href={toolPath(openspecTool)}>OpenSpec</a>
+          ) : (
+            <a href={site.openspecUrl} rel="noopener">
+              OpenSpec
+            </a>
+          )
+        }{' · '}<a href={site.repo.url} rel="noopener">Kód a specifikace na GitHubu</a>{' · '}<a
           href={discussions.url}
           rel="noopener">Diskuze</a
-        >
+        >{' · '}<a href={site.privacyPath}>Ochrana osobních údajů</a>
       </p>
-      <div class="footer__legal">
-        <p>© {year} {site.author}</p>
-        <a href={site.privacyPath}>Ochrana osobních údajů</a>
-        <!-- Odkryje a obslouží ho ConsentBanner. Bez JavaScriptu není co nastavovat. -->
-        <button type="button" class="footer__consent" data-consent-open hidden>Nastavení cookies</button>
-      </div>
+      <p class="footer__copy">© {year} {site.author}</p>
     </div>
   </div>
 </footer>
@@ -53,33 +56,9 @@ const year = new Date().getFullYear();
       gap: var(--space-1) var(--space-5);
     }
 
-    .footer__legal {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: baseline;
-      gap: var(--space-1) var(--space-4);
+    .footer__copy {
       color: var(--faint);
       font-size: var(--text-sm);
-    }
-
-    .footer__consent {
-      padding: 0;
-      border: 0;
-      background: none;
-      color: var(--accent);
-      font: inherit;
-      text-decoration: underline;
-      text-decoration-thickness: 1px;
-      text-underline-offset: 0.2em;
-      cursor: pointer;
-
-      &[hidden] {
-        display: none;
-      }
-
-      &:hover {
-        text-decoration-thickness: 2px;
-      }
     }
   }
 </style>

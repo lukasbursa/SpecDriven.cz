@@ -29,3 +29,9 @@
 - [x] 6.1 Spustit `npm run check` a `npm run build` bez chyb. V `dist/` ověřit, že žádné HTML nemá atribut `src` ani `href` s doménou Googlu, která by se načetla sama (`grep -rhoE '(src|href)="https?://[^"]*google[^"]*"' dist --include='*.html'` najde jen odkazy na dokumentaci na stránce o ochraně údajů). Adresa `gtag.js` smí být jen jako text uvnitř skriptu lišty
 - [x] 6.2 Ručně v administraci GA4 nastavit dobu uchování dat na 14 měsíců, vypnout Google signály, personalizaci reklam a sdílení dat, nechat zapnuté rozšířené měření a přijmout podmínky zpracování dat podle rozhodnutí 8. Ověřit, že hodnoty souhlasí s textem stránky `/ochrana-osobnich-udaju/`
 - [ ] 6.3 Po nasazení ověřit na https://specdriven.cz kroky 3 z Migration Plan v design.md: bez souhlasu žádný požadavek na Google a žádná cookie `_ga`, po souhlasu návštěva v přehledu GA4 „Real-time“, po odvolání žádná cookie `_ga`
+
+## 7. Patička na jeden řádek
+
+- [x] 7.1 Odebrat tlačítko „Nastavení cookies“ z `Footer.astro`, zkrátit texty na „Vytvořeno pomocí SDD – OpenSpec“ a „Kód a specifikace na GitHubu“ a dát odkazy, „Ochrana osobních údajů“ a „© <rok> <autor>“ do jednoho řádku. Z `ochrana-osobnich-udaju.astro` odebrat větu, že tlačítko je i v patičce. Upravit odstavec v `CLAUDE.md`. Ověřit přes `npm run check` a `npm run build`
+- [x] 7.2 Ověřit v prohlížeči scénáře „Patička na jednom řádku“ (1280 px, světlý i tmavý režim), „Odvolání souhlasu“ a „Dodatečný souhlas“ přes stránku `/ochrana-osobnich-udaju/`, zalomení patičky na 320 px bez vodorovného posunu a že patička nemá tlačítko „Nastavení cookies“
+- [x] 7.3 Změnit první část patičky na „Vytvořeno pomocí OpenSpec“ s odkazem na stránku nástroje přes `getPublishedTools()` a `toolPath()`, záložně na `site.openspecUrl`. Ověřit v `dist/index.html`, že odkaz vede na `/nastroje/openspec/`, a v prohlížeči, že patička na 1280 px zůstává na jednom řádku
