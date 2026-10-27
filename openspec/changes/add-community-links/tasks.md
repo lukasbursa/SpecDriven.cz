@@ -1,6 +1,6 @@
 ## 1. Nastavení GitHubu (ručně, autor webu)
 
-- [ ] 1.1 V nastavení repozitáře zapnout Discussions a založit kategorie Obecné, Články, Nástroje a Nápady. Ověřit, že `curl -sI https://github.com/lukasbursa/SpecDriven.cz/discussions` a adresy kategorií Články a Nástroje vrací stav 200, a předat URL obou kategorií k zapsání do konfigurace.
+- [x] 1.1 V nastavení repozitáře zapnout Discussions a založit kategorie Obecné, Články, Nástroje a Nápady. Ověřit, že stránky kategorií Články a Nástroje obsahují popis kategorie (GitHub vrací stav 200 i pro neexistující slug, stav odpovědi proto nic nedokazuje), a předat URL obou kategorií k zapsání do konfigurace. Slugy jsou `články` a `nástroje`.
 
 ## 2. Konfigurace a schéma
 

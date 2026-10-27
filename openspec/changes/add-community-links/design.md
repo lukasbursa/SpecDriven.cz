@@ -39,7 +39,7 @@ repoEditUrl(filePath)              // `${repo.url}/edit/${repo.branch}/${filePat
 newIssueUrl(template, fields)      // `${repo.url}/issues/new?` + URLSearchParams({ template, ...fields })
 ```
 
-`discussions.url` se odvodí z `site.repo.url`, URL kategorií se zapíšou ručně. Slug, který GitHub vytvoří z názvu s diakritikou („Články“), dopředu neznáme a odhadovat ho nebudeme. `URLSearchParams` zakóduje mezery jako `+` a lomítka v adrese stránky. GitHub obojí přijímá.
+`discussions.url` se odvodí z `site.repo.url`, URL kategorií se zapíšou ručně. GitHub ponechal ve slugu diakritiku (`…/categories/články`, `…/categories/nástroje`). V konfiguraci se slug zapíše čitelně a do `href` se dostane procentově zakódovaný přes `new URL(…).href` (`%C4%8Dl%C3%A1nky`), aby adresa nezávisela na tom, jak s ne-ASCII znaky naloží prohlížeč nebo RSS čtečka. `URLSearchParams` zakóduje mezery jako `+` a lomítka v adrese stránky. GitHub obojí přijímá.
 
 ### 3. Pole `discussion` v obou kolekcích
 
@@ -96,7 +96,7 @@ Pravidlo platí pro všechny včetně autora webu. Zapíše se třikrát, každ�
 
 ## Risks / Trade-offs
 
-- [Discussions nejsou zapnuté nebo kategorie nemají očekávanou adresu → odkazy vrací 404] → nastavení GitHubu je první úkol a jeho ověření (`curl` na každou adresu) musí projít před pushem do `main`.
+- [Discussions nejsou zapnuté nebo kategorie nemají očekávanou adresu → odkazy vrací 404] → nastavení GitHubu je první úkol a musí být hotové před pushem do `main`. GitHub vrací stav 200 i pro neexistující kategorii, proto se ověřuje, že stránka kategorie obsahuje její popis, ne stav odpovědi.
 - [Šablony issue fungují až z výchozí větve] → formulář a předvyplnění se dají ověřit až po pushi do `main`, poslední úkol je ruční kontrola na produkci.
 - [Editor `.mdx` souboru ukáže čtenáři importy a komponenty] → přijatelné. CONTRIBUTING.md vysvětlí, že text mezi komponentami jde upravit beze změny kódu.
 - [K přispění je potřeba účet na GitHubu] → blok to říká přímo. Pro publikum webu (vývojáři) je to běžné.
