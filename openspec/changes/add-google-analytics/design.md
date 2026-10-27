@@ -70,7 +70,7 @@ Alternativa: vlastní cookie se souhlasem. Prohlížeč by ji posílal s každý
 ### 4. Odvolání souhlasu bez obnovení stránky
 
 Po „Odmítnout“ v situaci, kdy GA4 na stránce běží, skript:
-1. zavolá `gtag('consent', 'update', { analytics_storage: 'denied' })`, takže GA4 přestane zapisovat cookies a posílat data,
+1. zavolá `gtag('consent', 'update', { analytics_storage: 'denied' })`, takže GA4 přestane zapisovat cookies, a nastaví `window['ga-disable-<měřicí ID>'] = true`. Samotný `consent update` nestačí: načtený `gtag.js` pak dál posílá události bez cookies (`gcs=G100`) s novým náhodným ID, což ukázalo ověření na produkci. Vypínač je [oficiální způsob, jak měření vypnout](https://developers.google.com/tag-platform/security/guides/privacy). Dokumentace popisuje jeho nastavení před prvním voláním `gtag()`, za běhu je ověřený testem. Při novém souhlasu na téže stránce se vrátí na `false`,
 2. smaže všechny cookies `_ga` a `_ga_*`. GA4 je ve výchozím nastavení ukládá na nejvyšší možnou doménu (`.specdriven.cz`), proto se maže s `domain=.specdriven.cz` i bez `domain`, vždy s `path=/` a datem v minulosti,
 3. uloží volbu `denied`.
 

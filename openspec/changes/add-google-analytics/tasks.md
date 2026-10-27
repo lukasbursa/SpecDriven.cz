@@ -35,3 +35,7 @@
 - [x] 7.1 Odebrat tlačítko „Nastavení cookies“ z `Footer.astro`, zkrátit texty na „Vytvořeno pomocí SDD – OpenSpec“ a „Kód a specifikace na GitHubu“ a dát odkazy, „Ochrana osobních údajů“ a „© <rok> <autor>“ do jednoho řádku. Z `ochrana-osobnich-udaju.astro` odebrat větu, že tlačítko je i v patičce. Upravit odstavec v `CLAUDE.md`. Ověřit přes `npm run check` a `npm run build`
 - [x] 7.2 Ověřit v prohlížeči scénáře „Patička na jednom řádku“ (1280 px, světlý i tmavý režim), „Odvolání souhlasu“ a „Dodatečný souhlas“ přes stránku `/ochrana-osobnich-udaju/`, zalomení patičky na 320 px bez vodorovného posunu a že patička nemá tlačítko „Nastavení cookies“
 - [x] 7.3 Změnit první část patičky na „Vytvořeno pomocí OpenSpec“ s odkazem na stránku nástroje přes `getPublishedTools()` a `toolPath()`, záložně na `site.openspecUrl`. Ověřit v `dist/index.html`, že odkaz vede na `/nastroje/openspec/`, a v prohlížeči, že patička na 1280 px zůstává na jednom řádku
+
+## 8. Oprava po ověření na produkci
+
+- [x] 8.1 Ověření 6.3 na produkci ukázalo, že po odvolání načtený `gtag.js` dál posílá události bez cookies (`gcs=G100`). Doplnit do odvolání vypínač `window['ga-disable-<ID>'] = true` a při novém souhlasu ho vrátit na `false` (design.md, rozhodnutí 4). Ověřeno lokálně se zaznamenáváním všech požadavků na Google: po odvolání neodejde žádná událost ani při posunutí a přechodu na další stránku, po novém souhlasu na téže stránce se měří znovu

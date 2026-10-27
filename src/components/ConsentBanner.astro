@@ -79,6 +79,7 @@ const hostname = new URL(site.url).hostname;
     if (!measure) return;
     if (gtag) {
       // Souhlas odvolaný a znovu udělený na téže stránce.
+      setDisabled(false);
       gtag('consent', 'update', { analytics_storage: 'granted' });
       return;
     }
@@ -116,8 +117,16 @@ const hostname = new URL(site.url).hostname;
     }
   }
 
+  /** Oficiální vypínač gtag.js. Bez něj by načtený gtag.js po odvolání dál posílal události bez cookies. */
+  function setDisabled(disabled: boolean) {
+    (window as unknown as Record<string, boolean>)[`ga-disable-${measurementId}`] = disabled;
+  }
+
   function stopAnalytics() {
-    gtag?.('consent', 'update', { analytics_storage: 'denied' });
+    if (gtag) {
+      setDisabled(true);
+      gtag('consent', 'update', { analytics_storage: 'denied' });
+    }
     deleteAnalyticsCookies();
   }
 
