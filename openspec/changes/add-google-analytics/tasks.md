@@ -27,5 +27,5 @@
 ## 6. Ověření a nasazení
 
 - [x] 6.1 Spustit `npm run check` a `npm run build` bez chyb. V `dist/` ověřit, že žádné HTML nemá atribut `src` ani `href` s doménou Googlu, která by se načetla sama (`grep -rhoE '(src|href)="https?://[^"]*google[^"]*"' dist --include='*.html'` najde jen odkazy na dokumentaci na stránce o ochraně údajů). Adresa `gtag.js` smí být jen jako text uvnitř skriptu lišty
-- [ ] 6.2 Ručně v administraci GA4 nastavit dobu uchování dat na 14 měsíců, vypnout Google signály a sdílení dat a přijmout podmínky zpracování dat podle rozhodnutí 8. Ověřit, že hodnoty souhlasí s textem stránky `/ochrana-osobnich-udaju/`
+- [x] 6.2 Ručně v administraci GA4 nastavit dobu uchování dat na 14 měsíců, vypnout Google signály, personalizaci reklam a sdílení dat, nechat zapnuté rozšířené měření a přijmout podmínky zpracování dat podle rozhodnutí 8. Ověřit, že hodnoty souhlasí s textem stránky `/ochrana-osobnich-udaju/`
 - [ ] 6.3 Po nasazení ověřit na https://specdriven.cz kroky 3 z Migration Plan v design.md: bez souhlasu žádný požadavek na Google a žádná cookie `_ga`, po souhlasu návštěva v přehledu GA4 „Real-time“, po odvolání žádná cookie `_ga`

@@ -13,7 +13,8 @@ const gdpr = 'https://eur-lex.europa.eu/legal-content/CS/TXT/?uri=CELEX:32016R06
 const ecommAct = 'https://e-sbirka.gov.cz/sb/2005/127';
 const gaCookies = 'https://support.google.com/analytics/answer/11397207?hl=cs';
 const gaRetention = 'https://support.google.com/analytics/answer/7667196?hl=cs';
-const gaPrivacy = 'https://support.google.com/analytics/answer/12017362?hl=cs';
+const gaEvents = 'https://support.google.com/analytics/answer/9216061?hl=cs';
+const gaPrivacy ='https://support.google.com/analytics/answer/12017362?hl=cs';
 ---
 
 <BaseLayout
@@ -46,6 +47,10 @@ const gaPrivacy = 'https://support.google.com/analytics/answer/12017362?hl=cs';
         <li>náhodný identifikátor prohlížeče uložený v cookie,</li>
         <li>navštívené stránky a čas návštěvy,</li>
         <li>odkud jste přišli (předchozí stránka nebo kampaň uvedená v odkazu),</li>
+        <li>
+          co na stránce děláte: jestli ji posunete téměř na konec (90 % výšky), jestli kliknete na odkaz mimo web a na
+          jaký a jestli stáhnete soubor (<a href={gaEvents} rel="noopener">rozšířené měření, dokumentace Googlu</a>),
+        </li>
         <li>typ zařízení, operační systém, prohlížeč a jazyk,</li>
         <li>
           přibližnou polohu (stát, region, město), kterou Google odvodí z IP adresy. U návštěvníků z EU Google IP adresu

@@ -92,7 +92,7 @@ Je to `src/pages/ochrana-osobnich-udaju.astro`, stejně jako `jak-vznikl-tento-w
 
 Osnova (nadpisy `##`):
 1. **Kdo údaje zpracovává**: správce Lukáš Burša, kontakt info@lukasbursa.cz jako odkaz `mailto:`. Adresa je v `site.config.ts` (`site.contactEmail`), stránka ji odtud jen vypíše.
-2. **Měření návštěvnosti**: GA4, jen se souhlasem. Zpracovávané údaje: náhodný identifikátor prohlížeče v cookie, navštívené stránky, odkud čtenář přišel, typ zařízení a prohlížeče, přibližná poloha odvozená z IP adresy. Právní základ: souhlas podle čl. 6 odst. 1 písm. a) GDPR a pro uložení cookies § 89 odst. 3 zákona č. 127/2005 Sb. Bez Google signálů a personalizace reklam.
+2. **Měření návštěvnosti**: GA4, jen se souhlasem. Zpracovávané údaje: náhodný identifikátor prohlížeče v cookie, navštívené stránky, odkud čtenář přišel, události rozšířeného měření, které na webu můžou nastat (posunutí na 90 % výšky stránky, kliknutí na odkaz na jinou doménu, stažení souboru, podle [dokumentace Googlu](https://support.google.com/analytics/answer/9216061?hl=cs)), typ zařízení a prohlížeče, přibližná poloha odvozená z IP adresy. Právní základ: souhlas podle čl. 6 odst. 1 písm. a) GDPR a pro uložení cookies § 89 odst. 3 zákona č. 127/2005 Sb. Bez Google signálů a personalizace reklam.
 3. **Komu údaje předáváme**: Google Ireland Limited jako zpracovatel. Předání do USA společnosti Google LLC, která je certifikovaná v rámci EU-U.S. Data Privacy Framework (odkaz na záznam na dataprivacyframework.gov).
 4. **Jak dlouho**: cookies `_ga` a `_ga_Z05Q363X59` 2 roky ([dokumentace Googlu](https://support.google.com/analytics/answer/11397207?hl=cs)), údaje na úrovni uživatelů a událostí v GA4 14 měsíců, což je nejdelší možnost u standardní vlastnosti ([dokumentace Googlu](https://support.google.com/analytics/answer/7667196)).
 5. **Co web ukládá ve vašem prohlížeči**: tabulka s položkami `_ga`, `_ga_Z05Q363X59` (cookie, jen se souhlasem), `analytics-consent` a `color-scheme` (`localStorage`, nezbytné, neodesílají se).
@@ -109,7 +109,8 @@ Tón je věcný jako zbytek webu: žádné „vaše soukromí je pro nás priori
 - doba uchování dat 14 měsíců. Souhrnné přehledy návštěvnosti a zdrojů na ní nezávisí, delší doba dovolí v Průzkumech srovnat rok s rokem. Kratší možnost (2 měsíce) by šetrnost ke čtenářům zvýšila jen málo, protože se měří až se souhlasem,
 - vypnuté Google signály a sdílení dat s produkty Googlu,
 - přijaté podmínky zpracování dat (Data Processing Terms), aby byl Google v roli zpracovatele, jak to popisuje stránka,
-- volitelně vypnutý sběr přesné polohy a údajů o zařízení pro oblast EU.
+- volitelně vypnutý sběr přesné polohy a údajů o zařízení pro oblast EU,
+- rozšířené měření v datovém streamu zůstává zapnuté. Prokliky na odkazy ven ukážou, kolik čtenářů jde ze stránky nástroje na jeho repozitář, a to pomáhá při propagaci. Stránka proto vyjmenuje události, které na webu můžou nastat. Vyhledávání, videa ani formuláře web nemá, takže je nezmiňuje. Když přibudou, stránka se doplní.
 
 Stránka o ochraně údajů musí s tímto nastavením souhlasit. Proto patří do úkolů ručně odškrtávaný krok s kontrolou.
 

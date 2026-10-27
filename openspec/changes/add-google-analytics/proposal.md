@@ -13,7 +13,7 @@ Autor webu dnes neví, kolik lidí web čte, které články zabírají a odkud 
 - **BREAKING** (pro specifikaci): požadavek, že prohlížeč nikdy nestahuje soubory z jiné domény než specdriven.cz, se zúží. Bez souhlasu platí dál beze změny, po souhlasu je jedinou výjimkou GA4.
 - Texty, které tvrdí, že JavaScript obsluhuje jen přepínač režimu (stránka „Jak vznikl tento web“, `README.md`, `CLAUDE.md`), se upraví podle skutečnosti.
 
-Mimo rozsah: Google Tag Manager a další měřicí nebo reklamní služby, měření vlastních událostí (prokliky, odeslání formulářů), Consent Mode v režimu „advanced“ (pingy bez cookies ještě před souhlasem), Google Search Console (nastavuje se přes DNS, web nemění).
+Mimo rozsah: Google Tag Manager a další měřicí nebo reklamní služby, vlastní události nad rámec rozšířeného měření GA4 (to zůstává zapnuté, viz design.md, rozhodnutí 8), Consent Mode v režimu „advanced“ (pingy bez cookies ještě před souhlasem), Google Search Console (nastavuje se přes DNS, web nemění).
 
 ## Capabilities
 
