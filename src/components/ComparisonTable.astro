@@ -1,0 +1,161 @@
+---
+import { formatDateShort, isoDate } from '../lib/dates';
+import { formatStars, getPublishedTools, getToolIds, toolPath, type Tool } from '../lib/tools';
+
+// Srovnávací tabulka nástrojů: řádek pro každý publikovaný nástroj v pořadí
+// podle popularity. Sloupec je buď údaj z metadat nástroje, nebo hodnoty
+// zapsané v článku podle slugu nástroje. Chybějící hodnota pro publikovaný
+// nástroj nebo neznámý slug shodí build, koncepty se nevypisují ani nehlídají.
+type MetaField = 'kind' | 'license' | 'stars' | 'verifiedDate';
+
+export type Column = { meta: MetaField } | { label: string; values: Record<string, string> };
+
+interface Props {
+  caption: string;
+  columns: Column[];
+}
+
+const { caption, columns } = Astro.props;
+
+const metaLabels: Record<MetaField, string> = {
+  kind: 'Typ',
+  license: 'Licence',
+  stars: 'Hvězdy',
+  verifiedDate: 'Ověřeno',
+};
+
+const tools = await getPublishedTools();
+const knownIds = await getToolIds();
+const where = `Srovnání „${caption}“ (${Astro.url.pathname})`;
+
+for (const column of columns) {
+  if ('meta' in column) continue;
+  for (const id of Object.keys(column.values)) {
+    if (!knownIds.has(id)) {
+      throw new Error(`${where}: sloupec „${column.label}“ uvádí neznámý nástroj ${id}.`);
+    }
+  }
+  for (const tool of tools) {
+    if (!column.values[tool.id]?.trim()) {
+      throw new Error(`${where}: sloupec „${column.label}“ nemá hodnotu pro nástroj ${tool.id}.`);
+    }
+  }
+}
+
+// Text v `zpětných apostrofech` se vypíše jako <code>, nic jiného se nepřevádí.
+function segments(text: string) {
+  return text.split('`').map((part, index) => ({ part, code: index % 2 === 1 }));
+}
+
+function textOf(tool: Tool, column: Column): string | undefined {
+  if (!('meta' in column)) return column.values[tool.id];
+  const { kind, license, stars } = tool.data;
+  if (column.meta === 'kind') return kind;
+  if (column.meta === 'license') return license;
+  if (column.meta === 'stars') return stars === undefined ? 'bez veřejného repozitáře' : formatStars(stars);
+}
+
+// Chrome neodvozuje jméno oblasti z <caption>, proto explicitní aria-labelledby.
+const id = `srovnani-${caption
+  .normalize('NFD')
+  .replace(/[̀-ͯ]/g, '')
+  .toLowerCase()
+  .replace(/[^a-z0-9]+/g, '-')
+  .replace(/^-|-$/g, '')}`;
+---
+
+<div class="comparison" role="region" tabindex="0" aria-labelledby={id}>
+  <table>
+    <caption id={id} class="visually-hidden">{caption}</caption>
+    <thead>
+      <tr>
+        <th scope="col">Nástroj</th>
+        {columns.map((column) => <th scope="col">{'meta' in column ? metaLabels[column.meta] : column.label}</th>)}
+      </tr>
+    </thead>
+    <tbody>
+      {
+        tools.map((tool) => (
+          <tr>
+            <th scope="row">
+              <a href={toolPath(tool)}>{tool.data.title}</a>
+            </th>
+            {columns.map((column) =>
+              'meta' in column && column.meta === 'verifiedDate' ? (
+                <td>
+                  <time datetime={isoDate(tool.data.verifiedDate)}>{formatDateShort(tool.data.verifiedDate)}</time>
+                </td>
+              ) : (
+                <td>{segments(textOf(tool, column) ?? '').map(({ part, code }) => (code ? <code>{part}</code> : part))}</td>
+              ),
+            )}
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>
+
+<style>
+  @layer components {
+    /* Posouvá se obal, ne tabulka: přichycený sloupec se drží nejbližšího
+       posouvaného předka. Šířka 100cqi sahá do šířky obsahu stránky článku. */
+    .comparison {
+      position: relative;
+      width: 100cqi;
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+
+      &:focus-visible {
+        outline-offset: 2px;
+      }
+
+      & table {
+        display: table;
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        font-size: var(--text-sm);
+        line-height: 1.55;
+      }
+
+      & th,
+      & td {
+        min-width: 8rem;
+        padding: var(--space-2) var(--space-3);
+        border-bottom: 1px solid var(--line);
+        text-align: left;
+        vertical-align: top;
+      }
+
+      & tbody tr:last-child > * {
+        border-bottom: 0;
+      }
+
+      & thead th {
+        font-family: var(--font-code);
+        font-size: 0.8125rem;
+        font-weight: 600;
+        color: var(--muted);
+      }
+
+      & th:first-child {
+        position: sticky;
+        left: 0;
+        z-index: 1;
+        min-width: 7rem;
+        border-right: 1px solid var(--line);
+        background: var(--bg);
+      }
+
+      & tbody th {
+        font-weight: 600;
+      }
+
+      & code {
+        white-space: nowrap;
+      }
+    }
+  }
+</style>

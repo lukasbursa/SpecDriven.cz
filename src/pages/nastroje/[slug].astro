@@ -3,6 +3,7 @@ import { render } from 'astro:content';
 import Feedback from '../../components/Feedback.astro';
 import Frontmatter, { type Entry } from '../../components/Frontmatter.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { articlePath, getComparisonArticle } from '../../lib/articles';
 import { formatStars, getPublishedTools, toolPath, type Tool } from '../../lib/tools';
 import { discussions, newIssueUrl, repoEditUrl, site } from '../../site.config';
 
@@ -31,6 +32,7 @@ const {
   discussion,
 } = tool.data;
 const { Content, headings } = await render(tool);
+const comparison = await getComparisonArticle();
 
 // Sekce s mapováním na obecný cyklus je povinná, bez ní se web nesestaví.
 const requiredSection = 'Jak funguje';
@@ -72,6 +74,15 @@ const report = newIssueUrl('zastaraly-udaj.yml', {
 
     <div class="prose">
       <Content />
+
+      {
+        comparison && (
+          <p>
+            Jak se {title} liší od ostatních nástrojů, ukazuje{' '}
+            <a href={articlePath(comparison)}>{comparison.data.title}</a>.
+          </p>
+        )
+      }
 
       <h2 id="oficialni-odkazy">Oficiální odkazy</h2>
       <ul>

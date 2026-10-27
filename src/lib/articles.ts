@@ -11,6 +11,15 @@ export async function getPublishedArticles(): Promise<Article[]> {
   return articles.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
 }
 
+// Článek se srovnáním nástrojů, na který odkazuje přehled i stránky nástrojů.
+const comparisonSlug = 'srovnani-nastroju';
+
+/** Publikovaný článek se srovnáním nástrojů, u konceptu nebo bez článku `undefined`. */
+export async function getComparisonArticle(): Promise<Article | undefined> {
+  const articles = await getPublishedArticles();
+  return articles.find((article) => article.id === comparisonSlug);
+}
+
 export function articlePath(article: Article): string {
   return `/clanky/${article.id}/`;
 }

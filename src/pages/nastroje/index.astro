@@ -1,9 +1,11 @@
 ---
 import ToolCards from '../../components/ToolCards.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { articlePath, getComparisonArticle } from '../../lib/articles';
 import { getPublishedTools } from '../../lib/tools';
 
 const tools = await getPublishedTools();
+const comparison = await getComparisonArticle();
 ---
 
 <BaseLayout
@@ -15,6 +17,13 @@ const tools = await getPublishedTools();
     <p class="page__lead">
       Nástroje, které vedou vývoj přes specifikaci. Jsou seřazené podle počtu hvězd na GitHubu k datu ověření, od
       nejpopulárnějšího. Nástroje bez veřejného repozitáře jsou na konci.
+      {
+        comparison && (
+          <>
+            {' '}Rozdíly mezi nimi vedle sebe ukazuje <a href={articlePath(comparison)}>srovnání nástrojů</a>.
+          </>
+        )
+      }
     </p>
     <ToolCards tools={tools} headingLevel={2} showVerified />
   </div>

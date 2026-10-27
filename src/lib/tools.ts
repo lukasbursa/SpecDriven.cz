@@ -15,6 +15,15 @@ export async function getPublishedTools(): Promise<Tool[]> {
   );
 }
 
+/**
+ * Slugy všech nástrojů včetně konceptů. Jen pro kontroly (např. neznámý nástroj
+ * ve srovnání), publikované nástroje se vybírají přes getPublishedTools().
+ */
+export async function getToolIds(): Promise<Set<string>> {
+  const tools = await getCollection('tools');
+  return new Set(tools.map((tool) => tool.id));
+}
+
 export function toolPath(tool: Tool): string {
   return `/nastroje/${tool.id}/`;
 }

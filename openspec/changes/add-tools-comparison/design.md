@@ -55,7 +55,7 @@ import ComparisonTable from '../../components/ComparisonTable.astro';
 
 - Řádky a jejich pořadí určuje `getPublishedTools()`. Autor pořadí nepíše, takže platí požadavek „Řazení podle popularity“ ze specifikace `tools`.
 - První sloupec je `<th scope="row">` s názvem nástroje jako odkazem na `toolPath(tool)`. Záhlaví sloupců jsou `<th scope="col">`, první se jmenuje „Nástroj“.
-- Popisky sloupců z metadat jsou pevné a stejné jako v bloku metadat stránky nástroje: `typ`, `licence`, `hvězdy`, `ověřeno`. Hvězdy formátuje `formatStars()`. U nástroje bez hvězd se zobrazí „bez veřejného repozitáře“ jako na stránce nástroje. Datum se formátuje přes `formatDateShort()` v prvku `<time>`.
+- Popisky sloupců z metadat jsou pevné a odpovídají klíčům bloku metadat stránky nástroje, jen s velkým písmenem jako ruční sloupce: „Typ“, „Licence“, „Hvězdy“, „Ověřeno“. Hvězdy formátuje `formatStars()`. U nástroje bez hvězd se zobrazí „bez veřejného repozitáře“ jako na stránce nástroje. Datum se formátuje přes `formatDateShort()` v prvku `<time>`.
 - Jedna orientace pro všechny tabulky znamená jednu kontrolu úplnosti a jedno pravidlo pro přichycený sloupec. Řádek se čte jako „jak tímto nástrojem projde změna“ a sloupec jako „jak stejný krok dělají ostatní“.
 
 *Alternativa:* tabulka s cyklem s nástroji ve sloupcích (kroky v řádcích). Šířka by byla stejná, ale vznikly by dvě orientace a kontrola úplnosti by se musela psát dvakrát.
@@ -90,18 +90,18 @@ Hodnota je obyčejný řetězec, protože Markdown v props komponenty nefunguje.
 ### 5. Rozvržení a přístupnost
 
 ```
-<figure class="comparison">
-  <div class="comparison__scroll" role="region" tabindex="0" aria-labelledby="<id caption>">
-    <table>
-      <caption id="…">Cyklus krok za krokem</caption>
-      …
+<div class="comparison" role="region" tabindex="0" aria-labelledby="<id caption>">
+  <table>
+    <caption id="…" class="visually-hidden">Cyklus krok za krokem</caption>
+    …
 ```
 
-- Komponenta ve vrstvě `components` přepíše pro svou tabulku `display: block` z `prose.css` zpět na `display: table`. Posouvá se obal `__scroll`, ne tabulka. Přichycený sloupec (`position: sticky; left: 0`) se vztahuje k nejbližšímu posouvanému předkovi, takže tabulka sama posouvaná být nesmí.
+- `<caption>` je vizuálně skrytý. Každá tabulka stojí hned pod nadpisem sekce se stejným textem, viditelný název by se opakoval. Čtečky ho oznámí jako název tabulky i posouvané oblasti.
+- Komponenta ve vrstvě `components` přepíše pro svou tabulku `display: block` z `prose.css` zpět na `display: table`. Posouvá se obal `.comparison`, ne tabulka. Přichycený sloupec (`position: sticky; left: 0`) se vztahuje k nejbližšímu posouvanému předkovi, takže tabulka sama posouvaná být nesmí.
 - Buňky prvního sloupce mají pozadí `--bg` a pravý okraj `--line`, aby přes ně neprosvítal posouvaný obsah. Tokeny `light-dark()` tím řeší i tmavý režim.
 - `tabindex="0"` a `role="region"` s názvem z `<caption>` umožní posouvat šipkami a čtečka oblast pojmenuje (pravidlo axe `scrollable-region-focusable`). Zaměření ukazuje stejný `:focus-visible` obrys jako odkazy.
-- Šířka: na širokých obrazovkách může obal přesáhnout `--measure` doprava až do šířky kontejneru, `width: min(var(--container), 100vw - 2 * var(--gutter))`. Tabulka se šesti krátkými sloupci se pak na desktopu vejde bez posouvání. Na úzkých obrazovkách je obal široký jako sloupec textu a posouvá se. Pokud se přesah na stránce článku nebude chovat podle očekávání (rodič s `max-width` a `overflow`), zůstane obal široký jako text a jen se posouvá. Úkol 2.2 to ověří v prohlížeči.
-- Buňky mají `min-width` kolem 10rem, aby se texty nelámaly po slovech, a písmo `--text-sm`.
+- Šířka: na širokých obrazovkách obal přesáhne `--measure` doprava až do šířky obsahu stránky článku. Tabulka se šesti krátkými sloupci se pak na desktopu vejde bez posouvání. Na úzkých obrazovkách je obal široký jako sloupec textu a posouvá se. Šířku obsahu zná CSS přes container query: element `.article` na stránce článku dostane `container-type: inline-size` a obal má `width: 100cqi`. Výraz `100vw` by se nehodil, protože započítává i posuvník stránky a tabulka by na některých šířkách přetekla. Bez kontejneru (komponenta mimo stránku článku) se `cqi` vztahuje k viewportu. Úkol 2.2 to ověří v prohlížeči.
+- Buňky mají `min-width` kolem 8rem, aby se texty nelámaly po slovech, a písmo `--text-sm`. Tabulka cyklu (šest sloupců) se tak vejde do kontejneru 1080 px.
 
 ### 6. Tři přístupy bez diagramu
 
@@ -150,3 +150,4 @@ Otázky k výběru jsou formulované jako situace („Chcete editor, agenta a sp
 ## Open Questions
 
 - Mají Spec Kit nebo Kiro mechanismus, který specifikace jednotlivých funkcí slučuje do souhrnné specifikace systému? Stránky nástrojů to neuvádějí. Odpověď určí jen zařazení nástrojů v sekci „Tři přístupy“ a ve sloupci „Po dokončení práce“, ne strukturu článku ani komponentu. Ověří ji úkol 4.1.
+  *Odpověď (27. 10. 2026):* ne. Spec Kit podle [dokumentace](https://github.github.io/spec-kit/concepts/sdd.html) nepředepisuje, jak se mají soubory funkce uchovávat nebo upravovat po změně požadavků. Kiro má jednu složku na funkci v `.kiro/specs/` a specifikace podle [doporučených postupů](https://kiro.dev/docs/specs/best-practices/) průběžně upravuje, slučování ale nepopisuje. Oba nástroje proto patří do skupiny „specifikace funkce“.

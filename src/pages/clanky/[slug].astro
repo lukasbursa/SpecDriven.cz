@@ -49,6 +49,8 @@ const entries: Entry[] = [
       flex-direction: column;
       gap: var(--space-5);
       padding-block: var(--space-6) var(--space-8);
+      /* Šířka obsahu pro srovnávací tabulky (100cqi), které přesahují sloupec textu. */
+      container-type: inline-size;
 
       /* :global, aby pravidlo platilo i pro kořen vnořených komponent. */
       & > :global(*) {

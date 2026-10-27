@@ -1,0 +1,285 @@
+---
+title: Srovnání nástrojů pro spec-driven development
+description: Šest nástrojů pro spec-driven development vedle sebe. Jak zapisují specifikaci, jak projdou obecným cyklem, jak ověřují výsledek a kde fungují.
+pubDate: 2026-10-27
+tags: [nástroje]
+---
+
+import ComparisonTable from '../../components/ComparisonTable.astro';
+
+Tento článek staví vedle sebe všech šest nástrojů, které web popisuje: [Spec Kit](/nastroje/spec-kit/), [OpenSpec](/nastroje/openspec/), [BMAD-METHOD](/nastroje/bmad-method/), [GSD Core](/nastroje/gsd-core/), [Agent OS](/nastroje/agent-os/) a [Kiro](/nastroje/kiro/). Údaje vycházejí z jejich stránek na tomto webu a z oficiální dokumentace a odpovídají stavu k 27. 10. 2026. Nástroje se rychle vyvíjejí, proto před rozhodnutím ověřte aktuální stav u zdroje.
+
+Srovnání nevybírá vítěze. Ukazuje, v čem se nástroje liší, aby šlo posoudit, který odpovídá vaší práci. Tento web sám vzniká v OpenSpec ([Jak vznikl tento web](/jak-vznikl-tento-web/)), to ale není doporučení.
+
+Tabulky mají nástroje v řádcích, seřazené stejně jako v [přehledu nástrojů](/nastroje/) podle počtu hvězd na GitHubu. Na úzké obrazovce se tabulky posouvají do strany a název nástroje zůstává vidět.
+
+## Přehled
+
+Typ, licence, hvězdy a datum ověření se načítají z údajů na stránkách nástrojů. Sloupec „Potřebuje“ shrnuje, co je nutné mít před instalací.
+
+<ComparisonTable
+  caption="Přehled"
+  columns={[
+    { meta: 'kind' },
+    { meta: 'license' },
+    {
+      label: 'Potřebuje',
+      values: {
+        'spec-kit': 'Python 3.11+ a `uv`',
+        openspec: 'nic, je to jeden spustitelný soubor (nebo Node.js 20.19+ přes npm)',
+        'bmad-method': '`uv`; stabilní v6.12 navíc Node.js 20.12+ a Python 3.10+',
+        'gsd-core': 'Node.js 18+ a npm',
+        'agent-os': 'instalační skript; postup je přístupný po zadání e-mailu',
+        kiro: 'stažení aplikace; práce se platí kredity, plán Free má 50 měsíčně',
+      },
+    },
+    { meta: 'stars' },
+    { meta: 'verifiedDate' },
+  ]}
+/>
+
+Kiro je jediný komerční nástroj a jediné samostatné vývojové prostředí. Ostatní jsou open-source a doplňují AI asistenta, kterého už používáte, například Claude Code, Cursor nebo GitHub Copilot.
+
+## Tři přístupy ke specifikaci
+
+Nejpodstatnější rozdíl mezi nástroji není v názvech příkazů, ale v tom, co specifikace popisuje a co se s ní stane po dokončení práce.
+
+**Specifikace systému.** [OpenSpec](/nastroje/openspec/) drží hlavní specifikace, které popisují současné chování celého systému. Každá změna k nim píše jen rozdíl (deltu) a po archivaci se delta sloučí do hlavních specifikací. Specifikace se tak dá kdykoli číst jako popis toho, co systém dělá teď.
+
+**Specifikace funkce.** [Spec Kit](/nastroje/spec-kit/), [Kiro](/nastroje/kiro/) a [Agent OS](/nastroje/agent-os/) dávají každé funkci vlastní složku se specifikací, plánem a úkoly. Souhrnnou specifikaci celého systému z nich nesestavují. Spec Kit podle [své dokumentace](https://github.github.io/spec-kit/concepts/sdd.html) nepředepisuje, jak se mají soubory funkce uchovávat nebo upravovat po změně požadavků. Kiro má specifikace funkcí ve složce `.kiro/specs/` a [doporučuje](https://kiro.dev/docs/specs/best-practices/) je průběžně upravovat. Slučování ale nepopisuje a jejich počet v repozitáři neomezuje. Agent OS ukládá specifikace do složek s datem a časem v názvu a doporučuje je pro práci, která potřebuje trvalou dokumentaci rozsahu a rozhodnutí.
+
+**Požadavky produktu.** [GSD Core](/nastroje/gsd-core/) a [BMAD-METHOD](/nastroje/bmad-method/) začínají požadavky na úrovni projektu nebo milníku (`REQUIREMENTS.md`, PRD). Ty se pak rozdělí na fáze, epiky a stories, které se implementují jedna po druhé.
+
+## Cyklus krok za krokem
+
+Jak každý nástroj pokrývá obecný cyklus z článku [Co je spec-driven development](/clanky/co-je-spec-driven-development/). V buňkách jsou jen hlavní soubory a příkazy, podrobnosti jsou na stránce nástroje v sekci „Jak funguje“.
+
+<ComparisonTable
+  caption="Cyklus krok za krokem"
+  columns={[
+    {
+      label: 'Záměr',
+      values: {
+        'spec-kit': '`constitution.md` (jednou na projekt), popis funkce',
+        openspec: '`proposal.md`, předtím volitelně `/opsx:explore`',
+        'bmad-method': '`bmad-product-brief` a další skilly analýzy',
+        'gsd-core': '`PROJECT.md`, `ROADMAP.md`',
+        'agent-os': '`/plan-product`, otázka „co stavíme“',
+        kiro: 'popis v chatu, steering soubory',
+      },
+    },
+    {
+      label: 'Specifikace',
+      values: {
+        'spec-kit': '`spec.md` přes `/speckit-specify`',
+        openspec: 'delta specifikace ve `specs/` změny',
+        'bmad-method': '`bmad-prd`, `bmad-ux`',
+        'gsd-core': '`REQUIREMENTS.md`, `CONTEXT.md` fáze',
+        'agent-os': '`shape.md` přes `/shape-spec`',
+        kiro: '`requirements.md` (u oprav `bugfix.md`)',
+      },
+    },
+    {
+      label: 'Plán',
+      values: {
+        'spec-kit': '`plan.md`, `tasks.md`',
+        openspec: '`design.md`, `tasks.md`',
+        'bmad-method': '`bmad-architecture`, stories v `tickets.toml`',
+        'gsd-core': '`RESEARCH.md`, `PLAN.md` ve vlnách',
+        'agent-os': '`plan.md`, `standards.md`',
+        kiro: '`design.md`, `tasks.md`',
+      },
+    },
+    {
+      label: 'Implementace',
+      values: {
+        'spec-kit': '`/speckit-implement`',
+        openspec: '`/opsx:apply`',
+        'bmad-method': '`bmad-build`',
+        'gsd-core': '`/gsd-execute-phase`',
+        'agent-os': 'AI asistent podle `plan.md`',
+        kiro: 'spouštění úkolů z `tasks.md`',
+      },
+    },
+    {
+      label: 'Ověření',
+      values: {
+        'spec-kit': '`/speckit-converge`',
+        openspec: '`/opsx:verify`, `/opsx:archive`',
+        'bmad-method': 'součást `bmad-build`',
+        'gsd-core': '`VERIFICATION.md`, `/gsd-verify-work`',
+        'agent-os': 'samostatný krok nepopisuje',
+        kiro: 'Markdown Review, Analyze Requirements, Correctness',
+      },
+    },
+  ]}
+/>
+
+Všechny nástroje kromě Kira přidávají příkazy nebo skilly do AI asistenta. Zápis příkazu se proto může lišit podle asistenta, například `/speckit-specify` nebo `/speckit.specify`.
+
+## Jak vypadá specifikace
+
+<ComparisonTable
+  caption="Jak vypadá specifikace"
+  columns={[
+    {
+      label: 'Kde leží',
+      values: {
+        'spec-kit': '`specs/<číslo>-<funkce>/`, zásady v `.specify/memory/`',
+        openspec: '`openspec/specs/` a delty v `openspec/changes/<změna>/specs/`',
+        'bmad-method': '`_bmad-output/<iniciativa>/`',
+        'gsd-core': '`.planning/`, fáze v `.planning/phases/`',
+        'agent-os': '`agent-os/specs/<datum>-<čas>-<slug>/`',
+        kiro: '`.kiro/specs/<funkce>/`',
+      },
+    },
+    {
+      label: 'Formát požadavků',
+      values: {
+        'spec-kit': 'uživatelské scénáře podle priority, akceptační scénáře Given/When/Then, požadavky `FR-001`',
+        openspec: 'Requirement se SHALL/MUST a scénáře WHEN/THEN',
+        'bmad-method': 'produktové požadavky (PRD), požadavky epiku a stories',
+        'gsd-core': 'číslovaná akceptační kritéria, např. `AUTH-01`',
+        'agent-os': 'rozsah a rozhodnutí v `shape.md`',
+        kiro: 'uživatelské příběhy a akceptační kritéria v notaci EARS',
+      },
+    },
+    {
+      label: 'Po dokončení práce',
+      values: {
+        'spec-kit': 'složka funkce zůstává, další postup nepředepisuje',
+        openspec: 'delty se sloučí do hlavních specifikací, změna jde do archivu',
+        'bmad-method': 'dokumenty zůstávají v iniciativě, krok „learn and adjust“ vrací práci do plánování',
+        'gsd-core': '`/gsd-ship` vytvoří pull request a fázi archivuje',
+        'agent-os': 'složka specifikace zůstává jako dokumentace',
+        kiro: 'specifikace funkce zůstává a průběžně se upravuje',
+      },
+    },
+  ]}
+/>
+
+Rozdíl ve formátu je vidět na jednom požadavku. Kiro v [dokumentaci](https://kiro.dev/docs/specs/) uvádí tento příklad v notaci EARS:
+
+```text
+WHEN a user submits a form with invalid data
+THE SYSTEM SHALL display validation errors next to the relevant fields
+```
+
+Tentýž požadavek ve formátu OpenSpec, jako požadavek se scénářem:
+
+```markdown
+### Requirement: Form validation
+The form SHALL display validation errors next to the relevant fields.
+
+#### Scenario: Invalid data
+- **WHEN** a user submits the form with invalid data
+- **THEN** validation errors are displayed next to the relevant fields
+```
+
+A jako akceptační scénář podle [šablony specifikace](https://github.com/github/spec-kit/blob/main/templates/spec-template.md) Spec Kitu:
+
+```markdown
+1. **Given** a user has filled in the form with invalid data,
+   **When** they submit it,
+   **Then** validation errors are displayed next to the relevant fields
+```
+
+Druhý a třetí zápis jsou ukázky tohoto webu podle formátu z dokumentace, ne citace.
+
+## Ověření
+
+Některé nástroje mají na ověření samostatný příkaz, který porovná kód se specifikací, jiné kontrolují výsledek přímo během implementace.
+
+<ComparisonTable
+  caption="Ověření"
+  columns={[
+    {
+      label: 'Jak se ověřuje',
+      values: {
+        'spec-kit': '`/speckit-converge` dopíše chybějící úkoly a implementace se opakuje, dokud neohlásí `Converged`',
+        openspec: '`/opsx:verify` (rozšířený profil) vypíše zprávu o úplnosti, správnosti a soudržnosti, nic nemění',
+        'bmad-method': '`bmad-build` kontroluje akceptační kritéria, nezávislé revize a testy, pokud je projekt má',
+        'gsd-core': 'ověřovací agent zapíše `VERIFICATION.md` a navrhne opravy, `/gsd-verify-work` pro akceptační testy',
+        'agent-os': 'samostatný krok nepopisuje',
+        kiro: 'Markdown Review s komentáři, v IDE Analyze Requirements a Correctness (property-based testy)',
+      },
+    },
+    {
+      label: 'Proti čemu',
+      values: {
+        'spec-kit': 'specifikace, plán a úkoly',
+        openspec: 'artefakty změny (návrh, specifikace, design, úkoly)',
+        'bmad-method': 'akceptační kritéria a záměr změny',
+        'gsd-core': 'cíl fáze, ID požadavků a rozhodnutí v `CONTEXT.md`',
+        'agent-os': 'měřítkem jsou standardy vložené přes `/inject-standards`',
+        kiro: 'požadavky v `requirements.md`',
+      },
+    },
+  ]}
+/>
+
+Zdroje k údajům, které nejsou na stránkách nástrojů: [skilly OpenSpec](https://openspec.dev/docs/skills) a [postup změny v BMad](https://docs.bmad-method.org/build/build-a-change/).
+
+## Malé změny
+
+Pro drobné úpravy a opravy chyb nabízí většina nástrojů kratší cestu než celý cyklus.
+
+<ComparisonTable
+  caption="Malé změny"
+  columns={[
+    {
+      label: 'Kratší cesta',
+      values: {
+        'spec-kit': 'rozšíření `bug` pro opravy chyb: `/speckit-bug-assess`, `/speckit-bug-fix`, `/speckit-bug-test`, bez předchozí specifikace funkce',
+        openspec: 'samostatnou zkratku neuvádí, i malá změna projde `/opsx:propose`, `/opsx:apply` a `/opsx:archive`',
+        'bmad-method': 'triviální úprava bez BMad, ucelená menší změna rovnou do `bmad-build`',
+        'gsd-core': '`/gsd-quick` (plán a provedení mimo smyčku fází), `/gsd-fast` pro úpravy na minutu',
+        'agent-os': 'na rychlé úkoly stačí plan mód asistenta bez `/shape-spec`',
+        kiro: 'Quick Spec vytvoří všechny tři soubory bez schvalování, na průzkumnou práci volný chat',
+      },
+    },
+  ]}
+/>
+
+Zdroje: [opravy chyb ve Spec Kitu](https://github.github.io/spec-kit/guides/bugfix.html), [rychlé úkoly v GSD Core](https://github.com/open-gsd/gsd-core/blob/main/docs/how-to/handle-quick-and-fast-tasks.md) a [nastavení Kira](https://kiro.dev/docs/ide/setup/).
+
+## Podporovaná prostředí
+
+<ComparisonTable
+  caption="Podporovaná prostředí"
+  columns={[
+    {
+      label: 'Prostředí',
+      values: {
+        'spec-kit': 'přes 40 integrací, např. Claude Code, GitHub Copilot, Cursor, Gemini CLI, Codex CLI, obecná `generic`',
+        openspec: '46 nástrojů se skilly, např. Claude Code, Cursor, GitHub Copilot, Gemini CLI, Codex',
+        'bmad-method': 'AI asistenti, kteří podporují skilly (verze v7)',
+        'gsd-core': 'Claude Code, OpenCode, Codex, GitHub Copilot, Cursor, Windsurf a další',
+        'agent-os': 'Claude Code, Cursor, Windsurf, Codex, Antigravity a asistenti, kteří čtou soubory',
+        kiro: 'vlastní IDE pro macOS, Windows a Linux, CLI a web',
+      },
+    },
+    {
+      label: 'Napojení na asistenta',
+      values: {
+        'spec-kit': '`specify init --integration <klíč>`, další asistent přes `specify integration install`',
+        openspec: '`openspec init` nainstaluje skilly, 32 nástrojům i příkazy (slash commands)',
+        'bmad-method': 'instalátor skillů se zeptá na nástroje, oficiální pluginy pro Claude Code a Codex',
+        'gsd-core': 'instalátor převede agenty a příkazy do formátu asistenta, nativní je Claude Code',
+        'agent-os': 'plná podpora příkazů v Claude Code, jinde odkaz přímo na soubory v `agent-os/`',
+        kiro: 'není potřeba, specifikace jsou součástí produktu',
+      },
+    },
+  ]}
+/>
+
+## Podle čeho vybírat
+
+Žádný nástroj není nejlepší pro všechno. Pomůže položit si několik otázek. U každé jsou nástroje, jejichž dokumentace danou situaci uvádí.
+
+- **Chcete editor, agenta a specifikace v jednom produktu bez další instalace?** [Kiro](/nastroje/kiro/), jako jediný z nich komerční.
+- **Měníte průběžně existující systém a chcete mít stále aktuální popis jeho chování?** [OpenSpec](/nastroje/openspec/), postavený na deltách a hlavních specifikacích.
+- **Potřebujete zásady projektu, proti kterým se kontroluje každý krok, třeba kvůli firemním standardům nebo regulaci?** [Spec Kit](/nastroje/spec-kit/) se zásadami (constitution) a předvolbami.
+- **Rozkládáte velkou funkci na části a pracujete na ní přes několik sezení?** [GSD Core](/nastroje/gsd-core/) s fázemi v čistém kontextu, [BMAD-METHOD](/nastroje/bmad-method/) s epiky a stories.
+- **Chcete pokrýt i produkt, UX a architekturu, nejen kód?** [BMAD-METHOD](/nastroje/bmad-method/) se skilly pro tyto role.
+- **Jde vám hlavně o to, aby AI asistent dodržoval konvence vašeho kódu?** [Agent OS](/nastroje/agent-os/) se standardy vytaženými z existujícího kódu.
