@@ -26,7 +26,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
+      # Celá historie: stavový řádek z ní určuje pořadí archivací ve stejný den
+      # (src/lib/openspec-status.ts). V mělkém klonu by ukázal špatnou změnu.
       - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-node@v5
         with:
