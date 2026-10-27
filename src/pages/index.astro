@@ -1,6 +1,7 @@
 ---
 import ArticleList from '../components/ArticleList.astro';
 import Scenario from '../components/Scenario.astro';
+import SpecExcerpt from '../components/SpecExcerpt.astro';
 import ToolCards from '../components/ToolCards.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getPublishedArticles } from '../lib/articles';
@@ -22,14 +23,21 @@ const cycle = [
 <BaseLayout>
   <section class="hero">
     <div class="container hero__inner">
-      <p class="hero__label mono" aria-hidden="true">## Purpose</p>
-      <h1 class="hero__title">Nejdřív specifikace.<br />Potom kód.</h1>
-      <p class="hero__lead">
-        Spec-driven development česky. Co to je, jak funguje a jaké nástroje pro něj existují.
-      </p>
-      <Scenario title="Nový čtenář" when="nevíte, co je spec-driven development">
-        <a class="button" href={site.introArticlePath}>Začněte úvodním článkem →</a>
-      </Scenario>
+      <div class="hero__main">
+        <p class="hero__label mono" aria-hidden="true">## Purpose</p>
+        <h1 class="hero__title">Nejdřív specifikace.<br />Potom kód.</h1>
+        <p class="hero__lead">
+          Spec-driven development česky. Co to je, jak funguje a jaké nástroje pro něj existují.
+        </p>
+        <Scenario title="Nový čtenář" when="nevíte, co je spec-driven development">
+          <a class="button" href={site.introArticlePath}>Začněte úvodním článkem →</a>
+        </Scenario>
+      </div>
+      <SpecExcerpt
+        file="openspec/specs/homepage/spec.md"
+        requirement="Vysvětlení SDD na první pohled"
+        label="Ukázka specifikace úvodní stránky"
+      />
     </div>
   </section>
 
@@ -84,10 +92,22 @@ const cycle = [
     }
 
     .hero__inner {
+      display: grid;
+      gap: var(--space-5);
+      padding-block: clamp(2.5rem, 1.5rem + 4vw, 5rem);
+
+      /* Vpravo úryvek specifikace, podle které úvodní sekce vznikla. */
+      @media (min-width: 64rem) {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 26rem);
+        gap: var(--space-7);
+        align-items: start;
+      }
+    }
+
+    .hero__main {
       display: flex;
       flex-direction: column;
       gap: var(--space-5);
-      padding-block: clamp(2.5rem, 1.5rem + 4vw, 5rem);
     }
 
     .hero__label {

@@ -33,6 +33,12 @@ export function repoTreeUrl(path: string): string {
   return `${site.repo.url}/tree/${site.repo.branch}/${path}`;
 }
 
+/** Odkaz na soubor v repozitáři, volitelně se zvýrazněnými řádky `[od, do]`. */
+export function repoBlobUrl(path: string, lines?: [number, number]): string {
+  const hash = lines ? `#L${lines[0]}-L${lines[1]}` : '';
+  return `${site.repo.url}/blob/${site.repo.branch}/${path}${hash}`;
+}
+
 /** Odkaz na editor souboru na GitHubu, např. `src/content/tools/openspec.md`. */
 export function repoEditUrl(filePath: string): string {
   return `${site.repo.url}/edit/${site.repo.branch}/${filePath}`;

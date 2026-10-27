@@ -1,0 +1,111 @@
+---
+// Úryvek specifikace jako soubor v editoru: cesta, čísla řádků, zdrojový Markdown.
+// Čísla řádků a značky Markdownu (#, **, -) jsou pro čtečky skryté.
+import { readRequirement } from '../lib/spec-excerpt';
+import { repoBlobUrl } from '../site.config';
+
+interface Props {
+  /** Cesta ke specifikaci relativně ke kořeni repozitáře. */
+  file: string;
+  /** Název požadavku za `### Requirement: `. */
+  requirement: string;
+  /** Jméno bloku pro čtečky obrazovky. */
+  label: string;
+}
+
+const { file, requirement, label } = Astro.props;
+const { lines } = readRequirement(file, requirement);
+const range: [number, number] = [lines[0].number, lines[lines.length - 1].number];
+---
+
+<figure class="spec-excerpt" aria-label={label}>
+  <figcaption class="spec-excerpt__file">{file}</figcaption>
+  <code class="spec-excerpt__code">
+    {
+      lines.map((line) => (
+        <span class="spec-excerpt__line">
+          <span class="spec-excerpt__number" aria-hidden="true">{line.number}</span>
+          <span class="spec-excerpt__text">{line.tokens.map((token) => (
+            <span
+              class={token.kind === 'text' ? undefined : `spec-excerpt__${token.kind}`}
+              aria-hidden={token.kind === 'marker' ? 'true' : undefined}
+            >{token.text}</span>
+          ))}</span>
+        </span>
+      ))
+    }
+  </code>
+  <a class="spec-excerpt__link" href={repoBlobUrl(file, range)} rel="noopener">Celá specifikace na GitHubu →</a>
+</figure>
+
+<style>
+  @layer components {
+    .spec-excerpt {
+      margin: 0;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      font-family: var(--font-code);
+      overflow: hidden;
+    }
+
+    .spec-excerpt__file {
+      padding: 0.625rem var(--space-4);
+      border-bottom: 1px solid var(--line);
+      font-size: 0.8125rem;
+      line-height: 1.5;
+      color: var(--faint);
+      overflow-wrap: anywhere;
+    }
+
+    .spec-excerpt__code {
+      display: block;
+      padding: var(--space-4) var(--space-4) var(--space-4) var(--space-2);
+      font-size: 0.8125rem;
+      line-height: 1.6;
+      color: var(--ink);
+    }
+
+    .spec-excerpt__line {
+      display: grid;
+      grid-template-columns: 2.5ch minmax(0, 1fr);
+      gap: var(--space-3);
+      min-height: 1lh;
+    }
+
+    .spec-excerpt__number {
+      color: var(--faint);
+      text-align: right;
+      user-select: none;
+    }
+
+    /* Zalomený řádek pokračuje pod začátkem textu, ne pod číslem. */
+    .spec-excerpt__text {
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    .spec-excerpt__marker {
+      color: var(--faint);
+    }
+
+    .spec-excerpt__heading,
+    .spec-excerpt__keyword {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .spec-excerpt__normative {
+      color: var(--code-keyword);
+      font-weight: 600;
+    }
+
+    .spec-excerpt__link {
+      display: block;
+      padding: 0.625rem var(--space-4);
+      border-top: 1px solid var(--line);
+      font-size: 0.8125rem;
+      line-height: 1.5;
+    }
+  }
+</style>

@@ -19,7 +19,7 @@
 
 ### 1. Ukázat requirement „Vysvětlení SDD na první pohled“
 
-Popisuje přesně to, co čtenář vidí v levém sloupci (nadpis a úvodní text), a je krátký: dvě věty a jeden scénář, v souboru řádky 9–15.
+Popisuje přesně to, co čtenář vidí v levém sloupci (nadpis a úvodní text), a je krátký: dvě věty a jeden scénář, v souboru řádky 9–14.
 
 *Alternativa, „Výzva ve tvaru scénáře“:* text „WHEN nevíte, co je…“ je vlevo doslova, ale požadavek má tři scénáře a do sloupce by se nevešel celý. Zkrácený úryvek s výpustkou už není „skutečný“.
 
@@ -57,7 +57,7 @@ function readRequirement(file: string, name: string): { file: string; lines: Exc
     <span class="line"><span class="ln" aria-hidden="true">9</span><span>…tokeny…</span></span>
     …
   </code>
-  <a href="…/blob/main/openspec/specs/homepage/spec.md#L9-L15">Celá specifikace na GitHubu →</a>
+  <a href="…/blob/main/openspec/specs/homepage/spec.md#L9-L14">Celá specifikace na GitHubu →</a>
 </figure>
 ```
 
