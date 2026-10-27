@@ -1,0 +1,123 @@
+---
+title: Konec vibe codingu? Přichází spec-driven development
+description: Vibe coding je rychlý start, ale u softwaru, který má dlouho vydržet, narazí. Srovnání se spec-driven developmentem a co vám specifikace přinese.
+pubDate: 2026-10-27
+tags: [názor]
+---
+
+import Scenario from '../../components/Scenario.astro';
+import { repoBlobUrl, repoTreeUrl } from '../../site.config';
+
+Vibe coding se za necelý rok dostal z jednoho příspěvku na sociální síti až do slovníku. Jenže tak dnes vzniká i software, který má dlouho vydržet, a právě tam vibe coding naráží. Pro takový software dává smysl jiný přístup: nejdřív sepsat, co má dělat, a teprve potom podle toho psát kód.
+
+## Co je vibe coding
+
+Pojem zavedl Andrej Karpathy [v příspěvku na X](https://x.com/karpathy/status/1886192184808149383) 2. února 2025: *„There's a new kind of coding I call ‚vibe coding‘, where you fully give in to the vibes, embrace exponentials, and forget that the code even exists.“* Tedy programování, při kterém se úplně oddáte pocitu a zapomenete, že nějaký kód vůbec existuje.
+
+V tomtéž příspěvku popisuje, jak to vypadá. Změny od AI přijímá všechny a diffy nečte (*„I don't read the diffs anymore“*), chybové hlášky vkládá zpátky bez komentáře a kód podle jeho slov roste za hranici toho, čemu rozumí (*„The code grows beyond my usual comprehension“*). A rovnou dodává, k čemu se to hodí: *„It's not too bad for throwaway weekend projects“*, na víkendové projekty na zahození to není špatné.
+
+Vibe coding byl tedy od začátku myšlený pro věci, které se zahodí. Odtud otazník v nadpisu.
+
+Collins Dictionary vyhlásil vibe coding [slovem roku 2025](https://blog.collinsdictionary.com/language-lovers/collins-word-of-the-year-2025-ai-meets-authenticity-as-society-shifts/). Mezitím se jeho význam rozmělnil a začalo se tak říkat skoro jakémukoli programování s AI. Simon Willison proto [v březnu 2025 připomněl](https://simonwillison.net/2025/Mar/19/vibe-coding/), že vibe coding je *„building software with an LLM without reviewing the code it writes“*, tedy stavění softwaru s jazykovým modelem bez kontroly kódu, který model napíše. Když kód čtete, testujete a umíte ho vysvětlit, je to podle něj prostě vývoj softwaru.
+
+Tento článek se drží Willisonova vymezení. Vibe coding je práce, při které se řídíte jen dojmem z výsledku.
+
+## Kde vibe coding funguje
+
+Řekněme to na rovinu: vibe coding je skvělý nástroj. Tam, kde výsledek nemusí přežít týden, je to nejrychlejší cesta od nápadu k něčemu, na co se dá kliknout.
+
+- **Prototyp k ověření nápadu.** Za odpoledne zjistíte, jestli nápad vůbec dává smysl a stojí za další práci.
+- **Jednorázový skript.** Převod souborů, úklid dat, rychlá analýza. Spustí se jednou a zahodí.
+- **Osobní nástroj.** Když jste jediný uživatel i správce, nikomu nic nepředáváte.
+- **Učení.** Při hraní s novou knihovnou nebo jazykem je rychlá zpětná vazba důležitější než architektura.
+
+Ve všech případech platí totéž: když se to rozbije, zahodíte to a začnete znovu. Žádná škoda.
+
+## Kde se láme
+
+Potíž začne ve chvíli, kdy se z víkendového projektu stane produkt. Kód má žít měsíce, pracuje na něm víc lidí nebo víc sezení s AI a někdo na něm závisí.
+
+1. **Záměr nepřežije konverzaci.** Co jste chtěli, máte v hlavě a v historii chatu. Nové sezení s AI to nemá a dovozuje si to z kódu, který nikdo nečetl.
+2. **Není proti čemu ověřovat.** „Funguje to“ znamená „to, co jsem zkusil, fungovalo“. Bez zapsaného očekávaného chování nepoznáte, jestli je nečekané chování chyba, nebo záměr.
+3. **Review nemá na čem stát.** Reviewer vidí změny v kódu, ale ne to, čeho měly dosáhnout. Posoudí, jestli je kód čistý, ne jestli dělá správnou věc.
+4. **Dojem se nedá předat.** Kolega, který projekt přebírá, dostane kód a pár vět vysvětlení. Za půl roku jste tím kolegou vy.
+5. **Kód, kterému nikdo nerozumí.** Karpathy to přiznává sám. U víkendového projektu je to zábavné, u kódu, který zpracovává data zákazníků, je to riziko. V kódu, který nikdo nečetl, se chyby hledají těžko, i ty bezpečnostní.
+
+## Vibe coding vs. spec-driven development
+
+| Hledisko | Vibe coding | Spec-driven development |
+| --- | --- | --- |
+| Kde žije zadání | v hlavě a v historii chatu | v repozitáři vedle kódu |
+| Nové sezení s AI | začíná od nuly | agent si přečte specifikaci |
+| Proti čemu se ověřuje | proti dojmu, že to funguje | proti scénářům WHEN/THEN |
+| Co vidí reviewer | změny v kódu | záměr i změny v kódu |
+| Předání kolegovi | ústně, pokud vůbec | odkaz na specifikaci |
+| Změna po půl roce | pátrání v kódu | specifikace popisuje současné chování |
+| Rychlost startu | okamžitě | nejdřív se sepíše záměr |
+| Režie u drobností | žádná | i malá změna potřebuje pár řádků textu |
+
+V posledních dvou řádcích vibe coding vyhrává a nemá smysl to zastírat. Otázka nezní, který přístup je rychlejší na začátku, ale co se stane potom.
+
+## Jedna změna dvakrát
+
+Tento web má v hlavičce přepínač světlého a tmavého režimu. Vznikl přes spec-driven development, a tak jde ukázat, jak vypadá zadání v obou přístupech.
+
+Při vibe codingu je zadáním jedna věta:
+
+> Přidej do hlavičky přepínač tmavého režimu.
+
+Z té věty je jasné jen jedno: má vzniknout tlačítko, které přepne barvy. Neříká ale nic o tom:
+
+- jestli si web volbu pamatuje na dalších stránkách a při další návštěvě,
+- co se stane, když si čtenář později v systému zapne jiný režim,
+- jestli stránka při načtení na okamžik neblikne opačnou barvou,
+- co uvidí čtenář s vypnutým JavaScriptem,
+- jak se tlačítko ovládá klávesnicí a co oznámí čtečka obrazovky,
+- jestli se tlačítko vejde do hlavičky na telefonu.
+
+Něco z toho AI možná odhadne sama, něco ne. Dokud to někdo nevyzkouší, nevíte, co z toho platí, a nemáte nic, proti čemu byste výsledek zkontrolovali.
+
+Ve specifikaci webu má stejný požadavek devět scénářů. Dva z nich:
+
+<Scenario title="Načtení bez bliknutí" when="čtenář s uloženou tmavou variantou a světlým režimem v systému otevře libovolnou stránku">
+  stránka se od prvního vykreslení zobrazí v tmavé variantě
+</Scenario>
+
+<Scenario title="Prohlížeč bez JavaScriptu" when="čtenář otevře libovolnou stránku s vypnutým JavaScriptem">
+  hlavička neobsahuje tlačítko pro přepnutí režimu a web se zobrazí podle systému
+</Scenario>
+
+Každý scénář je otázka, kterou si někdo položil dřív, než vznikl kód. A zároveň kontrolní bod: po implementaci se projde a buď platí, nebo ne. Celou změnu s návrhem, specifikací, designem a úkoly najdete <a href={repoTreeUrl('openspec/changes/archive/2026-10-27-add-color-scheme-toggle')}>v repozitáři webu</a>.
+
+## Co tím získáte
+
+- **Kontext, který přežije sezení.** Specifikace leží v repozitáři. Nové sezení s AI, nový kolega i vy za půl roku začínáte od stejného textu.
+- **Měřítko pro ověření.** Scénáře WHEN/THEN říkají, co přesně má platit. Dají se projít ručně nebo přepsat do testů.
+- **Review záměru, ne jen kódu.** Reviewer nejdřív posoudí, jestli změna dělá správnou věc, a teprve potom, jestli ji dělá dobře. Chyba v zadání se opraví v jedné větě, ne ve stovce řádků kódu.
+- **Rozhodnutí s důvodem.** Proč tlačítko bez JavaScriptu zmizí? Odpověď je napsaná v designu změny, ne v hlavě jednoho člověka.
+- **Méně dohadování s AI.** Místo toho, abyste v každém sezení vysvětlovali totéž, odkážete agenta na specifikaci.
+
+## Co to stojí
+
+Spec-driven development není zadarmo.
+
+- **Čas na začátku.** Než vznikne první řádek kódu, musíte popsat, co chcete. Často to zabere jen pár odstavců, ale u nápadu, který možná zahodíte, se nevyplatí ani to.
+- **Disciplína.** Specifikace má cenu, jen když odpovídá skutečnosti. Kdo upraví kód a specifikaci ne, má brzy dva zdroje pravdy, které si odporují.
+- **Režie u drobností.** Oprava překlepu přes celý cyklus je byrokracie. Nástroje to řeší různě, přehled je ve [srovnání nástrojů](/clanky/srovnani-nastroju/) v části „Malé změny“. Tento web má pro opravy textu výjimku: přijdou rovnou pull requestem bez návrhu změny, jak popisuje stránka [Jak vznikl tento web](/jak-vznikl-tento-web/).
+
+## Kdy co
+
+1. **Zahodíte to do měsíce?** Pak stačí vibe coding. Prototyp, jednorázový skript, osobní nástroj.
+2. **Bude na tom pracovat někdo další, nebo vy za půl roku?** Pak potřebujete specifikaci. Záměr nesmí zůstat jen ve vaší hlavě.
+3. **Závisí na tom někdo, třeba zákazníci, jejich data nebo peníze?** Pak potřebujete specifikaci a kód, který někdo přečetl.
+4. **Nic z toho?** Klidně vibe coding, ale kód si aspoň přečtěte. Pak už to podle Willisona vibe coding není.
+
+Nejlepší cesta často vede přes obojí. Nápad si ověříte vibe codingem, a když se osvědčí, sepíšete k němu specifikaci a prototyp podle ní přepíšete. Prototyp vám přitom napoví, na co ve specifikaci nezapomenout.
+
+## Takže konec vibe codingu?
+
+Ne. Vibe coding zůstane nejrychlejší cestou od nápadu k prototypu. Končí jen představa, že stejným způsobem jde stavět software, který má dlouho vydržet. Pro ten ho Karpathy nikdy nezamýšlel.
+
+Pro takový software se vyplatí obrátit pořadí: nejdřív specifikace, potom kód. Jak to funguje, vysvětluje článek [Co je spec-driven development](/clanky/co-je-spec-driven-development/). Nástroje, které s tím pomáhají, najdete v [přehledu nástrojů](/nastroje/) a ve [srovnání](/clanky/srovnani-nastroju/).
+
+A nakonec: tento článek vznikl stejně. Než se napsala jeho první věta, měl vlastní požadavek se scénáři <a href={repoBlobUrl('openspec/specs/articles/spec.md')}>ve specifikaci webu</a>. Celý web vzniká v OpenSpec.

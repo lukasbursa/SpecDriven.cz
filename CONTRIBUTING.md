@@ -34,3 +34,5 @@ Aktuální specifikace webu jsou v [`openspec/specs/`](openspec/specs/), kontext
 ## Tón obsahu
 
 Obsah je věcný a informativní: vysvětluje, co nástroj nebo pojem je a jak funguje. Fakta o nástrojích odkazují na oficiální zdroje a nesou datum ověření, protože se rychle mění. Obsah je česky, s diakritikou.
+
+Výjimkou jsou názorové články. Mají štítek `názor` a smí mít ostřejší formulace v nadpisu, perexu a závěru. Fakta v nich odkazují na zdroj stejně jako jinde.

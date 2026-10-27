@@ -11,7 +11,7 @@ Cyklus je **propose → apply → archive** (`/opsx:propose`, `/opsx:apply`, `/o
 Jediná výjimka: úprava textu a faktů v **existujícím** souboru v `src/content/` (překlep, formulace, zastaralý údaj s odkazem na oficiální zdroj a nové `verifiedDate`) smí jít přímým commitem nebo pull requestem bez změny v OpenSpec. Nový článek nebo nástroj a cokoli mimo `src/content/` (komponenty, stránky, styly, schéma, konfigurace) prochází cyklem. Pravidlo platí pro všechny a popisují ho i `CONTRIBUTING.md` a stránka „Jak vznikl tento web“, drž je v souladu.
 
 - `openspec/specs/` jsou zdroj pravdy o chování webu. Při implementaci ověřuj proti scénářům WHEN/THEN, ne proti vlastnímu odhadu.
-- `openspec/config.yaml` obsahuje kontext projektu: publikum, **věcný tón** obsahu (fakta o nástrojích s odkazem na oficiální zdroje a datem ověření), vizuální styl a stack. OpenSpec ho předává při každém generování artefaktů. Při psaní obsahu webu se jím řiď taky.
+- `openspec/config.yaml` obsahuje kontext projektu: publikum, **věcný tón** obsahu (fakta o nástrojích s odkazem na oficiální zdroje a datem ověření), vizuální styl a stack. Výjimkou z věcného tónu jsou názorové články se štítkem `názor`: ostřejší formulace smí mít v nadpisu, perexu a závěru, fakta v nich mají zdroj. OpenSpec ho předává při každém generování artefaktů. Při psaní obsahu webu se jím řiď taky.
 - Artefakty se píšou česky. Strukturní nadpisy (`### Requirement:`, `#### Scenario:`) a klíčová slova SHALL/MUST zůstávají anglicky.
 - Když implementace odhalí rozpor se specifikací, uprav nejdřív artefakty změny (design.md, specs) a teprve potom kód.
 - Kontrola artefaktů: `openspec validate <změna> --strict`, pro hlavní specifikace `openspec validate --specs --strict`.

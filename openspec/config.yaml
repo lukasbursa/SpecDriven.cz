@@ -15,6 +15,10 @@ context: |
   a jak funguje. Fakta o nástrojích odkazují na oficiální zdroje a nesou datum
   ověření, protože se rychle mění.
 
+  Výjimkou jsou názorové články. Mají štítek `názor` a smí mít ostřejší
+  formulace v nadpisu, perexu a závěru. Fakta v nich odkazují na zdroj
+  stejně jako jinde.
+
   Web sám je vyvíjen veřejně přes OpenSpec – repozitář slouží jako živá ukázka
   metody. Proto mají být proposals, specs i tasks srozumitelné i pro čtenáře
   zvenku, kteří se z nich učí. OpenSpec je zmíněn jako nástroj, kterým web

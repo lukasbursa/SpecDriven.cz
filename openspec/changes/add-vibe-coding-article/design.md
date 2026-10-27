@@ -43,12 +43,12 @@ Sekce 7 v požadavku není, ale bez ní by článek působil jako reklama. Speci
 
 ```yaml
 title: Konec vibe codingu? Přichází spec-driven development
-description: Vibe coding je rychlý start, ale u softwaru, který musí fungovat i zítra, narazí. Srovnání se spec-driven developmentem a co vám specifikace přinese.
+description: Vibe coding je rychlý start, ale u softwaru, který má dlouho vydržet, narazí. Srovnání se spec-driven developmentem a co vám specifikace přinese.
 pubDate: <datum implementace>
 tags: [názor]
 ```
 
-Soubor `konec-vibe-codingu.mdx`. Perex má 149 znaků a vejde se do limitu 160. Termín se v celém článku píše „vibe coding“ odděleně, tak jak ho zavedl Karpathy, ve skloňování „vibe codingu“.
+Soubor `konec-vibe-codingu.mdx`. Perex má 145 znaků a vejde se do limitu 160. Termín se v celém článku píše „vibe coding“ odděleně, tak jak ho zavedl Karpathy, ve skloňování „vibe codingu“.
 
 ### 3. Zdroje: jen primární, ověřené v den psaní
 
@@ -57,7 +57,13 @@ Soubor `konec-vibe-codingu.mdx`. Perex má 149 znaků a vejde se do limitu 160. 
 | Karpathy zavedl pojem, citát „forget that the code even exists“, vymezení na „throwaway weekend projects“ | jeho příspěvek na X z 2. 2. 2025 | povinně |
 | Slovo roku 2025 | oznámení Collins Dictionary | povinně |
 | Ne každé programování s AI je vibe coding | článek Simona Willisona z března 2025 | povinně |
-| Zkušení vývojáři byli s AI pomalejší, ale připadali si rychlejší | studie METR z července 2025 | volitelně |
+| Zkušení vývojáři byli s AI pomalejší, ale připadali si rychlejší | studie METR z července 2025 | **nepoužije se** (viz níže) |
+
+Výsledek ověření (27. 10. 2026):
+- **Karpathy:** příspěvek <https://x.com/karpathy/status/1886192184808149383> z 2. 2. 2025 (23:17 UTC). X ho bez přihlášení nezobrazí, plné znění se ověřilo přes veřejné API zrcadla fxtwitter a shoduje se s citací u Willisona. Článek cituje „forget that the code even exists“, „I don't read the diffs anymore“, „The code grows beyond my usual comprehension“ a „It's not too bad for throwaway weekend projects“ a odkazuje na původní URL na X.
+- **Collins:** oficiální stránka `collinsdictionary.com/woty` automatické načtení odmítá. Článek proto odkazuje na oznámení na jazykovém blogu Collins (<https://blog.collinsdictionary.com/language-lovers/collins-word-of-the-year-2025-ai-meets-authenticity-as-society-shifts/>, 6. 11. 2025), které vibe coding jako slovo roku 2025 uvádí.
+- **Willison:** „Not all AI-assisted programming is vibe coding (but vibe coding rocks)“, <https://simonwillison.net/2025/Mar/19/vibe-coding/>, 19. 3. 2025. Vibe coding vymezuje jako „building software with an LLM without reviewing the code it writes“.
+- **METR:** studie (<https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/>) zkoumala 16 vývojářů s nástroji z počátku roku 2025. Autoři dnes na stránce sami uvádějí, že výsledky „no longer reflect the current impact of AI models“, a odkazují na novější studii. Omezení se do jedné věty nevejdou, takže tvrzení by v článku z října 2026 zavádělo.
 
 Citáty zůstanou v angličtině s českým překladem hned za nimi, aby šly porovnat s originálem. Studie METR se použije, jen když se její omezení (malý vzorek, zkušení vývojáři ve vlastních velkých projektech, nástroje z počátku roku 2025) vejdou do jedné věty u tvrzení. Jinak by článek tvrdil víc, než studie ukázala. Bezpečnostní reporty a mediální incidenty (agent smazal databázi apod.) se nepoužijí: metodika reportů je těžko ověřitelná a incidenty svádějí k senzaci.
 
@@ -92,5 +98,5 @@ V úvodním článku přibude na konec sekce „Proč se o SDD mluví právě te
 - [Nadpis s „Konec…“ může působit jako clickbait a ubrat webu na důvěryhodnosti] → Otazník v titulku, férové sekce 2 a 7 a tabulka, ve které vibe coding dvakrát vede.
 - [Karpathy nebo Willison mohli příspěvek smazat nebo upravit] → Ověřit v den psaní. Kdyby původní příspěvek zmizel, citovat přes archivovanou kopii a uvést to.
 - [Specifikace mezi commitem implementace a archivací ještě požadavek tohoto článku neobsahuje, a odkaz ze závěru tak chvíli vede na specifikaci bez něj] → Archivovat ve stejném pushi jako implementaci, protože push do `main` nasazuje.
-- [Štítek `názor` zatím nemá vlastní výpis a čtenář nemusí poznat, co znamená] → Úvod článku jednou větou řekne, že jde o názorový text. Výpis štítků je mimo rozsah.
+- [Štítek `názor` zatím nemá vlastní výpis a čtenář nemusí poznat, co znamená] → Článek to v textu zvlášť neuvádí (autor větu „Tento text je názorový…“ při revizi odmítl). Názorovost nese štítek a tón nadpisu. Výpis štítků je mimo rozsah.
 - [Srovnání se časem rozejde s vývojem nástrojů] → Článek nevypisuje konkrétní nástroje pro vibe coding a o SDD nástrojích jen odkazuje na přehled a srovnání, kde mají data ověření.
