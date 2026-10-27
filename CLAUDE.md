@@ -42,7 +42,7 @@ Testovací framework projekt nemá. Úkol je ověřený, když projde `npm run c
 - **Fonty** IBM Plex Sans/Mono spravuje Fonts API Astra s providerem `fontsource` (`astro.config.mjs`). Build je stahuje ze sítě a servíruje z vlastní domény. Provider `npm` v Astru 7.4 nefunguje (vrací `file://` URL). Externí zdroje (Google Fonts, CDN) v HTML být nesmí, specifikace to vyžaduje.
 - **Data bez času** se formátují v UTC (`src/lib/dates.ts`), aby výsledek nezávisel na časovém pásmu stroje.
 - **Komponenta `Scenario.astro`** (blok WHEN/THEN) se používá na úvodní stránce i v MDX článcích (import relativní cestou). Má explicitní `aria-labelledby`, protože Chrome neodvozuje jméno `<figure>` z `<figcaption>`.
-- **JavaScript v prohlížeči zakázaný není**, zatím ho ale žádná stránka nepoužívá. Barevný režim se řídí jen systémem (`prefers-color-scheme`).
+- **Barevný režim** se ve výchozím stavu řídí systémem. Přepínač v hlavičce (`Header.astro`) ukládá ruční volbu do `localStorage` pod klíčem `color-scheme`, jen když se liší od systému, a nastaví atribut `data-theme` na `<html>`. Ten v `tokens.css` přepne `color-scheme`, a tím všechny barvy z `light-dark()`. Uloženou volbu před vykreslením uplatní inline skript (`is:inline`) v `<head>` v `BaseLayout.astro`. Nesmí být modulem, ten se spouští až po načtení stránky a stránka by blikla. Bez JavaScriptu zůstane tlačítko `hidden`. Jinak web JavaScript nepoužívá, nový skript má mít stejně jasný důvod.
 
 ## Nasazení
 

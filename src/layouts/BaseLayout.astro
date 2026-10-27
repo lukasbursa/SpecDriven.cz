@@ -21,6 +21,13 @@ const seo = Astro.props;
     <style is:inline>
       @layer reset, base, prose, components;
     </style>
+    <!-- Ruční volba barevného režimu musí platit před prvním vykreslením, proto inline a ne modul. -->
+    <script is:inline>
+      try {
+        const scheme = localStorage.getItem('color-scheme');
+        if (scheme === 'light' || scheme === 'dark') document.documentElement.dataset.theme = scheme;
+      } catch {}
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="light dark" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />

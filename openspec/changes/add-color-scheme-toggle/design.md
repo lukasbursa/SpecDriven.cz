@@ -51,14 +51,14 @@ Každý přístup k `localStorage` je v `try/catch`. V prohlížeči se zablokov
 </head>
 <body>
   <header> … <button hidden> … </header>
-  <script> obsluha tlačítka </script>     ← modul, Astro ho zabalí do _astro/
+  <script type="module"> obsluha tlačítka </script>   ← modul, spustí se po načtení
 ```
 
 Inline skript musí běžet před vykreslením. Běžný `<script>` v Astru je modul a spouští se až po načtení dokumentu, stránka by tedy na okamžik ukázala systémovou variantu. Proto `is:inline`. Skript jen nastaví atribut, žádnou logiku navíc nemá a nemění pořadí ostatního obsahu `<head>`.
 
-Obsluha tlačítka (výpočet stavu, klik, sledování systému) je běžný `<script>` komponenty. Astro ho zabalí do souboru s hashem v `_astro/` a nasazení ho nahraje ve fázi assetů, stejně jako CSS.
+Obsluha tlačítka (výpočet stavu, klik, sledování systému) je běžný `<script>` komponenty. Astro ho zpracuje jako modul. Skripty menší než 4 kB nedává do `_astro/`, ale vloží je do stránky jako `<script type="module">` (tady asi 0,8 kB). Modul se spouští až po načtení dokumentu, takže vykreslení neblokuje.
 
-*Alternativa:* celou logiku dát do inline skriptu. Opakovala by se v HTML každé stránky a prodlužovala by blokující část `<head>`.
+*Alternativa:* celou logiku dát do inline skriptu v `<head>`. Prodlužovala by blokující část `<head>` a běžela by dřív, než existuje tlačítko.
 
 ### 4. Logika přepnutí a návrat k systému
 
@@ -72,7 +72,12 @@ klik:   nová = opak(aktivní)
 
 změna systému (matchMedia 'change'):
         bez uložené volby → jen překresli tlačítko (barvy přepne CSS samo)
+
+návrat z bfcache (pageshow, persisted):
+        znovu přečti uloženou volbu a nastav data-theme
 ```
+
+Aktivní variantu skript odvozuje z atributu `data-theme`, ne přímo z úložiště. Při zablokovaném `localStorage` tak přepnutí na aktuální stránce funguje dál. Stránku, na kterou se čtenář vrátí tlačítkem Zpět, prohlížeč obnoví z mezipaměti (bfcache) bez spuštění inline skriptu. Mezitím ale mohl volbu změnit na jiné stránce, proto se při obnovení přečte znovu.
 
 Tím odpadá třetí stav „podle systému“. Kdo nikdy neklikne, zůstane na systému. Kdo se proklikne zpátky na systémovou variantu, vrátí se k ní, aniž by o tom musel vědět.
 
@@ -104,7 +109,11 @@ Tlačítko je v DOM za `<nav>`, ne uvnitř. Není to odkaz navigace a na širok�
            [ navigace (zalomená)              ]
 ```
 
-Na úzké obrazovce je tlačítko vizuálně v první řadě, ale v pořadí zaměření je až za navigací. Pořadí zaměření tím neztrácí smysl (WCAG 2.4.3): tlačítko je nezávislé na odkazech a na široké obrazovce, kde se klávesnice používá nejvíc, odpovídá vizuálnímu pořadí. Bod zlomu se nevolí podle pevné šířky, grid se přizpůsobí obsahu (navigace se zalomí, když se nevejde).
+Na úzké obrazovce je tlačítko vizuálně v první řadě, ale v pořadí zaměření je až za navigací. Pořadí zaměření tím neztrácí smysl (WCAG 2.4.3): tlačítko je nezávislé na odkazech a na široké obrazovce, kde se klávesnice používá nejvíc, odpovídá vizuálnímu pořadí.
+
+Grid oblasti podle délky obsahu sám nepřeskládá, rozložení se proto přepíná media query. Bod zlomu je v `rem`, aby se posunul s velikostí písma, kterou si čtenář nastavil v prohlížeči. Hodnota se odvodí ze změřené šířky názvu, navigace a tlačítka v jednom řádku. Kdyby navigace později zesílila a do bodu zlomu se nevešla, nepřeteče: její seznam se zalomí uvnitř své oblasti.
+
+*Alternativa:* zachovat flexbox a tlačítko umístit absolutně do pravého horního rohu s rezervovaným odsazením. Zalamovalo by se podle obsahu, ale rezervované místo by na úzké obrazovce ubíralo šířku i druhé řadě s navigací.
 
 *Alternativa:* tlačítko v DOM hned za názvem webu. Pořadí by sedělo na mobilu, ale nesedělo by na široké obrazovce.
 

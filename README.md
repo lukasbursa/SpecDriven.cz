@@ -45,4 +45,4 @@ Workflow jde spustit i ručně v záložce Actions. Ve výchozím stavu je to zk
 
 ## Technologie
 
-[Astro](https://astro.build) (statický výstup), obsah v Markdown/MDX, čisté CSS, písmo IBM Plex. V prohlížeči neběží žádný JavaScript.
+[Astro](https://astro.build) (statický výstup), obsah v Markdown/MDX, čisté CSS, písmo IBM Plex. JavaScript v prohlížeči obsluhuje jen přepínač světlého a tmavého režimu, web funguje i bez něj.
