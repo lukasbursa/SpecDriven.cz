@@ -27,4 +27,4 @@
 
 ## 6. Po nasazení (ručně, po pushi do main)
 
-- [ ] 6.1 Na produkci projít odkazy z patičky, článku a nástroje OpenSpec. Ověřit, že „Nahlásit zastaralý údaj“ otevře formulář s předvyplněným nástrojem a adresou stránky, že formulář bez zdroje nejde odeslat a že „Navrhnout úpravu“ nabídne nepřihlášenému návštěvníkovi přihlášení a přihlášenému bez práv vytvoření forku.
+- [x] 6.1 Na produkci projít odkazy z patičky, článku a nástroje OpenSpec. Ověřit, že „Nahlásit zastaralý údaj“ otevře formulář s předvyplněným nástrojem a adresou stránky, že formulář bez zdroje nejde odeslat a že „Navrhnout úpravu“ nabídne nepřihlášenému návštěvníkovi přihlášení a přihlášenému bez práv vytvoření forku.
