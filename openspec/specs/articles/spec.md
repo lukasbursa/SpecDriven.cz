@@ -29,7 +29,7 @@ Web SHALL mít stránku `/clanky/` se seznamem všech publikovaných článků s
 - **THEN** vidí všechny publikované články seřazené podle data publikace od nejnovějšího
 
 ### Requirement: Detail článku
-Každý publikovaný článek SHALL mít vlastní stránku na adrese `/clanky/<slug>/`, kde `<slug>` je odvozen z názvu souboru článku. Stránka SHALL zobrazit název, datum publikace, případné datum aktualizace, štítky a obsah článku.
+Každý publikovaný článek SHALL mít vlastní stránku na adrese `/clanky/<slug>/`, kde `<slug>` je odvozen z názvu souboru článku. Stránka SHALL zobrazit název, datum publikace, případné datum aktualizace, autora, štítky a obsah článku. Autorem je autor webu z nastavení webu.
 
 #### Scenario: Otevření článku
 - **WHEN** čtenář otevře `/clanky/co-je-spec-driven-development/`
@@ -38,6 +38,10 @@ Každý publikovaný článek SHALL mít vlastní stránku na adrese `/clanky/<s
 #### Scenario: Aktualizovaný článek
 - **WHEN** článek má vyplněné datum aktualizace
 - **THEN** na stránce článku je kromě data publikace uvedeno i „Aktualizováno“ s tímto datem
+
+#### Scenario: Autor článku
+- **WHEN** čtenář otevře `/clanky/co-je-spec-driven-development/`
+- **THEN** blok metadat nad nadpisem obsahuje řádek `autor:` se jménem Lukáš Burša
 
 ### Requirement: Koncepty se nepublikují
 Článek označený jako koncept MUST být vynechán ze seznamu článků, z úvodní stránky, z RSS feedu i ze sitemap a MUST NOT mít v produkčním sestavení vlastní stránku.

@@ -31,4 +31,4 @@
 
 - [x] 6.1 Doplnit `CLAUDE.md`: strukturovaná data skládá `src/lib/structured-data.ts` a `application/ld+json` pravidlu o JavaScriptu neodporuje, `lastmod` v sitemapě se čte z `article:*_time` ve vygenerovaných stránkách, datum změny nástroje zahrnuje datum ověření
 - [x] 6.2 Spustit `npm run check`, `npm run build`, `openspec validate add-seo-metadata --strict` a ověřit, že projdou bez chyb
-- [ ] 6.3 Po nasazení ověřit přesměrování `index.html` přes `curl -I` na produkci a strukturovaná data úvodní stránky, článku a nástroje ve Validátoru schema.org a v Testu výsledků s rozšířenými funkcemi od Googlu (bez chyb, varování nevadí)
+- [x] 6.3 Po nasazení ověřit přesměrování `index.html` přes `curl -I` na produkci a strukturovaná data úvodní stránky, článku a nástroje ve Validátoru schema.org a v Testu výsledků s rozšířenými funkcemi od Googlu (bez chyb, varování nevadí)
