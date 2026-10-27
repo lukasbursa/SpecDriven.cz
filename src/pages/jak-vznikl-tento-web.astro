@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { repoTreeUrl, site } from '../site.config';
+import { discussions, repoTreeUrl, site } from '../site.config';
+
+const contributingUrl = `${site.repo.url}/blob/${site.repo.branch}/CONTRIBUTING.md`;
 ---
 
 <BaseLayout
@@ -56,6 +58,25 @@ import { repoTreeUrl, site } from '../site.config';
       <p>
         Aktuální stav vývoje ukazuje i řádek v patičce každé stránky: počet specifikací, počet archivovaných změn a
         poslední dokončenou změnu.
+      </p>
+
+      <h2>Jak přispět</h2>
+      <p>Do webu může přispět kdokoli s účtem na GitHubu. Cesta příspěvku záleží na tom, co měníte:</p>
+      <ul>
+        <li>
+          <strong>Oprava textu nebo faktu</strong> v existujícím článku či stránce nástroje může přijít rovnou pull requestem,
+          bez návrhu změny v OpenSpec. Opravu faktu je potřeba doložit odkazem na oficiální zdroj. Na konci každého
+          článku a stránky nástroje je odkaz „Navrhnout úpravu“, který otevře zdrojový soubor stránky na GitHubu.
+        </li>
+        <li><strong>Nový článek nebo nástroj</strong> začíná návrhem v issue.</li>
+        <li>
+          <strong>Změna chování, struktury nebo vzhledu webu</strong> prochází stejným cyklem propose → apply → archive jako
+          všechny ostatní změny.
+        </li>
+      </ul>
+      <p>
+        Podrobný postup popisují <a href={contributingUrl} rel="noopener">pravidla pro přispěvatele</a> v repozitáři.
+        Dotazy a zkušenosti patří do <a href={discussions.url} rel="noopener">diskuzí na GitHubu</a>.
       </p>
 
       <h2>Technologie</h2>

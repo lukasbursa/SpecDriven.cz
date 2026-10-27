@@ -26,14 +26,10 @@ Diskuze jsou jen odkazy. Vložené vlákno (Giscus a podobné) načítá skript 
 ### 2. Adresy v `site.config.ts`
 
 ```ts
-export const site = {
-  // …
-  discussions: {
-    url: 'https://github.com/lukasbursa/SpecDriven.cz/discussions',
-    // Slug kategorie tvoří GitHub z názvu, doplní se po jejich založení.
-    categories: { articles: '…/categories/<slug>', tools: '…/categories/<slug>' },
-  },
-} as const;
+export const discussions = {
+  url: `${site.repo.url}/discussions`,
+  categories: { articles: '…/categories/články', tools: '…/categories/nástroje' },
+} as const;   // samostatný export: objekt `site` se v deklaraci nemůže odkazovat sám na sebe
 
 repoEditUrl(filePath)              // `${repo.url}/edit/${repo.branch}/${filePath}`
 newIssueUrl(template, fields)      // `${repo.url}/issues/new?` + URLSearchParams({ template, ...fields })
@@ -46,13 +42,13 @@ newIssueUrl(template, fields)      // `${repo.url}/issues/new?` + URLSearchParam
 ```ts
 const discussion = z
   .url()
-  .refine((url) => url.startsWith(`${site.discussions.url}/`), {
-    message: `Odkaz na vlákno musí vést do ${site.discussions.url}/.`,
+  .refine((url) => url.startsWith(`${discussions.url}/`), {
+    message: `Odkaz na vlákno musí vést do ${discussions.url}/.`,
   })
   .optional();
 ```
 
-Stejná definice se použije v `articles` i `tools`. Kontrola prefixu zachytí odkaz na cizí repozitář nebo překlep v doméně. Existenci vlákna nekontroluje. Komponenta pak použije `discussion ?? site.discussions.categories.<kolekce>`.
+Stejná definice se použije v `articles` i `tools`. Kontrola prefixu zachytí odkaz na cizí repozitář nebo překlep v doméně. Existenci vlákna nekontroluje. Komponenta pak použije `discussion ?? discussions.categories.<kolekce>`.
 
 ### 4. Komponenta `Feedback.astro`
 

@@ -1,6 +1,16 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
+import { discussions } from './site.config';
+
+// Odkaz na vlastní vlákno, bez něj vede zpětná vazba na kategorii diskuzí.
+// Existenci vlákna build neověřuje, jen to, že odkaz míří do diskuzí webu.
+const discussion = z
+  .url()
+  .refine((url) => url.startsWith(`${discussions.url}/`), {
+    message: `Odkaz na vlákno musí vést do ${discussions.url}/.`,
+  })
+  .optional();
 
 // Neplatná metadata článku shodí build s chybou, která uvede soubor a pole.
 const articles = defineCollection({
@@ -12,6 +22,7 @@ const articles = defineCollection({
     updatedDate: z.coerce.date().optional(),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
+    discussion,
   }),
 });
 
@@ -35,6 +46,7 @@ const tools = defineCollection({
       pubDate: z.coerce.date(),
       updatedDate: z.coerce.date().optional(),
       draft: z.boolean().default(false),
+      discussion,
     })
     .refine((tool) => tool.website || tool.repository, {
       message: 'Nástroj potřebuje alespoň jedno z polí website a repository.',

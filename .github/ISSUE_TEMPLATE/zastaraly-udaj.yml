@@ -1,0 +1,41 @@
+# Formulář pro odkaz „Nahlásit zastaralý údaj“ na stránkách nástrojů.
+# Web předvyplní pole `nastroj` a `stranka` parametry URL se stejným názvem
+# (newIssueUrl v src/site.config.ts), id polí proto neměňte.
+name: Zastaralý údaj o nástroji
+description: Údaj na stránce nástroje už neplatí, například příkaz, podporovaný asistent nebo licence.
+title: 'Zastaralý údaj: '
+labels: [documentation]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Díky, že pomáháte udržet údaje aktuální. Web uvádí jen fakta, která jde dohledat v oficiálních zdrojích nástroje, proto je odkaz na zdroj povinný.
+  - type: input
+    id: nastroj
+    attributes:
+      label: Nástroj
+      placeholder: OpenSpec
+    validations:
+      required: true
+  - type: input
+    id: stranka
+    attributes:
+      label: Stránka na webu
+      placeholder: https://specdriven.cz/nastroje/openspec/
+    validations:
+      required: true
+  - type: textarea
+    id: udaj
+    attributes:
+      label: Co je zastaralé
+      description: Co na stránce stojí a jak to platí teď.
+    validations:
+      required: true
+  - type: input
+    id: zdroj
+    attributes:
+      label: Oficiální zdroj
+      description: Odkaz na dokumentaci, repozitář nebo web nástroje, který nový údaj dokládá.
+      placeholder: https://
+    validations:
+      required: true

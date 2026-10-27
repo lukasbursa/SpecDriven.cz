@@ -1,0 +1,30 @@
+name: Návrh článku nebo nástroje
+description: Téma článku nebo nástroj pro SDD, který na webu chybí.
+title: 'Návrh: '
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Nový článek nebo nástroj prochází na webu stejným cyklem jako ostatní změny (propose → apply → archive). Tento návrh je první krok. Postup popisuje [CONTRIBUTING.md](https://github.com/lukasbursa/SpecDriven.cz/blob/main/CONTRIBUTING.md).
+  - type: dropdown
+    id: typ
+    attributes:
+      label: Co navrhujete
+      options:
+        - Článek
+        - Nástroj
+    validations:
+      required: true
+  - type: textarea
+    id: popis
+    attributes:
+      label: Popis
+      description: O čem by článek byl, nebo co nástroj dělá a jak souvisí se spec-driven developmentem.
+    validations:
+      required: true
+  - type: textarea
+    id: zdroje
+    attributes:
+      label: Zdroje
+      description: Oficiální dokumentace, repozitář nebo další podklady.

@@ -1,8 +1,10 @@
 ---
 import { render } from 'astro:content';
+import Feedback from '../../components/Feedback.astro';
 import Frontmatter, { type Entry } from '../../components/Frontmatter.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { formatStars, getPublishedTools, type Tool } from '../../lib/tools';
+import { formatStars, getPublishedTools, toolPath, type Tool } from '../../lib/tools';
+import { discussions, newIssueUrl, repoEditUrl, site } from '../../site.config';
 
 export async function getStaticPaths() {
   const tools = await getPublishedTools();
@@ -14,8 +16,20 @@ interface Props {
 }
 
 const { tool } = Astro.props;
-const { title, description, kind, license, website, repository, docs, stars, verifiedDate, pubDate, updatedDate } =
-  tool.data;
+const {
+  title,
+  description,
+  kind,
+  license,
+  website,
+  repository,
+  docs,
+  stars,
+  verifiedDate,
+  pubDate,
+  updatedDate,
+  discussion,
+} = tool.data;
 const { Content, headings } = await render(tool);
 
 // Sekce s mapováním na obecný cyklus je povinná, bez ní se web nesestaví.
@@ -39,6 +53,13 @@ const links = [
   { label: 'Repozitář', url: repository },
   { label: 'Dokumentace', url: docs },
 ].flatMap(({ label, url }) => (url ? [{ label, url, text: url.replace(/^https?:\/\//, '').replace(/\/$/, '') }] : []));
+
+// Formulář .github/ISSUE_TEMPLATE/zastaraly-udaj.yml, klíče jsou id jeho polí.
+const report = newIssueUrl('zastaraly-udaj.yml', {
+  title: `Zastaralý údaj: ${title}`,
+  nastroj: title,
+  stranka: new URL(toolPath(tool), site.url).href,
+});
 ---
 
 <BaseLayout title={title} description={description} type="article" publishedTime={pubDate} modifiedTime={updatedDate}>
@@ -63,6 +84,12 @@ const links = [
         }
       </ul>
     </div>
+
+    <Feedback
+      discussion={discussion ?? discussions.categories.tools}
+      editUrl={repoEditUrl(tool.filePath!)}
+      report={report}
+    />
   </article>
 </BaseLayout>
 

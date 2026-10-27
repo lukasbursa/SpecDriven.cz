@@ -1,8 +1,10 @@
 ---
 import { render } from 'astro:content';
+import Feedback from '../../components/Feedback.astro';
 import Frontmatter, { type Entry } from '../../components/Frontmatter.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getPublishedArticles, type Article } from '../../lib/articles';
+import { discussions, repoEditUrl } from '../../site.config';
 
 export async function getStaticPaths() {
   const articles = await getPublishedArticles();
@@ -14,7 +16,7 @@ interface Props {
 }
 
 const { article } = Astro.props;
-const { title, description, pubDate, updatedDate, tags } = article.data;
+const { title, description, pubDate, updatedDate, tags, discussion } = article.data;
 const { Content } = await render(article);
 
 const entries: Entry[] = [
@@ -35,6 +37,8 @@ const entries: Entry[] = [
     <div class="prose">
       <Content />
     </div>
+
+    <Feedback discussion={discussion ?? discussions.categories.articles} editUrl={repoEditUrl(article.filePath!)} />
   </article>
 </BaseLayout>
 

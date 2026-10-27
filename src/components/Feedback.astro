@@ -1,0 +1,65 @@
+---
+// Sekce „Zpětná vazba“ na konci článku a stránky nástroje. Všechno jsou jen
+// odkazy na GitHub, stránka nic nenačítá z cizí domény.
+interface Props {
+  /** Vlákno z metadat, nebo kategorie diskuzí. */
+  discussion: string;
+  editUrl: string;
+  /** Formulář pro zastaralý údaj, jen u nástrojů. */
+  report?: string;
+}
+
+const { discussion, editUrl, report } = Astro.props;
+---
+
+<section class="feedback" aria-labelledby="zpetna-vazba">
+  <h2 id="zpetna-vazba" class="feedback__title mark-h2">Zpětná vazba</h2>
+  <ul class="feedback__links">
+    <li><a href={discussion} rel="noopener">Diskutovat na GitHubu&nbsp;→</a></li>
+    <li><a href={editUrl} rel="noopener">Navrhnout úpravu této stránky&nbsp;→</a></li>
+    {
+      report && (
+        <li>
+          <a href={report} rel="noopener">
+            Nahlásit zastaralý údaj&nbsp;→
+          </a>
+        </li>
+      )
+    }
+  </ul>
+  <p class="feedback__note">Odkazy vedou na GitHub, kde je potřeba účet.</p>
+</section>
+
+<style>
+  @layer components {
+    .feedback {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      margin-top: var(--space-5);
+      padding: var(--space-4) 1.125rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+    }
+
+    .feedback__title {
+      font-size: var(--text-h3);
+      line-height: var(--leading-tight);
+    }
+
+    .feedback__links {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .feedback__note {
+      color: var(--faint);
+      font-size: var(--text-sm);
+    }
+  }
+</style>

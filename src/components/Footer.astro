@@ -1,5 +1,5 @@
 ---
-import { site } from '../site.config';
+import { discussions, site } from '../site.config';
 import StatusBar from './StatusBar.astro';
 
 const year = new Date().getFullYear();
@@ -13,7 +13,10 @@ const year = new Date().getFullYear();
         Tento web byl vytvořen pomocí <a href={site.introArticlePath}>SDD</a>{' – '}<a
           href={site.openspecUrl}
           rel="noopener">OpenSpec</a
-        >{' · '}<a href={site.repo.url} rel="noopener">Zdrojový kód a specifikace na GitHubu</a>
+        >{' · '}<a href={site.repo.url} rel="noopener">Zdrojový kód a specifikace na GitHubu</a>{' · '}<a
+          href={discussions.url}
+          rel="noopener">Diskuze</a
+        >
       </p>
       <p class="footer__copy">© {year} {site.author}</p>
     </div>

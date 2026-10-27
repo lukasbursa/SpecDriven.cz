@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Dotazy a diskuze
+    url: https://github.com/lukasbursa/SpecDriven.cz/discussions
+    about: Otázky k článkům, zkušenosti s nástroji a nápady patří do diskuzí.
