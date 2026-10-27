@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <!-- Obrázek pro sdílení podle src/assets/og-template.svg a pravidel v CLAUDE.md. -->
+  <defs>
+    <pattern id="mrizka" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#1f5fbf" stroke-opacity="0.07" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <!-- Pevné: pozadí „papír“ s mřížkou. -->
+  <rect width="1200" height="630" fill="#fafaf7"/>
+  <rect width="1200" height="630" fill="url(#mrizka)"/>
+
+  <!-- Pevné: logo a nápis. -->
+  <g transform="translate(80 80) scale(1.6667)" fill="none" stroke="#1f5fbf">
+    <rect x="2.5" y="2.5" width="19" height="19" rx="3" stroke-width="2"/>
+    <path d="M7 12.5l3.2 3.2L17 8.8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="136" y="113" font-family="IBM Plex Mono" font-weight="600" font-size="34" fill="#14202e">SpecDriven.cz</text>
+
+  <!-- Pevné: modrý pruh dole. -->
+  <rect y="618" width="1200" height="12" fill="#1f5fbf"/>
+
+  <text x="80" y="208" font-family="IBM Plex Mono" font-size="28" fill="#46525f">nastroje / bmad-method</text>
+  <text font-family="IBM Plex Sans" font-weight="600" font-size="64" fill="#14202e">
+    <tspan x="80" y="292">BMAD-METHOD</tspan>
+  </text>
+
+  <!-- Motiv. -->
+  <text x="80" y="380" font-family="IBM Plex Mono" font-size="24" fill="#46525f">skilly bmad-…</text>
+  <rect x="80" y="404" width="233" height="96" rx="8" fill="#ffffff" stroke="#dce3ea" stroke-width="2"/>
+  <text x="196.5" y="442" font-family="IBM Plex Sans" font-weight="600" text-anchor="middle" font-size="24" fill="#14202e">Záměr</text>
+  <text x="196.5" y="478" font-family="IBM Plex Mono" text-anchor="middle" font-size="24" fill="#1f5fbf">product-brief</text>
+  <rect x="349" y="404" width="233" height="96" rx="8" fill="#ffffff" stroke="#dce3ea" stroke-width="2"/>
+  <text x="465.5" y="442" font-family="IBM Plex Sans" font-weight="600" text-anchor="middle" font-size="24" fill="#14202e">Specifikace</text>
+  <text x="465.5" y="478" font-family="IBM Plex Mono" text-anchor="middle" font-size="24" fill="#1f5fbf">prd</text>
+  <path d="M319 452H341" stroke="#1f5fbf" stroke-width="2" fill="none"/><path d="M335 446L343 452L335 458" stroke="#1f5fbf" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="618" y="404" width="233" height="96" rx="8" fill="#ffffff" stroke="#dce3ea" stroke-width="2"/>
+  <text x="734.5" y="442" font-family="IBM Plex Sans" font-weight="600" text-anchor="middle" font-size="24" fill="#14202e">Plán</text>
+  <text x="734.5" y="478" font-family="IBM Plex Mono" text-anchor="middle" font-size="24" fill="#1f5fbf">architecture</text>
+  <path d="M588 452H610" stroke="#1f5fbf" stroke-width="2" fill="none"/><path d="M604 446L612 452L604 458" stroke="#1f5fbf" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="887" y="404" width="233" height="96" rx="8" fill="#ffffff" stroke="#dce3ea" stroke-width="2"/>
+  <text x="1003.5" y="442" font-family="IBM Plex Sans" font-weight="600" text-anchor="middle" font-size="24" fill="#14202e">Implementace</text>
+  <text x="1003.5" y="478" font-family="IBM Plex Mono" text-anchor="middle" font-size="24" fill="#1f5fbf">build</text>
+  <path d="M857 452H879" stroke="#1f5fbf" stroke-width="2" fill="none"/><path d="M873 446L881 452L873 458" stroke="#1f5fbf" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M1003.5 500V532H734.5V502" stroke="#1f5fbf" stroke-width="2" fill="none" stroke-dasharray="6 6"/><path d="M728.5 508L734.5 500L740.5 508" stroke="#1f5fbf" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="869" y="572" font-family="IBM Plex Mono" text-anchor="middle" font-size="24" fill="#46525f">learn and adjust</text>
+</svg>

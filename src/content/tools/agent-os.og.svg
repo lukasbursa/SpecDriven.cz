@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <!-- Obrázek pro sdílení podle src/assets/og-template.svg a pravidel v CLAUDE.md. -->
+  <defs>
+    <pattern id="mrizka" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#1f5fbf" stroke-opacity="0.07" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <!-- Pevné: pozadí „papír“ s mřížkou. -->
+  <rect width="1200" height="630" fill="#fafaf7"/>
+  <rect width="1200" height="630" fill="url(#mrizka)"/>
+
+  <!-- Pevné: logo a nápis. -->
+  <g transform="translate(80 80) scale(1.6667)" fill="none" stroke="#1f5fbf">
+    <rect x="2.5" y="2.5" width="19" height="19" rx="3" stroke-width="2"/>
+    <path d="M7 12.5l3.2 3.2L17 8.8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="136" y="113" font-family="IBM Plex Mono" font-weight="600" font-size="34" fill="#14202e">SpecDriven.cz</text>
+
+  <!-- Pevné: modrý pruh dole. -->
+  <rect y="618" width="1200" height="12" fill="#1f5fbf"/>
+
+  <text x="80" y="208" font-family="IBM Plex Mono" font-size="28" fill="#46525f">nastroje / agent-os</text>
+  <text font-family="IBM Plex Sans" font-weight="600" font-size="64" fill="#14202e">
+    <tspan x="80" y="292">Agent OS</tspan>
+  </text>
+
+  <!-- Motiv. -->
+  <rect x="80" y="352" width="200" height="60" rx="8" fill="#eaf1fc" stroke="#1f5fbf" stroke-width="2"/>
+  <text x="180" y="390" font-family="IBM Plex Mono" text-anchor="middle" font-size="24" fill="#1f5fbf">/shape-spec</text>
+  <path d="M286 382H320" stroke="#1f5fbf" stroke-width="2" fill="none"/><path d="M314 376L322 382L314 388" stroke="#1f5fbf" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M328 360a8 8 0 0 1 8 -8H483.2l16 16V404a8 8 0 0 1 -8 8H336a8 8 0 0 1 -8 -8Z" fill="#ffffff" stroke="#dce3ea" stroke-width="2"/>
+  <path d="M483.2 352V368H499.2" fill="none" stroke="#dce3ea" stroke-width="2"/>
+  <text x="348" y="391" font-family="IBM Plex Mono" font-size="24" fill="#14202e">shape.md</text>
+  <path d="M519.2 360a8 8 0 0 1 8 -8H660l16 16V404a8 8 0 0 1 -8 8H527.2a8 8 0 0 1 -8 -8Z" fill="#ffffff" stroke="#dce3ea" stroke-width="2"/>
+  <path d="M660 352V368H676" fill="none" stroke="#dce3ea" stroke-width="2"/>
+  <text x="539.2" y="391" font-family="IBM Plex Mono" font-size="24" fill="#14202e">plan.md</text>
+  <path d="M696 360a8 8 0 0 1 8 -8H908.8l16 16V404a8 8 0 0 1 -8 8H704a8 8 0 0 1 -8 -8Z" fill="#ffffff" stroke="#dce3ea" stroke-width="2"/>
+  <path d="M908.8 352V368H924.8" fill="none" stroke="#dce3ea" stroke-width="2"/>
+  <text x="716" y="391" font-family="IBM Plex Mono" font-size="24" fill="#14202e">standards.md</text>
+  <rect x="80" y="476" width="313.6" height="60" rx="8" fill="#ffffff" stroke="#dce3ea" stroke-width="2"/>
+  <text x="236.8" y="514" font-family="IBM Plex Mono" text-anchor="middle" font-size="24" fill="#14202e">/discover-standards</text>
+  <path d="M399.6 506H433.6" stroke="#1f5fbf" stroke-width="2" fill="none"/><path d="M427.6 500L435.6 506L427.6 512" stroke="#1f5fbf" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="441.6" y="476" width="270.4" height="60" rx="8" fill="#ffffff" stroke="#dce3ea" stroke-width="2"/>
+  <text x="576.8" y="514" font-family="IBM Plex Mono" text-anchor="middle" font-size="24" fill="#14202e">/index-standards</text>
+  <path d="M718 506H752" stroke="#1f5fbf" stroke-width="2" fill="none"/><path d="M746 500L754 506L746 512" stroke="#1f5fbf" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="760" y="476" width="284.8" height="60" rx="8" fill="#ffffff" stroke="#dce3ea" stroke-width="2"/>
+  <text x="902.4" y="514" font-family="IBM Plex Mono" text-anchor="middle" font-size="24" fill="#14202e">/inject-standards</text>
+</svg>

@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <!-- Obrázek pro sdílení podle src/assets/og-template.svg a pravidel v CLAUDE.md. -->
+  <defs>
+    <pattern id="mrizka" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#1f5fbf" stroke-opacity="0.07" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <!-- Pevné: pozadí „papír“ s mřížkou. -->
+  <rect width="1200" height="630" fill="#fafaf7"/>
+  <rect width="1200" height="630" fill="url(#mrizka)"/>
+
+  <!-- Pevné: logo a nápis. -->
+  <g transform="translate(80 80) scale(1.6667)" fill="none" stroke="#1f5fbf">
+    <rect x="2.5" y="2.5" width="19" height="19" rx="3" stroke-width="2"/>
+    <path d="M7 12.5l3.2 3.2L17 8.8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="136" y="113" font-family="IBM Plex Mono" font-weight="600" font-size="34" fill="#14202e">SpecDriven.cz</text>
+
+  <!-- Pevné: modrý pruh dole. -->
+  <rect y="618" width="1200" height="12" fill="#1f5fbf"/>
+
+  <text x="80" y="208" font-family="IBM Plex Mono" font-size="28" fill="#46525f">nastroje / openspec</text>
+  <text font-family="IBM Plex Sans" font-weight="600" font-size="64" fill="#14202e">
+    <tspan x="80" y="292">OpenSpec</tspan>
+  </text>
+
+  <!-- Motiv. -->
+  <rect x="80" y="340" width="520" height="244" rx="8" fill="#ffffff" stroke="#dce3ea" stroke-width="2"/>
+  <text x="108" y="384" font-family="IBM Plex Mono" font-weight="600" font-size="24" fill="#1f5fbf">openspec/changes/&lt;změna&gt;/</text>
+  <text x="108" y="428" font-family="IBM Plex Mono" font-size="24" fill="#14202e">├── proposal.md</text>
+  <text x="108" y="472" font-family="IBM Plex Mono" font-size="24" fill="#14202e">├── specs/</text>
+  <text x="108" y="516" font-family="IBM Plex Mono" font-size="24" fill="#14202e">├── design.md</text>
+  <text x="108" y="560" font-family="IBM Plex Mono" font-size="24" fill="#14202e">└── tasks.md</text>
+  <rect x="720" y="348" width="400" height="60" rx="8" fill="#eaf1fc" stroke="#1f5fbf" stroke-width="2"/>
+  <text x="920" y="386" font-family="IBM Plex Mono" text-anchor="middle" font-size="24" fill="#1f5fbf">/opsx:propose</text>
+  <rect x="720" y="432" width="400" height="60" rx="8" fill="#ffffff" stroke="#dce3ea" stroke-width="2"/>
+  <text x="920" y="470" font-family="IBM Plex Mono" text-anchor="middle" font-size="24" fill="#14202e">/opsx:apply</text>
+  <path d="M920 410V428" stroke="#1f5fbf" stroke-width="2" fill="none"/><path d="M914 422L920 430L926 422" stroke="#1f5fbf" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="720" y="516" width="400" height="60" rx="8" fill="#ffffff" stroke="#dce3ea" stroke-width="2"/>
+  <text x="920" y="554" font-family="IBM Plex Mono" text-anchor="middle" font-size="24" fill="#14202e">/opsx:archive</text>
+  <path d="M920 494V512" stroke="#1f5fbf" stroke-width="2" fill="none"/><path d="M914 506L920 514L926 506" stroke="#1f5fbf" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

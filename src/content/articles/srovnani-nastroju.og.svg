@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <!-- Obrázek pro sdílení podle src/assets/og-template.svg a pravidel v CLAUDE.md. -->
+  <defs>
+    <pattern id="mrizka" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#1f5fbf" stroke-opacity="0.07" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <!-- Pevné: pozadí „papír“ s mřížkou. -->
+  <rect width="1200" height="630" fill="#fafaf7"/>
+  <rect width="1200" height="630" fill="url(#mrizka)"/>
+
+  <!-- Pevné: logo a nápis. -->
+  <g transform="translate(80 80) scale(1.6667)" fill="none" stroke="#1f5fbf">
+    <rect x="2.5" y="2.5" width="19" height="19" rx="3" stroke-width="2"/>
+    <path d="M7 12.5l3.2 3.2L17 8.8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="136" y="113" font-family="IBM Plex Mono" font-weight="600" font-size="34" fill="#14202e">SpecDriven.cz</text>
+
+  <!-- Pevné: modrý pruh dole. -->
+  <rect y="618" width="1200" height="12" fill="#1f5fbf"/>
+
+  <text x="80" y="208" font-family="IBM Plex Mono" font-size="28" fill="#46525f">clanky / srovnani-nastroju</text>
+  <text font-family="IBM Plex Sans" font-weight="600" font-size="64" fill="#14202e">
+    <tspan x="80" y="292">Srovnání nástrojů pro</tspan>
+    <tspan x="80" y="368">spec-driven development</tspan>
+  </text>
+
+  <!-- Motiv. -->
+  <rect x="80" y="428" width="1040" height="156" rx="8" fill="#ffffff" stroke="#dce3ea" stroke-width="2"/>
+  <path d="M80 480H1120M80 532H1120M600 428V584" stroke="#dce3ea" stroke-width="2"/>
+  <text x="104" y="463" font-family="IBM Plex Sans" font-weight="600" font-size="24" fill="#14202e">Spec Kit</text>
+  <text x="576" y="463" font-family="IBM Plex Mono" text-anchor="end" font-size="24" fill="#1f5fbf">CLI</text>
+  <text x="624" y="463" font-family="IBM Plex Sans" font-weight="600" font-size="24" fill="#14202e">OpenSpec</text>
+  <text x="1096" y="463" font-family="IBM Plex Mono" text-anchor="end" font-size="24" fill="#1f5fbf">CLI</text>
+  <text x="104" y="515" font-family="IBM Plex Sans" font-weight="600" font-size="24" fill="#14202e">BMAD-METHOD</text>
+  <text x="576" y="515" font-family="IBM Plex Mono" text-anchor="end" font-size="24" fill="#1f5fbf">Metodika</text>
+  <text x="624" y="515" font-family="IBM Plex Sans" font-weight="600" font-size="24" fill="#14202e">GSD Core</text>
+  <text x="1096" y="515" font-family="IBM Plex Mono" text-anchor="end" font-size="24" fill="#1f5fbf">Plugin</text>
+  <text x="104" y="567" font-family="IBM Plex Sans" font-weight="600" font-size="24" fill="#14202e">Agent OS</text>
+  <text x="576" y="567" font-family="IBM Plex Mono" text-anchor="end" font-size="24" fill="#1f5fbf">Plugin</text>
+  <text x="624" y="567" font-family="IBM Plex Sans" font-weight="600" font-size="24" fill="#14202e">Kiro</text>
+  <text x="1096" y="567" font-family="IBM Plex Mono" text-anchor="end" font-size="24" fill="#1f5fbf">IDE</text>
+</svg>

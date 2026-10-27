@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <!-- Obrázek pro sdílení podle src/assets/og-template.svg a pravidel v CLAUDE.md. -->
+  <defs>
+    <pattern id="mrizka" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#1f5fbf" stroke-opacity="0.07" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <!-- Pevné: pozadí „papír“ s mřížkou. -->
+  <rect width="1200" height="630" fill="#fafaf7"/>
+  <rect width="1200" height="630" fill="url(#mrizka)"/>
+
+  <!-- Pevné: logo a nápis. -->
+  <g transform="translate(80 80) scale(1.6667)" fill="none" stroke="#1f5fbf">
+    <rect x="2.5" y="2.5" width="19" height="19" rx="3" stroke-width="2"/>
+    <path d="M7 12.5l3.2 3.2L17 8.8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="136" y="113" font-family="IBM Plex Mono" font-weight="600" font-size="34" fill="#14202e">SpecDriven.cz</text>
+
+  <!-- Pevné: modrý pruh dole. -->
+  <rect y="618" width="1200" height="12" fill="#1f5fbf"/>
+
+  <text x="80" y="208" font-family="IBM Plex Mono" font-size="28" fill="#46525f">clanky / konec-vibe-codingu</text>
+  <text font-family="IBM Plex Sans" font-weight="600" font-size="56" fill="#14202e">
+    <tspan x="80" y="284">Konec vibe codingu?</tspan>
+    <tspan x="80" y="352">Přichází spec-driven</tspan>
+    <tspan x="80" y="420">development</tspan>
+  </text>
+
+  <!-- Motiv. -->
+  <rect x="720" y="168" width="400" height="386" rx="8" fill="#ffffff" stroke="#dce3ea" stroke-width="2"/>
+  <text x="744" y="216" font-family="IBM Plex Mono" font-size="24" fill="#46525f">Kde žije zadání</text>
+  <rect x="732" y="242" width="376" height="44" rx="6" fill="#a3202a" fill-opacity="0.08"/>
+  <text x="744" y="272" font-family="IBM Plex Mono" font-weight="600" font-size="24" fill="#a3202a">−</text>
+  <text x="774" y="272" font-family="IBM Plex Sans" font-size="24" fill="#a3202a">v historii chatu</text>
+  <rect x="732" y="298" width="376" height="44" rx="6" fill="#1e6b3a" fill-opacity="0.08"/>
+  <text x="744" y="328" font-family="IBM Plex Mono" font-weight="600" font-size="24" fill="#1e6b3a">+</text>
+  <text x="774" y="328" font-family="IBM Plex Sans" font-size="24" fill="#1e6b3a">v repozitáři vedle kódu</text>
+  <path d="M722 370H1118" stroke="#dce3ea" stroke-width="2"/>
+  <text x="744" y="404" font-family="IBM Plex Mono" font-size="24" fill="#46525f">Proti čemu se ověřuje</text>
+  <rect x="732" y="430" width="376" height="44" rx="6" fill="#a3202a" fill-opacity="0.08"/>
+  <text x="744" y="460" font-family="IBM Plex Mono" font-weight="600" font-size="24" fill="#a3202a">−</text>
+  <text x="774" y="460" font-family="IBM Plex Sans" font-size="24" fill="#a3202a">proti dojmu</text>
+  <rect x="732" y="486" width="376" height="44" rx="6" fill="#1e6b3a" fill-opacity="0.08"/>
+  <text x="744" y="516" font-family="IBM Plex Mono" font-weight="600" font-size="24" fill="#1e6b3a">+</text>
+  <text x="774" y="516" font-family="IBM Plex Sans" font-size="24" fill="#1e6b3a">proti scénářům WHEN/THEN</text>
+</svg>

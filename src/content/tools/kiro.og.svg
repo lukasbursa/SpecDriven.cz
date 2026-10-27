@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <!-- Obrázek pro sdílení podle src/assets/og-template.svg a pravidel v CLAUDE.md. -->
+  <defs>
+    <pattern id="mrizka" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#1f5fbf" stroke-opacity="0.07" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <!-- Pevné: pozadí „papír“ s mřížkou. -->
+  <rect width="1200" height="630" fill="#fafaf7"/>
+  <rect width="1200" height="630" fill="url(#mrizka)"/>
+
+  <!-- Pevné: logo a nápis. -->
+  <g transform="translate(80 80) scale(1.6667)" fill="none" stroke="#1f5fbf">
+    <rect x="2.5" y="2.5" width="19" height="19" rx="3" stroke-width="2"/>
+    <path d="M7 12.5l3.2 3.2L17 8.8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="136" y="113" font-family="IBM Plex Mono" font-weight="600" font-size="34" fill="#14202e">SpecDriven.cz</text>
+
+  <!-- Pevné: modrý pruh dole. -->
+  <rect y="618" width="1200" height="12" fill="#1f5fbf"/>
+
+  <text x="80" y="208" font-family="IBM Plex Mono" font-size="28" fill="#46525f">nastroje / kiro</text>
+  <text font-family="IBM Plex Sans" font-weight="600" font-size="64" fill="#14202e">
+    <tspan x="80" y="292">Kiro</tspan>
+  </text>
+
+  <!-- Motiv. -->
+  <rect x="80" y="344" width="328" height="240" rx="8" fill="#ffffff" stroke="#dce3ea" stroke-width="2"/>
+  <text x="104" y="384" font-family="IBM Plex Mono" font-weight="600" font-size="24" fill="#14202e">requirements.md</text>
+  <path d="M82 404H406" stroke="#dce3ea" stroke-width="2"/>
+  <text x="104" y="448" font-family="IBM Plex Mono" font-size="24"><tspan font-weight="600" fill="#1f5fbf">WHEN</tspan><tspan fill="#14202e"> …</tspan></text>
+  <text x="104" y="488" font-family="IBM Plex Mono" font-size="24"><tspan font-weight="600" fill="#1f5fbf">THE SYSTEM</tspan><tspan fill="#14202e"></tspan></text>
+  <text x="104" y="528" font-family="IBM Plex Mono" font-size="24"><tspan font-weight="600" fill="#1f5fbf">SHALL</tspan><tspan fill="#14202e"> …</tspan></text>
+  <rect x="436" y="344" width="328" height="240" rx="8" fill="#ffffff" stroke="#dce3ea" stroke-width="2"/>
+  <text x="460" y="384" font-family="IBM Plex Mono" font-weight="600" font-size="24" fill="#14202e">design.md</text>
+  <path d="M438 404H762" stroke="#dce3ea" stroke-width="2"/>
+  <rect x="464" y="428" width="108" height="48" rx="8" fill="#eaf1fc" stroke="#1f5fbf" stroke-width="2"/>
+  <rect x="632" y="428" width="108" height="48" rx="8" fill="#ffffff" stroke="#dce3ea" stroke-width="2"/>
+  <rect x="548" y="516" width="108" height="48" rx="8" fill="#ffffff" stroke="#dce3ea" stroke-width="2"/>
+  <path d="M578 452H624" stroke="#1f5fbf" stroke-width="2" fill="none"/><path d="M618 446L626 452L618 458" stroke="#1f5fbf" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M518 476V496H602V514" stroke="#1f5fbf" stroke-width="2" fill="none"/>
+  <rect x="792" y="344" width="328" height="240" rx="8" fill="#ffffff" stroke="#dce3ea" stroke-width="2"/>
+  <text x="816" y="384" font-family="IBM Plex Mono" font-weight="600" font-size="24" fill="#14202e">tasks.md</text>
+  <path d="M794 404H1118" stroke="#dce3ea" stroke-width="2"/>
+  <rect x="816" y="432" width="24" height="24" rx="4" fill="#1f5fbf" stroke="#1f5fbf" stroke-width="2"/>
+  <path d="M822 444l4 4l8 -8" stroke="#ffffff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="856" y="438" width="200" height="12" rx="6" fill="#dce3ea"/>
+  <rect x="816" y="476" width="24" height="24" rx="4" fill="#1f5fbf" stroke="#1f5fbf" stroke-width="2"/>
+  <path d="M822 488l4 4l8 -8" stroke="#ffffff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="856" y="482" width="160" height="12" rx="6" fill="#dce3ea"/>
+  <rect x="816" y="520" width="24" height="24" rx="4" fill="#ffffff" stroke="#1f5fbf" stroke-width="2"/>
+  <rect x="856" y="526" width="184" height="12" rx="6" fill="#dce3ea"/>
+</svg>

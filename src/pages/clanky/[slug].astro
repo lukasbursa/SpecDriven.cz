@@ -4,6 +4,7 @@ import Feedback from '../../components/Feedback.astro';
 import Frontmatter, { type Entry } from '../../components/Frontmatter.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { articlePath, getPublishedArticles, type Article } from '../../lib/articles';
+import { ogImagePath } from '../../lib/og-image';
 import { articleData, authorData, breadcrumbData } from '../../lib/structured-data';
 import { discussions, repoEditUrl, site } from '../../site.config';
 
@@ -27,8 +28,10 @@ const entries: Entry[] = [
   ...(tags.length > 0 ? [{ key: 'štítky', value: `[${tags.join(', ')}]`, accent: true }] : []),
 ];
 
+const image = ogImagePath(article) ?? site.ogImage;
+
 const structuredData = [
-  articleData(article, site.ogImage),
+  articleData(article, image),
   authorData(),
   breadcrumbData([
     { name: 'Články', path: '/clanky/' },
@@ -44,6 +47,7 @@ const structuredData = [
   publishedTime={pubDate}
   modifiedTime={updatedDate}
   structuredData={structuredData}
+  image={image}
 >
   <article class="container article">
     <p class="article__path mono"><a href="/clanky/">clanky</a> / {article.id}</p>

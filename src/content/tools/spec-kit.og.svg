@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <!-- Obrázek pro sdílení podle src/assets/og-template.svg a pravidel v CLAUDE.md. -->
+  <defs>
+    <pattern id="mrizka" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#1f5fbf" stroke-opacity="0.07" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <!-- Pevné: pozadí „papír“ s mřížkou. -->
+  <rect width="1200" height="630" fill="#fafaf7"/>
+  <rect width="1200" height="630" fill="url(#mrizka)"/>
+
+  <!-- Pevné: logo a nápis. -->
+  <g transform="translate(80 80) scale(1.6667)" fill="none" stroke="#1f5fbf">
+    <rect x="2.5" y="2.5" width="19" height="19" rx="3" stroke-width="2"/>
+    <path d="M7 12.5l3.2 3.2L17 8.8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="136" y="113" font-family="IBM Plex Mono" font-weight="600" font-size="34" fill="#14202e">SpecDriven.cz</text>
+
+  <!-- Pevné: modrý pruh dole. -->
+  <rect y="618" width="1200" height="12" fill="#1f5fbf"/>
+
+  <text x="80" y="208" font-family="IBM Plex Mono" font-size="28" fill="#46525f">nastroje / spec-kit</text>
+  <text font-family="IBM Plex Sans" font-weight="600" font-size="64" fill="#14202e">
+    <tspan x="80" y="292">Spec Kit</tspan>
+  </text>
+
+  <!-- Motiv. -->
+  <text x="80" y="380" font-family="IBM Plex Mono" font-size="24" fill="#46525f">příkazy /speckit-…</text>
+  <rect x="80" y="404" width="179.2" height="64" rx="8" fill="#ffffff" stroke="#dce3ea" stroke-width="2"/>
+  <text x="169.6" y="444" font-family="IBM Plex Mono" text-anchor="middle" font-size="24" fill="#14202e">specify</text>
+  <rect x="295.2" y="404" width="179.2" height="64" rx="8" fill="#ffffff" stroke="#dce3ea" stroke-width="2"/>
+  <text x="384.8" y="444" font-family="IBM Plex Mono" text-anchor="middle" font-size="24" fill="#14202e">plan</text>
+  <path d="M265.2 436H287.2" stroke="#1f5fbf" stroke-width="2" fill="none"/><path d="M281.2 430L289.2 436L281.2 442" stroke="#1f5fbf" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="510.4" y="404" width="179.2" height="64" rx="8" fill="#ffffff" stroke="#dce3ea" stroke-width="2"/>
+  <text x="600" y="444" font-family="IBM Plex Mono" text-anchor="middle" font-size="24" fill="#14202e">tasks</text>
+  <path d="M480.4 436H502.4" stroke="#1f5fbf" stroke-width="2" fill="none"/><path d="M496.4 430L504.4 436L496.4 442" stroke="#1f5fbf" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="725.6" y="404" width="179.2" height="64" rx="8" fill="#ffffff" stroke="#dce3ea" stroke-width="2"/>
+  <text x="815.2" y="444" font-family="IBM Plex Mono" text-anchor="middle" font-size="24" fill="#14202e">implement</text>
+  <path d="M695.6 436H717.6" stroke="#1f5fbf" stroke-width="2" fill="none"/><path d="M711.6 430L719.6 436L711.6 442" stroke="#1f5fbf" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="940.8" y="404" width="179.2" height="64" rx="8" fill="#ffffff" stroke="#dce3ea" stroke-width="2"/>
+  <text x="1030.4" y="444" font-family="IBM Plex Mono" text-anchor="middle" font-size="24" fill="#14202e">converge</text>
+  <path d="M910.8 436H932.8" stroke="#1f5fbf" stroke-width="2" fill="none"/><path d="M926.8 430L934.8 436L926.8 442" stroke="#1f5fbf" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M1030.4 468V500H815.2V470" stroke="#1f5fbf" stroke-width="2" fill="none" stroke-dasharray="6 6"/><path d="M809.2 476L815.2 468L821.2 476" stroke="#1f5fbf" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="922.8" y="540" font-family="IBM Plex Mono" text-anchor="middle" font-size="24" fill="#46525f">dokud nehlásí Converged</text>
+</svg>

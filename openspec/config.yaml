@@ -38,3 +38,10 @@ context: |
   - Obsah webu je česky, s diakritikou.
   - Rychlost a přístupnost (WCAG AA) mají přednost před efekty.
   - Každá změna webu prochází cyklem propose → apply → archive.
+
+rules:
+  tasks:
+    - >-
+      Když změna přidává článek nebo nástroj nebo mění jeho název, úkoly MUST
+      obsahovat nakreslení nebo úpravu obrázku pro sdílení (`<slug>.og.svg`)
+      podle sekce „Obrázky pro sdílení“ v CLAUDE.md a kontrolu vykresleného PNG.

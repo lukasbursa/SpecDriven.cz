@@ -20,6 +20,8 @@ Některé články jsou v MDX (`.mdx`). Na začátku mají řádky `import …` 
 
 U stránky nástroje, kde opravujete fakt, aktualizujte i `verifiedDate` na den, kdy jste údaj ověřili.
 
+Vedle článku nebo nástroje může ležet obrázek pro sdílení `<slug>.og.svg`. Když měníte název, upravte ho v obrázku taky, nebo to nechte na správci. U nového obsahu je obrázek nepovinný: bez něj se použije výchozí obrázek webu a správce ho doplní.
+
 ## Změna přes OpenSpec
 
 Popis metody a cyklu propose → apply → archive je na stránce [Jak vznikl tento web](https://specdriven.cz/jak-vznikl-tento-web/), dokumentace nástroje na [openspec.dev](https://openspec.dev/).
