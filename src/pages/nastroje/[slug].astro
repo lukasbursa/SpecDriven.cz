@@ -4,7 +4,8 @@ import Feedback from '../../components/Feedback.astro';
 import Frontmatter, { type Entry } from '../../components/Frontmatter.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { articlePath, getComparisonArticle } from '../../lib/articles';
-import { formatStars, getPublishedTools, toolPath, type Tool } from '../../lib/tools';
+import { authorData, breadcrumbData, toolData } from '../../lib/structured-data';
+import { formatStars, getPublishedTools, toolModifiedDate, toolPath, type Tool } from '../../lib/tools';
 import { discussions, newIssueUrl, repoEditUrl, site } from '../../site.config';
 
 export async function getStaticPaths() {
@@ -47,6 +48,7 @@ const entries: Entry[] = [
   { key: 'ověřeno', value: verifiedDate },
   { key: 'publikováno', value: pubDate },
   ...(updatedDate ? [{ key: 'aktualizováno', value: updatedDate }] : []),
+  { key: 'autor', value: site.author },
 ];
 
 // Odkazy se zobrazují bez protokolu a koncového lomítka, např. „openspec.dev“.
@@ -56,6 +58,15 @@ const links = [
   { label: 'Dokumentace', url: docs },
 ].flatMap(({ label, url }) => (url ? [{ label, url, text: url.replace(/^https?:\/\//, '').replace(/\/$/, '') }] : []));
 
+const structuredData = [
+  toolData(tool, site.ogImage),
+  authorData(),
+  breadcrumbData([
+    { name: 'Nástroje', path: '/nastroje/' },
+    { name: title, path: toolPath(tool) },
+  ]),
+];
+
 // Formulář .github/ISSUE_TEMPLATE/zastaraly-udaj.yml, klíče jsou id jeho polí.
 const report = newIssueUrl('zastaraly-udaj.yml', {
   title: `Zastaralý údaj: ${title}`,
@@ -64,7 +75,14 @@ const report = newIssueUrl('zastaraly-udaj.yml', {
 });
 ---
 
-<BaseLayout title={title} description={description} type="article" publishedTime={pubDate} modifiedTime={updatedDate}>
+<BaseLayout
+  title={title}
+  description={description}
+  type="article"
+  publishedTime={pubDate}
+  modifiedTime={toolModifiedDate(tool)}
+  structuredData={structuredData}
+>
   <article class="container tool">
     <p class="tool__path mono"><a href="/nastroje/">nastroje</a> / {tool.id}</p>
 

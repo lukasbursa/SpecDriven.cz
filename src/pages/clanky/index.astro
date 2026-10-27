@@ -2,11 +2,16 @@
 import ArticleList from '../../components/ArticleList.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getPublishedArticles } from '../../lib/articles';
+import { breadcrumbData } from '../../lib/structured-data';
 
 const articles = await getPublishedArticles();
 ---
 
-<BaseLayout title="Články" description="Všechny články o spec-driven developmentu na SpecDriven.cz, od nejnovějšího.">
+<BaseLayout
+  title="Články"
+  description="Všechny články o spec-driven developmentu na SpecDriven.cz, od nejnovějšího."
+  structuredData={[breadcrumbData([{ name: 'Články', path: '/clanky/' }])]}
+>
   <div class="container page">
     <h1 class="page__title">Články</h1>
     <p class="page__lead">Vysvětlení pojmů, principů a nástrojů spec-driven developmentu. Od nejnovějšího.</p>

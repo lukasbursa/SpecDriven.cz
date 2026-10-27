@@ -20,6 +20,11 @@ export async function getComparisonArticle(): Promise<Article | undefined> {
   return articles.find((article) => article.id === comparisonSlug);
 }
 
+/** Datum poslední změny článku: aktualizace, a když chybí, publikace. */
+export function articleModifiedDate(article: Article): Date {
+  return article.data.updatedDate ?? article.data.pubDate;
+}
+
 export function articlePath(article: Article): string {
   return `/clanky/${article.id}/`;
 }

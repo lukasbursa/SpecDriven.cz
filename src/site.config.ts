@@ -7,6 +7,8 @@ export const site = {
     'Český rozcestník o spec-driven developmentu: co to je, jak funguje a jaké nástroje existují.',
   url: 'https://specdriven.cz',
   author: 'Lukáš Burša',
+  // Profily autora pro strukturovaná data (schema.org sameAs).
+  authorProfiles: ['https://github.com/lukasbursa'],
   repo: {
     url: 'https://github.com/lukasbursa/SpecDriven.cz',
     branch: 'main',

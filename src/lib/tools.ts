@@ -24,6 +24,16 @@ export async function getToolIds(): Promise<Set<string>> {
   return new Set(tools.map((tool) => tool.id));
 }
 
+/**
+ * Datum poslední změny stránky nástroje: nejnovější z publikace, aktualizace
+ * a ověření. Nové ověření mění údaje na stránce, proto se počítá jako změna.
+ */
+export function toolModifiedDate(tool: Tool): Date {
+  const { pubDate, updatedDate, verifiedDate } = tool.data;
+  const dates = [pubDate, verifiedDate, ...(updatedDate ? [updatedDate] : [])];
+  return new Date(Math.max(...dates.map((date) => date.getTime())));
+}
+
 export function toolPath(tool: Tool): string {
   return `/nastroje/${tool.id}/`;
 }

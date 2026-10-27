@@ -58,9 +58,11 @@ U článku se `article:modified_time` dál vypisuje jen při vyplněném `update
 
 ### 5. `lastmod` v sitemapě se čte z vygenerovaných stránek
 
-`serialize()` běží až po zápisu stránek do `dist/`. Modul `src/lib/sitemap-lastmod.ts` (import do `astro.config.mjs`) při prvním volání projde `dist/clanky/*/index.html` a `dist/nastroje/*/index.html` a z každé stránky vezme `article:modified_time`, a když chybí, `article:published_time`. Tyto hodnoty spočítala stránka z metadat obsahu podle rozhodnutí 4, sitemap je tedy jen přebírá. Z nich se dopočítají maxima pro `/clanky/`, `/nastroje/` a `/`. Pro ostatní adresy vrátí `serialize()` položku beze změny, takže `lastmod` nemají.
+Sitemap se generuje až po zápisu stránek do výstupní složky. Modul `src/lib/sitemap-lastmod.ts` projde `clanky/*/index.html` a `nastroje/*/index.html` a z každé stránky vezme `article:modified_time`, a když chybí, `article:published_time`. Tyto hodnoty spočítala stránka z metadat obsahu podle rozhodnutí 4, sitemap je tedy jen přebírá. Z nich se dopočítají maxima pro `/clanky/`, `/nastroje/` a `/`. Pro ostatní adresy vrátí `serialize()` položku beze změny, takže `lastmod` nemají.
 
-Stránka článku nebo nástroje bez obou metadat znamená chybu v šabloně, a build proto selže s chybou, která uvede soubor. Cesta k `dist/` se v `astro.config.mjs` složí z `import.meta.url`. `outDir` web nemění a `deploy.yml` s `dist/` počítá taky.
+Stránka článku nebo nástroje bez obou metadat znamená chybu v šabloně, a build proto selže s chybou, která uvede soubor.
+
+Data proto nečte `serialize()`, ale vlastní malá integrace v hooku `astro:build:done`, zařazená v `astro.config.mjs` před integrací sitemap. `serialize()` z ní data jen přebírá. Integrace sitemap totiž výjimku ze `serialize()` zachytí, jen ji zaloguje a sitemap nezapíše, ale build skončí úspěšně (ověřeno při implementaci, návratový kód 0). Nasazení by pak sitemap ze serveru smazalo. Výjimka z vlastního hooku build shodí. Hook navíc dostane skutečnou výstupní složku (`dir`), takže cesta k `dist/` není v konfiguraci napsaná natvrdo.
 
 Uvažované alternativy:
 
@@ -86,7 +88,7 @@ Podmínka na `THE_REQUEST` (původní řádek požadavku od klienta) je nutná. 
 ## Risks / Trade-offs
 
 - **[Nástroje vyhledávačů hlásí u strukturovaných dat varování]** Například doporučené pole, které nemáme. → Varování nevadí, opravují se jen chyby. Ověří se po nasazení (Migration Plan).
-- **[`lastmod` závisí na tvaru značek v HTML]** Když se změní, jak `SeoHead` vypisuje `article:*_time`, čtení z `dist/` přestane fungovat. → Chybějící datum u stránky článku nebo nástroje shodí build (rozhodnutí 5), takže se to nestane potichu. V `CLAUDE.md` bude vazba popsaná.
+- **[`lastmod` závisí na tvaru značek v HTML]** Když se změní, jak `SeoHead` vypisuje `article:*_time`, čtení z `dist/` přestane fungovat. → Chybějící datum u stránky článku nebo nástroje shodí build (rozhodnutí 5, vlastní hook, ne `serialize()`), takže se to nestane potichu. V `CLAUDE.md` bude vazba popsaná.
 - **[Pravidlo v `.htaccess` může na hostingu způsobit smyčku]** → Ověřit lokálně přes `httpd` s `AllowOverride All` nad `dist/` a po nasazení přes `curl -I` všechny tři scénáře požadavku „Adresy bez index.html“. Při potížích revert commitu a nové nasazení.
 - **[Obrázek ve strukturovaných datech]** Změna `add-og-images` přinese vlastní obrázek pro každou stránku. → `articleData()` a `toolData()` berou adresu obrázku jako parametr a stránka předává stejnou hodnotu jako do `og:image`. Která změna se implementuje později, napojí obrázek na obě místa.
 

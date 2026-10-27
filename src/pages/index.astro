@@ -5,6 +5,7 @@ import SpecExcerpt from '../components/SpecExcerpt.astro';
 import ToolCards from '../components/ToolCards.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getPublishedArticles } from '../lib/articles';
+import { authorData, websiteData } from '../lib/structured-data';
 import { getPublishedTools } from '../lib/tools';
 import { site } from '../site.config';
 
@@ -20,7 +21,7 @@ const cycle = [
 ];
 ---
 
-<BaseLayout>
+<BaseLayout structuredData={[websiteData(), authorData()]}>
   <section class="hero">
     <div class="container hero__inner">
       <div class="hero__main">

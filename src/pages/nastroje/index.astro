@@ -2,6 +2,7 @@
 import ToolCards from '../../components/ToolCards.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { articlePath, getComparisonArticle } from '../../lib/articles';
+import { breadcrumbData } from '../../lib/structured-data';
 import { getPublishedTools } from '../../lib/tools';
 
 const tools = await getPublishedTools();
@@ -11,6 +12,7 @@ const comparison = await getComparisonArticle();
 <BaseLayout
   title="Nástroje pro spec-driven development"
   description="Přehled nástrojů pro spec-driven development seřazený podle popularity na GitHubu: co jsou zač a jak fungují."
+  structuredData={[breadcrumbData([{ name: 'Nástroje', path: '/nastroje/' }])]}
 >
   <div class="container page">
     <h1 class="page__title">Nástroje pro spec-driven development</h1>
